@@ -1,0 +1,95 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.formWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-bottom: 0;
+  margin-top: 1rem;
+  
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.inputContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input {
+  border-radius: var(--border-radius);
+width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+ 
+.button {
+  cursor: pointer;
+  width: 100%;
+  
+  margin: 2rem 0 0 0;
+}
+
+.goBackButton {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  color: black;
+  cursor: pointer;
+}
+
+.mainContainer {
+  position: relative; /* Dodajemy pozycję względem rodzica */
+  min-height: 100vh; /* Minimalna wysokość na 100% wysokości ekranu */
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie poziome */
+  align-items: center; /* Wyśrodkowanie pionowe */
+}
+
+.backgroundOverlay {
+  background-image: url("/images/dzrewko_stare_tlo.webp");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute; /* Ustawiamy pozycję absolutną względem .mainContainer */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.05; /* Dodanie efektu prześwitywania, wartość od 0 do 1 */
+    z-index: -1; /* Dodajemy wyższy z-index, aby podnieść pole input nad tłem */
+}
+
+@media (max-width: 1024px) {.backgroundOverlay {
+  background-size: cover;
+
+}}

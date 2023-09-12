@@ -1,0 +1,23 @@
+
+
+.loader {
+  position: fixed; /* position: absolute również może być użyte w zależności od sytuacji */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Dodałem półprzezroczyste tło, ale to jest opcjonalne */
+  z-index: 1000; /* Wysoki indeks z, aby upewnić się, że jest na wierzchu */
+  }
+  
+  .loader svg {
+    max-width: 100px;
+  }
+  
+  .cls-1 {
+    fill: orange;
+  }
+  

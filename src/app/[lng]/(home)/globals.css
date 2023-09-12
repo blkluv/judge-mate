@@ -1,0 +1,160 @@
+/* global.css */
+
+::-webkit-scrollbar {
+  display: none;
+}
+/* Resetowanie domyślnych styli dla elementów */
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+/* Definicje zmiennych CSS */
+:root {
+  --border-radius: 1rem;
+  --component-padding: 1.5vw;
+  --component-margin: 1vw;
+  --underline-blue: #012dc2 solid 0.5vw;
+  --button-margin: 2vw;
+  --button-padding: 0.5vw;
+  --components-gap: 1vw;
+}
+
+/* Warianty dla tabletu */
+@media only screen and (max-width: 1024px) {
+}
+
+/* Warianty dla telefonu */
+@media only screen and (max-width: 767px) {
+  :root {
+    --border-radius: 1rem;
+    --component-padding: 3vw;
+    --component-margin: 6vw;
+    --underline-blue: #012dc2 solid 1vw;
+    --button-margin: 3vw;
+    --button-padding: 2vw;
+    --components-gap: 5vw;
+  }
+}
+
+/* Ustawienie podstawowych stylów dla body */
+body {
+  font-family: "Proxima Nova";
+  src: url("/fonts/Proxima-Nova-Regular.woff2") format("woff2"),
+    url("/fonts/Proxima-Nova-Regular.woff") format("woff");
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #e0e0e0;
+  max-width: 1200px; /* Ustawienie maksymalnej szerokości strony na 1200px */
+  margin: 0 auto; /* Wyśrodkowanie strony */
+}
+
+/* Ustawienie marginesu dla wszystkich elementów typu "p" */
+p {
+  margin-bottom: 1em;
+}
+
+/* Ustawienie stylu dla linków */
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Ustawienie stylu dla nagłówków */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+button {
+  z-index: 1;
+  margin: 1em;
+  display: inline-block;
+  transition: all 0.2s ease-in;
+  position: relative;
+  overflow: hidden;
+  color: #090909;
+  padding: 0.7em 1.7em;
+  font-size: 12px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  box-shadow: 1px 1px 6px #c5c5c5, -1px -1px 6px #ffffff;
+}
+
+button {
+  background-color: #012dc2;
+  color: white;
+}
+
+table {
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+th {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Dla szerokości ekranu mobilnego */
+
+@media only screen and (max-width: 767px) {
+  button {
+    padding: 2.77777778vw 6.66666667vw 3.05555556vw 6.66666667vw;
+    padding-top: 2.77778vw;
+    padding-right: 6.66667vw;
+    padding-bottom: 3.05556vw;
+    padding-left: 6.66667vw;
+  }
+  input {
+    font-size: 16px;
+  }
+}
