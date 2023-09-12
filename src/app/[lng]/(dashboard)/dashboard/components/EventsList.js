@@ -38,7 +38,7 @@ function EventsList() {
       <ul>
         {events.map((event) => (
           <li key={event.id}>
-            <Link href={`pl/dashboard/events/${event.id}`}>
+            <Link href={`dashboard/events/${event.id}`}>
               {" "}
               {/* Dodaj Link, który przekierowuje do strony danego wydarzenia */}
               <a>
