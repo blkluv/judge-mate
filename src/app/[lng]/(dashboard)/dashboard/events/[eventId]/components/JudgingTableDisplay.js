@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ref, get } from "firebase/database";
-import { realTimeDatabase } from "../../../../../firebase/config";
+import { realTimeDatabase } from "../../../../../../../firebase/config";
 
 const JudgingTableDisplay = ({ eventId }) => {
   const [categories, setCategories] = useState([]);

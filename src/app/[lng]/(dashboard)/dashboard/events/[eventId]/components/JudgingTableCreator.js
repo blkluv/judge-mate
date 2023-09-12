@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ref, set } from "firebase/database";
-import { realTimeDatabase } from "../../../../../firebase/config"; // Zakładam, że tak jest skonfigurowana baza danych
+import { realTimeDatabase } from "../../../../../../../firebase/config"; // Zakładam, że tak jest skonfigurowana baza danych
 
 const JudgingTableCreator = ({ eventId }) => {
   const [categories, setCategories] = useState([{ name: "", range: [1, 10] }]);

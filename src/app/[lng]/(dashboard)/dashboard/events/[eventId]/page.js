@@ -2,12 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchData } from "../../../../../../firebase/firestore/fetchData";
-import AddUserToEvent from "../../components/AddUserToEvent";
-import EventUsers from "../../components/EventUsers";
-import JudgingTableCreator from "../../components/JudgingTableCreator";
-import JudgingTableDisplay from "../../components/JudgingTableDisplay";
-import JudgeScoring from "../../components/JudgeScoring"; // Import JudgeScoring component
-import AllParticipantsScoresTable from "../../components/AllParticipantsScoresTable";
+import AddUserToEvent from "./components/AddUserToEvent";
+import EventUsers from "./components/EventUsers";
+import JudgingTableCreator from "./components/JudgingTableCreator";
+import JudgingTableDisplay from "./components/JudgingTableDisplay";
+import JudgeScoring from "./components/JudgeScoring"; // Import JudgeScoring component
+import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
 import { useAuthContext } from "../../../../../../firebase/context/AuthContext"; // Import the AuthContext
 
 function Page({ params: { eventId } }) {

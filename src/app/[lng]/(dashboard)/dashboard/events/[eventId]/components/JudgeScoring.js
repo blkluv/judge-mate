@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ref, set, get } from "firebase/database";
-import { realTimeDatabase } from "../../../../../firebase/config";
-import { db } from "../../../../../firebase/config";
+import { realTimeDatabase } from "../../../../../../../firebase/config";
+import { db } from "../../../../../../../firebase/config";
 import { collection, doc, getDoc } from "firebase/firestore";
 import debounce from "lodash.debounce";
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ref, onValue, off } from "firebase/database";
 import { doc, getDoc } from "firebase/firestore";
-import { realTimeDatabase, db } from "../../../../../firebase/config";
+import { realTimeDatabase, db } from "../../../../../../../firebase/config";
 
 const AllParticipantsScoresTable = ({ eventId }) => {
   const [allScores, setAllScores] = useState({});
@@ -84,11 +84,14 @@ const AllParticipantsScoresTable = ({ eventId }) => {
           {allParticipants.map((participantId) => (
             <tr key={participantId}>
               <td>{usernames[participantId] || participantId}</td>
-              {allJudges.map((judgeId) =>
-                categories.map((category) => (
+              {allJudges.flatMap((judgeId) =>
+                categories.map((category, categoryIndex) => (
                   <td key={`${judgeId}-${category}`}>
-                    {allScores[judgeId] && allScores[judgeId][participantId]
-                      ? allScores[judgeId][participantId].join(", ")
+                    {allScores[judgeId] &&
+                    allScores[judgeId][participantId] &&
+                    typeof allScores[judgeId][participantId][categoryIndex] !==
+                      "undefined"
+                      ? allScores[judgeId][participantId][categoryIndex]
                       : "No scores"}
                   </td>
                 ))

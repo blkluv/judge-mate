@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchData } from "../../../../../firebase/firestore/fetchData";
+import { fetchData } from "../../../../../../../firebase/firestore/fetchData";
 
 function EventUsers({ eventId }) {
   const [users, setUsers] = useState([]);
