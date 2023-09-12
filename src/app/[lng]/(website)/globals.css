@@ -1,0 +1,26 @@
+/* Import font from local files */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/font/Proxima-Nova-Regular.woff2") format("woff2"),
+    url("/font/Proxima-Nova-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: "Proxima Nova", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
