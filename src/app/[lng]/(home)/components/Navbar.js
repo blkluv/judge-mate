@@ -41,11 +41,12 @@ const Navbar = ({ params: { lng } }) => {
   return (
     <div className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
       <Image
-        src="/images/LOGOJUDGEMATE.png"
+        src="/LOGOJUDGEMATE.svg"
         alt="logo"
         width={50}
         height={50}
         className={styles.logo}
+        priority
       />
 
       <div onClick={() => setIsOpen(!isOpen)}>
