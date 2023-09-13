@@ -40,74 +40,83 @@ const Navbar = ({ params: { lng } }) => {
 
   return (
     <div className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
-      <img
-        src="images/LOGOJUDGEMATE.png"
-        alt="logo"
-        width={50}
-        height={50}
-        className={styles.logo}
-      />
+      <div className={styles.navbarInner}>
+        <Image
+          src="/icons/logo.svg"
+          alt="logo"
+          width={50}
+          height={50}
+          className={styles.logo}
+        />
 
-      <div onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? (
-          <Image
-            src="/icons/close.svg"
-            alt="menu icon"
-            width={50}
-            height={50}
-            className={`${styles.icon} ${isOpen ? styles.iconOnTop : ""}`}
-          />
-        ) : (
-          <Image
-            src="/icons/hamburger.svg"
-            alt="menu icon"
-            width={50}
-            height={50}
-            className={styles.icon}
-          />
-        )}
+        <div onClick={() => setIsOpen(!isOpen)}>
+          {!isOpen && (
+            <Image
+              src="/icons/hamburger.svg"
+              alt="menu icon"
+              width={50}
+              height={50}
+              className={styles.icon}
+            />
+          )}
+        </div>
       </div>
+
+      {isOpen && (
+        <Image
+          src="/icons/close.svg"
+          alt="close icon"
+          width={50}
+          height={50}
+          className={`${styles.icon} ${styles.iconOnTop}`}
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
       {isOpen && (
         <div className={styles.sidebar}>
           <ul>
             <Link className={styles.link} href={`/${lng}/`}>
               <li className={router.pathname === "/" ? styles.active : ""}>
-                Home
+                Strona domowa
               </li>
             </Link>
             <Link className={styles.link} href={`/${lng}/about-us`}>
               <li
                 className={router.pathname === "/about-us" ? styles.active : ""}
               >
-                About us
+                O nas
               </li>
             </Link>
             <Link className={styles.link} href={`/${lng}/contact`}>
               <li
                 className={router.pathname === "/contact" ? styles.active : ""}
               >
-                Contact
+                Kontakt
               </li>
             </Link>
             <Link className={styles.link} href={`/${lng}/business`}>
               <li
                 className={router.pathname === "/business" ? styles.active : ""}
               >
-                Store
-              </li>{" "}
+                Oferta
+              </li>
             </Link>
-
-            <Link className={styles.link} href={`/${lng}/live-events`}>
+            <Link className={styles.link} href={`/${lng}/treeshop`}>
               <li
-                className={
-                  router.pathname === "/live-events" ? styles.active : ""
-                }
+                className={router.pathname === "/treeshop" ? styles.active : ""}
               >
-                Live events
-              </li>{" "}
+                Butik cyrkulacyjny
+              </li>
+            </Link>
+            <Link className={styles.link} href={`/${lng}/signin`}>
+              <li
+                className={router.pathname === "/signin" ? styles.active : ""}
+              >
+                Zaloguj
+              </li>
             </Link>
             <li>
-              {" "}
               <LanguageSwitcher lng={lng} />
             </li>
           </ul>
