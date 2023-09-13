@@ -42,9 +42,8 @@ const Navbar = ({ params: { lng } }) => {
     <div className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
       <div className={styles.navbarInner}>
         <img
-          src="/images/LOGOJUDGEMATE.png"
+          src="/images/JudgeMateLogotypBlack.svg"
           alt="logo"
-          height={50}
           className={styles.logo}
         />
 

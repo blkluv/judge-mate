@@ -25,7 +25,7 @@ export default function Page({ params: { lng } }) {
       <div className={styles.elements}>
         <div className={styles.imageContainer}>
           <img
-            src="/images/LOGOJUDGEMATE.png"
+            src="/images/JudgeMateLogotypBlack.svg"
             alt="JudgeMateLogo"
             width={320}
           />

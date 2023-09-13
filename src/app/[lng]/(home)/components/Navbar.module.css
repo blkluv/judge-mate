@@ -41,8 +41,8 @@
 }
 
 .logo {
-  width: 150px;
-  height: auto;
+  width: auto;
+  height: 50px;
 }
 
 .navbar div {
@@ -56,6 +56,10 @@
 }
 
 @media (max-width: 600px) {
+  .logo {
+    width: auto;
+    height: 25px;
+  }
   .sidebar {
     width: 100vw;
   }
