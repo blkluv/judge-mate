@@ -1,71 +1,71 @@
 /* Footer.module.css */
 .footer {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  .links {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    width: 100%; /* Allocate 100% of the space to the links */
-  }
-  
-  .column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1; /* Each column will take up an equal amount of the available space */
-    border-right: 1px solid #fff; /* Add a vertical line to the right of each column */
-    padding-right: 20px; /* Add some padding to the right of each column */
-    align-items: center; /* Center the content of each column */
-  }
-  
-  .column:last-child {
-    border-right: none; /* Remove the border from the last column */
-  }
-  
-  .title {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .links a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 0; /* Add padding above and below each link */
-  }
-  
-  .copy {
-    padding-top: 2rem;
-    width: 100%; /* Allocate 100% of the space to the copyright */
-    text-align: center;
-    margin-top: 20px; /* Add some space above the copyright */
-  }
-  
-  /* Media Query for screens up to 560px wide */
+  background-color: black;
+  color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%; /* Allocate 100% of the space to the links */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1; /* Each column will take up an equal amount of the available space */
+  border-right: 1px solid #fff; /* Add a vertical line to the right of each column */
+  padding-right: 20px; /* Add some padding to the right of each column */
+  align-items: center; /* Center the content of each column */
+}
+
+.column:last-child {
+  border-right: none; /* Remove the border from the last column */
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.links a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 0; /* Add padding above and below each link */
+}
+
+.copy {
+  padding-top: 2rem;
+  width: 100%; /* Allocate 100% of the space to the copyright */
+  text-align: center;
+  margin-top: 20px; /* Add some space above the copyright */
+}
+
+/* Media Query for screens up to 560px wide */
 @media (max-width: 560px) {
   .links {
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .column {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-      border-right: none;
-      padding-right: 0;
-      border-bottom: 1px solid #fff;
-      width: calc(100%/2);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid #fff;
+    width: calc(100% / 2);
   }
 }
