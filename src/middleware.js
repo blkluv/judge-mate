@@ -5,7 +5,6 @@ import { fallbackLng, languages, cookieName } from "./app/i18n/settings";
 acceptLanguage.languages(languages);
 
 export const config = {
-  // matcher: '/:lng*'
   matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
 };
 
@@ -15,6 +14,11 @@ export function middleware(req) {
     lng = acceptLanguage.get(req.cookies.get(cookieName).value);
   if (!lng) lng = acceptLanguage.get(req.headers.get("Accept-Language"));
   if (!lng) lng = fallbackLng;
+
+  // If the request is for an image in the /images folder, do not redirect
+  if (req.nextUrl.pathname.startsWith("/images")) {
+    return NextResponse.next();
+  }
 
   // Redirect if lng in path is not supported
   if (

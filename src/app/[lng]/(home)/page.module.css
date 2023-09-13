@@ -34,11 +34,10 @@
 }
 
 .imageContainer {
-  padding: var(--component-padding);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
+  justify-content: center; /* Wyśrodkowanie w osi poziomej */
+  align-items: center; /* Wyśrodkowanie w osi pionowej */
+  height: 100%; /* Możesz dostosować tę wartość w zależności od potrzeb */
 }
 
 .elements {
