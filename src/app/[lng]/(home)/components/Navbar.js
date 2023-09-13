@@ -100,20 +100,7 @@ const Navbar = ({ params: { lng } }) => {
                 Oferta
               </li>
             </Link>
-            <Link className={styles.link} href={`/${lng}/treeshop`}>
-              <li
-                className={router.pathname === "/treeshop" ? styles.active : ""}
-              >
-                Butik cyrkulacyjny
-              </li>
-            </Link>
-            <Link className={styles.link} href={`/${lng}/signin`}>
-              <li
-                className={router.pathname === "/signin" ? styles.active : ""}
-              >
-                Zaloguj
-              </li>
-            </Link>
+
             <li>
               <LanguageSwitcher lng={lng} />
             </li>
