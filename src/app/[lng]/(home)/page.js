@@ -24,7 +24,11 @@ export default function Page({ params: { lng } }) {
       <div className={styles.backgroundOverlay}></div>
       <div className={styles.elements}>
         <div className={styles.imageContainer}>
-          <img src="/images/LOGOJUDGEMATE.svg" alt="JudgeMateLogo" />
+          <img
+            src="/images/LOGOJUDGEMATE.png"
+            alt="JudgeMateLogo"
+            width={320}
+          />
         </div>
 
         <Link href={`/${lng}/signin`}>
