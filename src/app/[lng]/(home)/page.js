@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
-import JudgeMateLogo from "../../../public/images/LOGOJUDGEMATE.png";
+
 import LangSwitch from "./components/LangSwitch";
 
 import { useTranslation } from "../../i18n/index";
@@ -24,7 +24,12 @@ export default function Page({ params: { lng } }) {
       <div className={styles.backgroundOverlay}></div>
       <div className={styles.elements}>
         <div className={styles.imageContainer}>
-          <Image src={JudgeMateLogo} alt="JudgeMateLogo" width={320} />
+          <Image
+            src="/images/LOGOJUDGEMATE.png"
+            alt="JudgeMateLogo"
+            width={320}
+            height={320}
+          />
         </div>
 
         <Link href={`/${lng}/signin`}>
