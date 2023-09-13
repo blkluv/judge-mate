@@ -12,8 +12,6 @@ import { useTranslation } from "../../../i18n/index";
 
 import Image from "next/image";
 
-import JudgeMateLogo from "../../../../public/images/LOGOJUDGEMATE.png";
-
 const auth = getAuth(firebase_app);
 
 function Page({ params: { lng } }) {
@@ -126,7 +124,11 @@ function Page({ params: { lng } }) {
       <div className={styles.backgroundOverlay}></div>
       <div className={styles.wrapper}>
         <div className={styles.formWrapper}>
-          <Image src={JudgeMateLogo} alt="JudgeMateLogo" width={320} />
+          <Image
+            src="/images/LOGOJUDGEMATE.png"
+            alt="JudgeMateLogo"
+            width={320}
+          />
           <h1 className={styles.heading}>{t("signInTitle")}</h1>
           <form onSubmit={handleForm} className={styles.form}>
             <label htmlFor="email">

@@ -4,7 +4,6 @@ import signUp from "../../../../firebase/auth/signup";
 import { useRouter } from "next/navigation";
 import addData from "../../../../firebase/firestore/addData";
 
-import JudgeMateLogo from "../../../../public/images/LOGOJUDGEMATE.png";
 import Image from "next/image";
 import PopupAlert from "../components/popup-alert/PopupAlert"; // Import PopupAlert
 
@@ -76,7 +75,11 @@ function Page() {
       />
       <div className={styles.backgroundOverlay}></div>
       <div className={styles.formWrapper}>
-        <Image src={JudgeMateLogo} alt="JudgeMateLogo" width={320} />
+        <Image
+          src="/images/LOGOJUDGEMATE.png"
+          alt="JudgeMateLogo"
+          width={320}
+        />
         <h1 className={styles.title}>Zarejestruj się</h1>
         <form onSubmit={handleForm} className={styles.form}>
           <label htmlFor="username">
