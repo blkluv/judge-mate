@@ -2,14 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "../../../../i18n/index";
 import PopupAlert from "../popup-alert/PopupAlert";
-import styles from "./signinform.module.css";
 import signIn from "../../../../../firebase/auth/signin";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import firebase_app from "../../../../../firebase/config";
 import Modal from "./ModalPopup";
+import styles from "./SignInForm.module.css";
 
 const auth = getAuth(firebase_app);
-
 const SignInForm = ({ lng }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
