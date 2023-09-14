@@ -125,9 +125,10 @@ function Page({ params: { lng } }) {
       <div className={styles.wrapper}>
         <div className={styles.formWrapper}>
           <Image
-            src="/images/LOGOJUDGEMATE.png"
+            src="/images/JudgeMateLogotypBlack.svg"
             alt="JudgeMateLogo"
             width={320}
+            height={320}
           />
           <h1 className={styles.heading}>{t("signInTitle")}</h1>
           <form onSubmit={handleForm} className={styles.form}>

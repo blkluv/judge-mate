@@ -1,26 +1,39 @@
 import React from "react";
 import styles from "./Footer.module.css"; // Assuming you're using CSS modules
+import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
+        <div className={styles.logo}>
+          <Image
+            src="/images/judgemate-logo.png"
+            alt="JudgeMate Logo"
+            width={100}
+            height={100}
+          />
+        </div>
         <div className={styles.links}>
           <div className={styles.column}>
-            <h3 className={styles.title}>Title1</h3>
-            <a href="/link1">Link 1</a>
-            <a href="/link2">Link 2</a>
-            <a href="/link3">Link 3</a>
+            <h3 className={styles.title}>O Aplikacji</h3>
+            <Link href="/about">O Nas</Link>
+            <Link href="/features">Funkcje</Link>
+            <Link href="/support">Wsparcie</Link>
           </div>
           <div className={styles.column}>
-            <h3 className={styles.title}>Title2</h3>
-            <a href="/link4">Link 4</a>
-            <a href="/link5">Link 5</a>
-            <a href="/link6">Link 6</a>
+            <h3 className={styles.title}>Zasoby</h3>
+            <Link href="/faq">FAQ</Link>
+            <Link href="/contact">Kontakt</Link>
+            <Link href="/terms">Regulamin</Link>
           </div>
         </div>
         <div className={styles.copy}>
-          <p>&copy; {new Date().getFullYear()} Judgemate</p>
+          <p>
+            &copy; {new Date().getFullYear()} JudgeMate. Wszelkie prawa
+            zastrzeżone.
+          </p>
         </div>
       </div>
     </footer>

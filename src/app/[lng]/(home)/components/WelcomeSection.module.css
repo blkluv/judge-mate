@@ -1,0 +1,61 @@
+.welcome-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 0;
+}
+
+.welcome-content {
+  flex: 1;
+  padding: 0 20px;
+  max-width: 600px;
+}
+
+.welcome-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.welcome-content p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.btn-login,
+.btn-register {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-register {
+  background-color: #28a745;
+}
+
+.welcome-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Media query dla responsywności */
+@media (max-width: 768px) {
+  .welcome-section {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .welcome-content {
+    max-width: none;
+  }
+
+  .btn-login,
+  .btn-register {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

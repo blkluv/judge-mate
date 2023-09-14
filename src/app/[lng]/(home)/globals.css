@@ -1,8 +1,39 @@
 /* global.css */
 
+/* Definicje czcionek */
+@font-face {
+  font-family: "AcidGroteskRegular";
+  src: url("/fonts/AcidGrotesk-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AcidGroteskLight";
+  src: url("/fonts/AcidGrotesk-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Definicje zmiennych CSS */
+:root {
+  --border-radius: 1rem;
+  --component-padding: 1.5vw;
+  --component-margin: 1vw;
+  --underline-style: #012dc2 solid 0.5vw;
+  --button-margin: 2vw;
+  --button-padding: 0.5vw;
+  --components-gap: 1vw;
+  --color-black: #000000;
+  --color-light-silver: #d9d9d9;
+  --color-blue: #0054e6;
+  --color-battery-charged-blue: #15b8dc;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
+
 /* Resetowanie domyślnych styli dla elementów */
 html,
 body,
@@ -20,48 +51,14 @@ blockquote {
   margin: 0;
   padding: 0;
 }
-/* Definicje zmiennych CSS */
-:root {
-  --border-radius: 1rem;
-  --component-padding: 1.5vw;
-  --component-margin: 1vw;
-  --underline-blue: #012dc2 solid 0.5vw;
-  --button-margin: 2vw;
-  --button-padding: 0.5vw;
-  --components-gap: 1vw;
-}
-
-/* Warianty dla tabletu */
-@media only screen and (max-width: 1024px) {
-}
-
-/* Warianty dla telefonu */
-@media only screen and (max-width: 767px) {
-  :root {
-    --border-radius: 1rem;
-    --component-padding: 1.5vw;
-    --component-margin: 1vw;
-    --underline-blue: #012dc2 solid 0.5vw;
-    --button-margin: 2vw;
-    --button-padding: 0.5vw;
-    --components-gap: 1vw;
-    --color-black: #000000;
-    --color-light-silver: #d9d9d9;
-    --color-blue: #0054e6;
-    --color-battery-charged-blue: #15b8dc;
-  }
-}
 
 /* Ustawienie podstawowych stylów dla body */
 body {
-  font-family: "Proxima Nova";
-  src: url("/fonts/Proxima-Nova-Regular.woff2") format("woff2"),
-    url("/fonts/Proxima-Nova-Regular.woff") format("woff");
+  font-family: "AcidGroteskRegular", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #333;
   background-color: white;
-
   margin: 0 auto; /* Wyśrodkowanie strony */
 }
 
@@ -72,12 +69,12 @@ p {
 
 /* Ustawienie stylu dla linków */
 a {
-  color: black;
+  color: var(--color-black);
   text-decoration: none;
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: underline; /* Dodanie podkreślenia dla lepszej dostępności */
 }
 
 /* Ustawienie stylu dla nagłówków */
@@ -87,6 +84,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: "AcidGroteskLight", Arial, sans-serif;
   margin-bottom: 0.5em;
 }
 
@@ -104,23 +102,18 @@ h3 {
 
 button {
   z-index: 1;
-  margin: 1em;
+  margin: var(--button-margin);
   display: inline-block;
   transition: all 0.2s ease-in;
   position: relative;
   overflow: hidden;
-  color: #090909;
-  padding: 0.7em 1.7em;
+  color: white;
+  padding: var(--button-padding);
   font-size: 12px;
-  border-radius: none;
-  background: #e8e8e8;
+  border-radius: 0; /* Poprawka wartości */
+  background-color: var(--color-blue);
   border: 1px solid #e8e8e8;
   box-shadow: 1px 1px 6px #c5c5c5, -1px -1px 6px #ffffff;
-}
-
-button {
-  background-color: #012dc2;
-  color: white;
 }
 
 table {
@@ -149,14 +142,9 @@ tr:hover {
 }
 
 /* Dla szerokości ekranu mobilnego */
-
 @media only screen and (max-width: 767px) {
   button {
-    padding: 2.77777778vw 6.66666667vw 3.05555556vw 6.66666667vw;
-    padding-top: 2.77778vw;
-    padding-right: 6.66667vw;
-    padding-bottom: 3.05556vw;
-    padding-left: 6.66667vw;
+    padding: 2.77777778vw 6.66666667vw;
   }
   input {
     font-size: 16px;

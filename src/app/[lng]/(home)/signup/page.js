@@ -76,9 +76,10 @@ function Page() {
       <div className={styles.backgroundOverlay}></div>
       <div className={styles.formWrapper}>
         <Image
-          src="/images/LOGOJUDGEMATE.png"
+          src="/images/JudgeMateLogotypBlack.svg"
           alt="JudgeMateLogo"
           width={320}
+          height={320}
         />
         <h1 className={styles.title}>Zarejestruj się</h1>
         <form onSubmit={handleForm} className={styles.form}>

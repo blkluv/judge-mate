@@ -41,12 +41,13 @@ const Navbar = ({ params: { lng } }) => {
   return (
     <div className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
       <div className={styles.navbarInner}>
-        <img
-          src="/images/JudgeMateLogotypBlack.svg"
-          alt="logo"
-          className={styles.logo}
-        />
-
+        <Link href={`/${lng}/`}>
+          <img
+            src="/images/JudgeMateLogotypBlack.svg"
+            alt="logo"
+            className={styles.logo}
+          />
+        </Link>
         <div onClick={() => setIsOpen(!isOpen)}>
           {!isOpen && (
             <Image
@@ -74,9 +75,11 @@ const Navbar = ({ params: { lng } }) => {
       {isOpen && (
         <div className={styles.sidebar}>
           <ul>
-            <Link className={styles.link} href={`/${lng}/`}>
-              <li className={router.pathname === "/" ? styles.active : ""}>
-                Strona domowa
+            <Link className={styles.link} href={`/${lng}/features`}>
+              <li
+                className={router.pathname === "/features" ? styles.active : ""}
+              >
+                Funkcje
               </li>
             </Link>
             <Link className={styles.link} href={`/${lng}/about-us`}>
@@ -86,18 +89,39 @@ const Navbar = ({ params: { lng } }) => {
                 O nas
               </li>
             </Link>
-            <Link className={styles.link} href={`/${lng}/contact`}>
+            <Link className={styles.link} href={`/${lng}/support`}>
               <li
-                className={router.pathname === "/contact" ? styles.active : ""}
+                className={router.pathname === "/support" ? styles.active : ""}
               >
-                Kontakt
+                Wsparcie
               </li>
             </Link>
-            <Link className={styles.link} href={`/${lng}/business`}>
+            <Link className={styles.link} href={`/${lng}/faq`}>
+              <li className={router.pathname === "/faq" ? styles.active : ""}>
+                FAQ
+              </li>
+            </Link>
+
+            {/* Dodatkowe linki */}
+            <Link className={styles.link} href={`/${lng}/pricing`}>
               <li
-                className={router.pathname === "/business" ? styles.active : ""}
+                className={router.pathname === "/pricing" ? styles.active : ""}
               >
-                Oferta
+                Cennik
+              </li>
+            </Link>
+            <Link className={styles.link} href={`/${lng}/blog`}>
+              <li className={router.pathname === "/blog" ? styles.active : ""}>
+                Blog
+              </li>
+            </Link>
+            <Link className={styles.link} href={`/${lng}/contact-us`}>
+              <li
+                className={
+                  router.pathname === "/contact-us" ? styles.active : ""
+                }
+              >
+                Kontakt
               </li>
             </Link>
 
