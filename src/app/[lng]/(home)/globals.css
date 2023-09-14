@@ -39,12 +39,16 @@ blockquote {
 @media only screen and (max-width: 767px) {
   :root {
     --border-radius: 1rem;
-    --component-padding: 3vw;
-    --component-margin: 6vw;
-    --underline-blue: #012dc2 solid 1vw;
-    --button-margin: 3vw;
-    --button-padding: 2vw;
-    --components-gap: 5vw;
+    --component-padding: 1.5vw;
+    --component-margin: 1vw;
+    --underline-blue: #012dc2 solid 0.5vw;
+    --button-margin: 2vw;
+    --button-padding: 0.5vw;
+    --components-gap: 1vw;
+    --color-black: #000000;
+    --color-light-silver: #d9d9d9;
+    --color-blue: #0054e6;
+    --color-battery-charged-blue: #15b8dc;
   }
 }
 
