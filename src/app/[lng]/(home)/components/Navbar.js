@@ -43,7 +43,7 @@ const Navbar = ({ params: { lng } }) => {
       <div className={styles.navbarInner}>
         <Link href={`/${lng}/`}>
           <img
-            src="/images/JudgeMateLogotypBlack.svg"
+            src="/images/JudgeMateLogotypWhite.svg"
             alt="logo"
             className={styles.logo}
           />
