@@ -1,11 +1,19 @@
-import React, { useState, useCallback } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "../../../../i18n/index";
 import styles from "./SignUpForm.module.css"; // Styl formularza
 import PopupAlert from "../popup-alert/PopupAlert";
 
 const SignUpForm = ({ lng }) => {
-  const { t } = useTranslation(lng);
+  const [t, setT] = useState(() => () => "");
+
+  useEffect(() => {
+    (async () => {
+      const { t: translationFunction } = await useTranslation(lng);
+      setT(() => translationFunction);
+    })();
+  }, [lng]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -49,15 +57,6 @@ const SignUpForm = ({ lng }) => {
       setPopupMessage(t("activationEmailSent"));
       setShowPopup(true);
     }
-  };
-
-  const handleGoToHomePage = () => {
-    router.push("/");
-  };
-
-  const handlePopupClose = () => {
-    setShowPopup(false);
-    router.push("/signin");
   };
 
   const closePopup = useCallback(() => {
@@ -107,20 +106,7 @@ const SignUpForm = ({ lng }) => {
       <button type="submit" className={styles.button}>
         {t("registerButton")}
       </button>
-      <button
-        className={styles.button}
-        onClick={() => router.push(`/${lng}/login`)}
-        type="button"
-      >
-        {t("haveAccount")}
-      </button>
-      <button
-        className={styles.button}
-        onClick={() => router.push(`/${lng}/forgot-password`)}
-        type="button"
-      >
-        {t("forgotPassword")}
-      </button>
+
       <PopupAlert
         message={popupMessage}
         onClose={closePopup}

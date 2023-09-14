@@ -25,40 +25,33 @@ const AuthContainer = ({ lng }) => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.backgroundOverlay}></div>
-      <div className={styles.elements}>
-        <div className={styles.imageContainer}>
-          <img
-            src="/images/JudgeMateLogotypBlack.svg"
-            alt="JudgeMateLogo"
-            width={320}
-          />
+      <div className={styles.mainForm}>
+        {activeTab === "signIn" ? (
+          <SignInForm lng={lng} />
+        ) : (
+          <SignUpForm lng={lng} />
+        )}{" "}
+        <div className={styles.elements}>
+          <div className={styles.tabs}>
+            <button
+              className={`${styles.tabButton} ${
+                activeTab === "signIn" ? styles.activeTab : ""
+              }`}
+              onClick={() => toggleTab("signIn")}
+            >
+              {t("signInTitle")}
+            </button>
+            <button
+              className={`${styles.tabButton} ${
+                activeTab === "signUp" ? styles.activeTab : ""
+              }`}
+              onClick={() => toggleTab("signUp")}
+            >
+              {t("CreateAnAccount")}
+            </button>
+          </div>
         </div>
-
-        <div className={styles.tabs}>
-          <button
-            className={`${styles.tabButton} ${
-              activeTab === "signIn" ? styles.activeTab : ""
-            }`}
-            onClick={() => toggleTab("signIn")}
-          >
-            {t("signInTitle")}
-          </button>
-          <button
-            className={`${styles.tabButton} ${
-              activeTab === "signUp" ? styles.activeTab : ""
-            }`}
-            onClick={() => toggleTab("signUp")}
-          >
-            {t("CreateAnAccount")}
-          </button>
-        </div>
-      </div>
-
-      {activeTab === "signIn" ? (
-        <SignInForm lng={lng} />
-      ) : (
-        <SignUpForm lng={lng} />
-      )}
+      </div>{" "}
     </div>
   );
 };

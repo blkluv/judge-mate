@@ -114,7 +114,6 @@ const SignInForm = ({ lng }) => {
 
   return (
     <form onSubmit={handleForm} className={styles.form}>
-      <h1 className={styles.heading}>{t("signInTitle")}</h1>
       <label htmlFor="email">
         <p className={styles.label}>{t("emailLabel")}</p>
         <div className={styles.inputContainer}>
@@ -151,13 +150,9 @@ const SignInForm = ({ lng }) => {
 
       {formErrors.message && <p>{formErrors.message}</p>}
 
-      <button
-        className={styles.button}
-        onClick={handleForgotPassword}
-        type="button"
-      >
+      <a className={styles.forgotPasswordLink} onClick={handleForgotPassword}>
         {t("remindPassword")}
-      </button>
+      </a>
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

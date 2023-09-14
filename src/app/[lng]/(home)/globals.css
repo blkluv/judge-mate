@@ -21,9 +21,9 @@
   --component-padding: 1.5vw;
   --component-margin: 1vw;
   --underline-style: #012dc2 solid 0.5vw;
-  --button-margin: 2vw;
+  --button-margin: 0.5vw;
   --button-padding: 0.5vw;
-  --components-gap: 1vw;
+  --components-gap: 0.5vw;
   --color-black: #000000;
   --color-light-silver: #d9d9d9;
   --color-blue: #0054e6;
@@ -116,6 +116,9 @@ button {
   background-color: var(--color-blue);
   border: 1px solid #e8e8e8;
   box-shadow: 1px 1px 6px #c5c5c5, -1px -1px 7px #ffffff;
+}
+button:hover {
+  background-color: var(--color-battery-charged-blue);
 }
 
 table {
