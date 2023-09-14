@@ -33,5 +33,19 @@
   "faq": "FAQ",
   "contact": "Kontakt",
   "termsAndConditions": "Regulamin",
-  "copyRights": "JudgeMate. Wszelkie prawa zastrzeżone."
+  "copyRights": "JudgeMate. Wszelkie prawa zastrzeżone.",
+  "registerTitle": "Zarejestruj się",
+  "usernameLabel": "Nazwa użytkownika",
+  "emailLabel": "Email",
+  "passwordLabel": "Twoje hasło",
+  "usernamePlaceholder": "Twoja nazwa użytkownika",
+  "emailPlaceholder": "przykladowy@mail.com",
+  "passwordPlaceholder": "Twoje hasło",
+  "emailAlreadyUsed": "Email został już wykorzystany.",
+  "activationEmailSent": "Na wskazany przy rejestracji adres email został wysłany link aktywacyjny. Aktywuj konto klikając w link",
+  "registerButton": "Zarejestruj się",
+  "haveAccount": "Masz już konto? Zaloguj się",
+  "forgotPassword": "Przypomnij hasło",
+  "signInBtn": "Zaloguj się",
+  "remindPassword": "Przypomnij hasło"
 }

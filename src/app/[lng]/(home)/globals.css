@@ -47,7 +47,9 @@ p,
 ul,
 ol,
 li,
-blockquote {
+blockquote,
+form, /* Dodane: resetowanie formularzy */
+button /* Dodane: resetowanie przycisków */ {
   margin: 0;
   padding: 0;
 }

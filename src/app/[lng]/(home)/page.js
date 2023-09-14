@@ -11,7 +11,7 @@ import FeatureSection from "./components/FeatureSection";
 import AboutSection from "./components/AboutSection";
 import SupportSection from "./components/SupportSection";
 import TestimonialsSection from "./components/TestimonialsSection";
-import AuthContainer from "./components/AuthContainer";
+import AuthContainer from "./components/auth-section/AuthContainer";
 
 export default function Page({ params: { lng } }) {
   const [t, setT] = useState(() => () => "");

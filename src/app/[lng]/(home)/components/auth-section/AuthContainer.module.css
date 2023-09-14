@@ -1,0 +1,60 @@
+/* AuthContainer.module.css */
+
+/* Style dla głównego kontenera */
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    to bottom right,
+    var(--color-blue),
+    var(--color-battery-charged-blue)
+  );
+  position: relative;
+}
+
+/* Style dla elementów wewnątrz kontenera */
+.elements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* Zabezpieczenie przed zasłonięciem przez tło */
+  position: relative;
+  padding: var(--component-padding);
+}
+
+/* Style dla obrazka */
+.imageContainer img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Style dla zakładek */
+.tabs {
+  display: flex;
+  margin-top: var(--component-margin);
+}
+
+/* Style dla przycisków zakładek */
+.tabButton {
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s;
+  outline: none;
+}
+
+.tabButton:hover {
+  color: #00b4db;
+}
+
+/* Style dla aktywnej zakładki */
+.activeTab {
+  color: #00b4db;
+}
