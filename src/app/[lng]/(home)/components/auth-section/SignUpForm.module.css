@@ -1,11 +1,9 @@
-/* SignUpForm.module.css */
+/* signinform.module.css */
 
 /* Style dla całego formularza */
 .form {
   margin: 0 auto;
-  padding: var(--component-padding);
   border-radius: var(--border-radius);
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +14,6 @@
 .heading {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: var(--component-margin);
 }
 
 /* Style dla etykiet inputów */
@@ -37,13 +34,28 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  width: 300px;
 }
-
-/* Style dla przycisku */
 
 /* Style dla błędów */
 .error {
   color: #ff0000;
   font-size: 14px;
   margin-top: 5px;
+}
+
+.forgotPasswordLink {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.button {
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  line-height: 48px;
+  padding: 0 16px;
+  width: 332px;
 }
