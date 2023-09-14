@@ -18,7 +18,7 @@ export default function AppLayout({ children, params: { lng } }) {
       <body>
         <Navbar params={{ lng }} lng={lng} />
         <div>{children}</div>
-        <Footer />
+        <Footer lng={lng} />
       </body>
     </html>
   );

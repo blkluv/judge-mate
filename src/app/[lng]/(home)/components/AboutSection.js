@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "../../../i18n/index";
 
-const AboutSection = () => {
+const AboutSection = ({ lng }) => {
+  const [t, setT] = useState(() => () => "");
+
+  useEffect(() => {
+    (async () => {
+      const { t: translationFunction } = await useTranslation(lng);
+      setT(() => translationFunction);
+    })();
+  }, [lng]);
+
   return (
     <section className="about-section">
       <div className="about-content">
-        <h2>O Aplikacji JudgeMate</h2>
-        <p>
-          JudgeMate to przełomowa platforma do zarządzania i śledzenia wyników w
-          zawodach sportowych, skoncentrowana pierwotnie na sportach
-          ekstremalnych. Jest to miejsce, w którym sędziowie, zawodnicy i fani
-          mogą wziąć czynny udział w każdym etapie zawodów.
-        </p>
-        <p>Aplikacja wprowadza nowy poziom interaktywności i społeczności.</p>
+        <h2>{t("aboutTitle")}</h2>
+        <p>{t("aboutDescription1")}</p>
+        <p>{t("aboutDescription2")}</p>
+        <p>{t("aboutDescription3")}</p>
       </div>
-      <div className="about-image">
-        <img src="/images/about-image.jpg" alt="O Aplikacji JudgeMate" />
-      </div>
+      <img
+        src="/images/JudgemateLogotypBlack.svg"
+        alt="JudgeMate"
+        width="320px"
+      />
     </section>
   );
 };

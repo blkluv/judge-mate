@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "../../../i18n/index";
 
-const SupportSection = () => {
+const SupportSection = ({ lng }) => {
+  const [t, setT] = useState(() => () => "");
+
+  useEffect(() => {
+    (async () => {
+      const { t: translationFunction } = await useTranslation(lng);
+      setT(() => translationFunction);
+    })();
+  }, [lng]);
   return (
     <section className="support-section">
       <div className="support-content">
-        <h2>Wsparcie</h2>
+        <h2>{t("supportTitle")}</h2>
+        <p>{t("supportDescription1")}</p>
+        <p>{t("supportDescription2")}</p>
         <p>
-          Nasz zespół wsparcia jest dostępny 24/7, aby pomóc Ci rozwiązać
-          wszelkie problemy i odpowiedzieć na pytania. Jesteśmy gotowi do pomocy
-          w każdym zakresie związanym z aplikacją JudgeMate.
-        </p>
-        <p>
-          Skontaktuj się z nami pod adresem:{" "}
-          <a href="mailto:support@judgemate.com">support@judgemate.com</a> lub
-          skorzystaj z naszego formularza kontaktowego.
+          {t("contactUs")}{" "}
+          <a href="mailto:support@judgemate.com">support@judgemate.com</a>{" "}
+          {t("orUseContactForm")}
         </p>
       </div>
     </section>

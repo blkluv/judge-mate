@@ -1,0 +1,58 @@
+.mainContainer {
+  position: relative; /* Dodajemy pozycję względem rodzica */
+  min-height: 100vh; /* Minimalna wysokość na 100% wysokości ekranu */
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie poziome */
+  align-items: center; /* Wyśrodkowanie pionowe */
+}
+
+.backgroundOverlay {
+  background-image: url("/images/DSC03503.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute; /* Ustawiamy pozycję absolutną względem .mainContainer */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* opacity: 0.05; Dodanie efektu prześwitywania, wartość od 0 do 1 */
+}
+
+@media (max-width: 1024px) {
+  .backgroundOverlay {
+    background-size: cover;
+  }
+}
+
+.container {
+  margin: var(--component-margin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageContainer {
+  padding: var(--component-padding);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  max-width: 400px;
+  max-height: 600px;
+  z-index: 10;
+  background-color: white;
+  border-radius: 2rem;
+}
+
+.homeButton {
+  width: 320px;
+}

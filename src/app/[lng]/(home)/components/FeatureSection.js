@@ -1,32 +1,41 @@
-// components/FeatureSection.js
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "../../../i18n/index";
 
-import React from "react";
+const FeatureSection = ({ lng }) => {
+  const [t, setT] = useState(() => () => "");
 
-const FeatureSection = () => {
+  useEffect(() => {
+    (async () => {
+      const { t: translationFunction } = await useTranslation(lng);
+      setT(() => translationFunction);
+    })();
+  }, [lng]);
+
   return (
     <section className="feature-section">
       <div className="feature-content">
-        <h2>Główne Funkcje</h2>
+        <h2>{t("featureTitle")}</h2>
         <div className="feature-list">
           <div className="feature-item">
             <i className="fas fa-trophy"></i>
-            <h3>Elektroniczne Kartki Wyników</h3>
-            <p>
-              Sędziowie mogą łatwo wprowadzać i modyfikować wyniki w czasie
-              rzeczywistym.
-            </p>
+            <h3>{t("scorecardsTitle")}</h3>
+            <p>{t("scorecardsDescription")}</p>
           </div>
 
           <div className="feature-item">
             <i className="fas fa-calendar-alt"></i>
-            <h3>Harmonogram i Zarządzanie</h3>
-            <p>Zintegrowany kalendarz zawodów dla lepszej organizacji.</p>
+            <h3>{t("scheduleManagementTitle")}</h3>
+            <p>{t("scheduleManagementDescription")}</p>
           </div>
           {/* Dodaj więcej funkcji według potrzeb */}
         </div>
       </div>
       <div className="feature-image">
-        <img src="/images/feature-image.jpg" alt="JudgeMate Features" />
+        <img
+          src="/images/JudgemateLogotypBlack.svg"
+          alt="JudgeMate"
+          width="320px"
+        />
       </div>
     </section>
   );

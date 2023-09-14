@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "../../../i18n/index";
 
-const WelcomeSection = () => {
+export default function WelcomeSection({ lng }) {
+  const [t, setT] = useState(() => () => "");
+
+  useEffect(() => {
+    (async () => {
+      const { t: translationFunction } = await useTranslation(lng);
+      setT(() => translationFunction);
+    })();
+  }, [lng]);
+
   return (
     <section className="welcome-section">
       <div className="welcome-content">
-        <h1>Witaj w JudgeMate!</h1>
-        <p>
-          JudgeMate to przełomowa platforma do zarządzania i śledzenia wyników w
-          zawodach sportowych.
-        </p>
-        <p>
-          Jest to miejsce, w którym sędziowie, zawodnicy i fani mogą wziąć
-          czynny udział w każdym etapie zawodów.
-        </p>
+        <h1>{t("welcomeTitle")}</h1>
+        <p>{t("welcomeDescription1")}</p>
+        <p>{t("welcomeDescription2")}</p>
       </div>
       <div className="welcome-image">
-        <img src="/images/welcome-image.jpg" alt="JudgeMate" />
+        <img
+          src="/images/JudgemateLogotypBlack.svg"
+          alt="JudgeMate"
+          width="320px"
+        />
       </div>
     </section>
   );
-};
-
-export default WelcomeSection;
+}
