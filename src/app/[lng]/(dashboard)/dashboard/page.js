@@ -3,7 +3,7 @@
 import { useAuthContext } from "../../../../firebase/context/AuthContext";
 import UserProfile from "../dashboard/components/UserProfile";
 import LogoutButton from "../dashboard/components/logout-button/LogoutButton";
-import CreateEvent from "../dashboard/components/CreateEvent";
+import CreateEvent from "./create-event/components/CreateEvent";
 import EventList from "./components/EventsList";
 
 function Page() {
@@ -15,8 +15,7 @@ function Page() {
       {user && (
         <div>
           <UserProfile />
-          <LogoutButton />
-          <CreateEvent />
+
           <EventList />
         </div>
       )}

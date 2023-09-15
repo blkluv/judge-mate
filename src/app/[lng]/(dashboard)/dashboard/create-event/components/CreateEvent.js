@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth } from "../../../../../firebase/config.js";
-import addData from "../../../../../firebase/firestore/addData.js";
+import { useRouter } from "next/navigation"; // Popraw import
+import { auth } from "../../../../../../firebase/config.js";
+import addData from "../../../../../../firebase/firestore/addData.js";
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -58,8 +58,9 @@ const CreateEvent = () => {
       setEventDate("");
 
       alert("Event successfully created!");
-      // Optionally, redirect user to a different page after event creation
-      // router.push('/path-to-next-page');
+
+      // Przekieruj użytkownika na stronę wydarzenia po jego utworzeniu
+      router.push(`/dashboard/events/${eventDocRef.id}`); // Zmień na właściwą ścieżkę URL
     } catch (error) {
       console.error("Error creating event:", error);
       alert("There was an error creating the event. Please try again.");

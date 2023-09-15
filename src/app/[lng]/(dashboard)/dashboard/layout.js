@@ -2,7 +2,7 @@ import "../../(home)/globals.css";
 import { AuthContextProvider } from "../../../../firebase/context/AuthContext";
 import { dir } from "i18next";
 import { languages } from "../../../i18n/settings";
-import Navbar from "./components/Navbar";
+import UserDashboardNavbar from "./components/UserDashboardNavbar";
 
 export const metadata = {
   title: "JudgeMate",
@@ -20,7 +20,7 @@ export default function DashboardLayout({ children, params: { lng } }) {
         <title>JudgeMate</title>
       </head>
       <body>
-        <Navbar />
+        <UserDashboardNavbar params={{ lng }} lng={lng} />
         <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
