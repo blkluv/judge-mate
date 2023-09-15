@@ -3,9 +3,9 @@ import { fetchData } from "../../../../../firebase/firestore/fetchData";
 import deleteData from "../../../../../firebase/firestore/deleteData";
 import { auth } from "../../../../../firebase/config.js";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; // Import Link z Next.js
+import Link from "next/link";
 
-function UserCreatedEvents() {
+function RemoveUserFromEventList() {
   const [userEvents, setUserEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,11 +22,10 @@ function UserCreatedEvents() {
       const { data, error } = await fetchData("events");
 
       if (data) {
-        // Odfiltruj wydarzenia, zostawiając tylko te utworzone przez zalogowanego użytkownika
-        const userCreatedEvents = data.filter(
-          (event) => event.roles[currentUser.uid] === "organizer"
+        const currentUserEvents = data.filter(
+          (event) => event.roles && event.roles[currentUser.uid]
         );
-        setUserEvents(userCreatedEvents);
+        setUserEvents(currentUserEvents);
       }
 
       if (error) {
@@ -39,19 +38,24 @@ function UserCreatedEvents() {
     fetchUserEvents();
   }, [currentUser]);
 
-  const handleDeleteEvent = async (eventId) => {
+  const handleRemoveUserFromEvent = async (eventId) => {
     try {
-      // Usuń wydarzenie z kolekcji "events"
-      await deleteData("events", eventId);
+      // 1. Remove the user's role from the event
+      const eventRef = doc(db, "events", eventId);
+      await updateDoc(eventRef, {
+        [`roles.${currentUser.uid}`]: FieldValue.delete(),
+      });
 
-      // Usuń również informacje o wydarzeniu z kolekcji "userEvents" w dokumencie użytkownika
+      // 2. Delete the event entry from the `userEvents` subcollection of the user
       await deleteData(`users/${currentUser.uid}/userEvents`, eventId);
 
-      // Przekieruj użytkownika na stronę z listą wydarzeń po usunięciu
-      router.push("/dashboard/my-events"); // Zmień na właściwą ścieżkę URL
+      // Redirect the user to the list of events after removal
+      router.push("/dashboard/my-events");
     } catch (error) {
-      console.error("Error deleting event:", error);
-      alert("There was an error deleting the event. Please try again.");
+      console.error("Error removing user from event:", error);
+      alert(
+        "There was an error removing the user from the event. Please try again."
+      );
     }
   };
 
@@ -65,15 +69,15 @@ function UserCreatedEvents() {
 
   return (
     <div>
-      <h1>Your Created Events</h1>
+      <h1>Events you're participating in</h1>
       <ul>
         {userEvents.map((event) => (
           <li key={event.id}>
             <Link href={`/dashboard/events/${event.id}`}>
               {event.eventName} - {event.eventDate}
             </Link>
-            <button onClick={() => handleDeleteEvent(event.id)}>
-              Delete Event
+            <button onClick={() => handleRemoveUserFromEvent(event.id)}>
+              Remove from Event
             </button>
           </li>
         ))}
@@ -82,4 +86,4 @@ function UserCreatedEvents() {
   );
 }
 
-export default UserCreatedEvents;
+export default RemoveUserFromEventList;

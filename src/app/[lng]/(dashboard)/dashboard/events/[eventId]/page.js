@@ -5,7 +5,7 @@ import { fetchData } from "../../../../../../firebase/firestore/fetchData";
 import AddUserToEvent from "./components/AddUserToEvent";
 import EventUsers from "./components/EventUsers";
 import JudgingTableCreator from "./components/JudgingTableCreator";
-import JudgingTableDisplay from "./components/JudgingTableDisplay";
+import RemoveUserFromEvent from "./components/RemoveUserFromEvent";
 import JudgeScoring from "./components/JudgeScoring"; // Import JudgeScoring component
 import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
 import { useAuthContext } from "../../../../../../firebase/context/AuthContext"; // Import the AuthContext
@@ -64,6 +64,7 @@ function Page({ params: { eventId } }) {
       <h1>{eventData?.eventName}</h1>
       <p>Date: {eventData?.eventDate}</p>
       {isOrganizer && <AddUserToEvent eventId={eventId} />}{" "}
+      {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}{" "}
       {/* Display AddUserToEvent for organizers */}
       <EventUsers eventId={eventId} />
       {isOrganizer && <JudgingTableCreator eventId={eventId} />}{" "}

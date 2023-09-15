@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ref, get, onValue } from "firebase/database";
+import { ref, get, onValue, off } from "firebase/database";
 import { realTimeDatabase } from "../../../../../../../firebase/config";
 
 const JudgingTableDisplay = ({ eventId }) => {
