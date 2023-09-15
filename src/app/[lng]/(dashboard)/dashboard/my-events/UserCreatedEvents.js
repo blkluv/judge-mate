@@ -3,6 +3,7 @@ import { fetchData } from "../../../../../firebase/firestore/fetchData";
 import deleteData from "../../../../../firebase/firestore/deleteData";
 import { auth } from "../../../../../firebase/config.js";
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // Import Link z Next.js
 
 function UserCreatedEvents() {
   const [userEvents, setUserEvents] = useState([]);
@@ -43,6 +44,9 @@ function UserCreatedEvents() {
       // Usuń wydarzenie z kolekcji "events"
       await deleteData("events", eventId);
 
+      // Usuń również informacje o wydarzeniu z kolekcji "userEvents" w dokumencie użytkownika
+      await deleteData(`users/${currentUser.uid}/userEvents`, eventId);
+
       // Przekieruj użytkownika na stronę z listą wydarzeń po usunięciu
       router.push("/dashboard/my-events"); // Zmień na właściwą ścieżkę URL
     } catch (error) {
@@ -65,7 +69,9 @@ function UserCreatedEvents() {
       <ul>
         {userEvents.map((event) => (
           <li key={event.id}>
-            {event.eventName} - {event.eventDate}
+            <Link href={`/dashboard/events/${event.id}`}>
+              {event.eventName} - {event.eventDate}
+            </Link>
             <button onClick={() => handleDeleteEvent(event.id)}>
               Delete Event
             </button>
