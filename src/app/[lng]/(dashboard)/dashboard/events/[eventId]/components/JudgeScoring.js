@@ -115,27 +115,36 @@ const JudgeScoring = ({ eventId, userId }) => {
   return (
     <div>
       <h3>Score the participants:</h3>
-      {participants.map((participant) => (
-        <div key={participant.id}>
-          <h4>{participant.username}</h4>
-          {categories.map((cat, idx) => (
-            <div key={idx}>
-              <label>
-                {cat.name} (Range: {cat.range[0]} to {cat.range[1]})
-                <input
-                  type="number"
-                  min={cat.range[0]}
-                  max={cat.range[1]}
-                  value={scores[participant.id]?.[idx] || ""}
-                  onChange={(e) =>
-                    handleScoreChange(participant.id, idx, e.target.value)
-                  }
-                />
-              </label>
-            </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Participant</th>
+            {categories.map((cat, idx) => (
+              <th key={idx}>{cat.name}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {participants.map((participant) => (
+            <tr key={participant.id}>
+              <td>{participant.username}</td>
+              {categories.map((cat, idx) => (
+                <td key={idx}>
+                  <input
+                    type="number"
+                    min={cat.range[0]}
+                    max={cat.range[1]}
+                    value={scores[participant.id]?.[idx] || ""}
+                    onChange={(e) =>
+                      handleScoreChange(participant.id, idx, e.target.value)
+                    }
+                  />
+                </td>
+              ))}
+            </tr>
           ))}
-        </div>
-      ))}
+        </tbody>
+      </table>
     </div>
   );
 };

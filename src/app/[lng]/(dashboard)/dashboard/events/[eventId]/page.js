@@ -49,6 +49,8 @@ function Page({ params: { eventId } }) {
   // Check if user is a judge for this event
   const isJudge = eventData?.roles?.[user?.uid] === "judge";
 
+  const isOrganizer = eventData?.roles?.[user?.uid] === "organizer"; // Check if user is an organizer
+
   if (loading) {
     return <div>Loading event...</div>;
   }
@@ -61,10 +63,11 @@ function Page({ params: { eventId } }) {
     <div>
       <h1>{eventData?.eventName}</h1>
       <p>Date: {eventData?.eventDate}</p>
-      <AddUserToEvent eventId={eventId} />
+      {isOrganizer && <AddUserToEvent eventId={eventId} />}{" "}
+      {/* Display AddUserToEvent for organizers */}
       <EventUsers eventId={eventId} />
-      <JudgingTableCreator eventId={eventId} />
-      <JudgingTableDisplay eventId={eventId} />
+      {isOrganizer && <JudgingTableCreator eventId={eventId} />}{" "}
+      {/* Display JudgingTableCreator for organizers */}
       {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}{" "}
       {/* Display JudgeScoring if user is a judge */}
       <AllParticipantsScoresTable eventId={eventId} />

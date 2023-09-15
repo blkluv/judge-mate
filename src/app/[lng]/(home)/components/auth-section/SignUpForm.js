@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "../../../../i18n/index";
 import styles from "./SignUpForm.module.css"; // Styl formularza
 import PopupAlert from "../popup-alert/PopupAlert";
+import signUp from "../../../../../firebase/auth/signup";
+import addData from "../../../../../firebase/firestore/addData";
 
 const SignUpForm = ({ lng }) => {
   const [t, setT] = useState(() => () => "");
