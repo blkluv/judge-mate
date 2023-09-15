@@ -1,0 +1,57 @@
+/* AllParticipantsScoresTable.module.css */
+
+/* Container styles */
+.allParticipantsScoresTable {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Heading styles */
+.allParticipantsScoresTable h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Table styles */
+.allScoresTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.allScoresTable th,
+.allScoresTable td {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.allScoresTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.allScoresTable th:first-child,
+.allScoresTable td:first-child {
+  text-align: left;
+  font-weight: normal;
+}
+
+.allScoresTable th,
+.allScoresTable td {
+  border: 1px solid #ddd;
+}
+
+/* Participant cell styles */
+.allScoresTable td {
+  background-color: #f9f9f9;
+}
+
+/* No scores available message styles */
+.noScoresAvailable {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #999;
+}

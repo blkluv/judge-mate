@@ -2,13 +2,14 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchData } from "../../../../../../firebase/firestore/fetchData";
-import AddUserToEvent from "./components/AddUserToEvent";
-import EventUsers from "./components/EventUsers";
+import AddUserToEvent from "./(users-management)/AddUserToEvent";
+import EventUsers from "./(users-management)/EventUsers";
 import JudgingTableCreator from "./components/JudgingTableCreator";
-import RemoveUserFromEvent from "./components/RemoveUserFromEvent";
+import RemoveUserFromEvent from "./(users-management)/RemoveUserFromEvent";
 import JudgeScoring from "./components/JudgeScoring"; // Import JudgeScoring component
 import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
 import { useAuthContext } from "../../../../../../firebase/context/AuthContext"; // Import the AuthContext
+import styles from "./page.module.css";
 
 function Page({ params: { eventId } }) {
   const router = useRouter();
@@ -63,14 +64,25 @@ function Page({ params: { eventId } }) {
     <div>
       <h1>{eventData?.eventName}</h1>
       <p>Date: {eventData?.eventDate}</p>
-      {isOrganizer && <AddUserToEvent eventId={eventId} />}{" "}
-      {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}{" "}
-      {/* Display AddUserToEvent for organizers */}
-      <EventUsers eventId={eventId} />
-      {isOrganizer && <JudgingTableCreator eventId={eventId} />}{" "}
+      <div className={`${styles.usersManagementSection}`}>
+        <h2>Event management</h2>
+        {isOrganizer && <AddUserToEvent eventId={eventId} />}{" "}
+        {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}{" "}
+        {/* Display AddUserToEvent for organizers */}
+        <EventUsers eventId={eventId} />
+      </div>
+      {isOrganizer && (
+        <div className={`${styles.tableConfigSection}`}>
+          <h2>Table config</h2>
+          <JudgingTableCreator eventId={eventId} />{" "}
+        </div>
+      )}{" "}
       {/* Display JudgingTableCreator for organizers */}
-      {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}{" "}
-      {/* Display JudgeScoring if user is a judge */}
+      {isJudge && (
+        <div className={`${styles.usersManagementSection}`}>
+          <JudgeScoring eventId={eventId} userId={user.uid} />{" "}
+        </div>
+      )}{" "}
       <AllParticipantsScoresTable eventId={eventId} />
     </div>
   );

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ref, onValue, off } from "firebase/database";
 import { doc, getDoc } from "firebase/firestore";
 import { realTimeDatabase, db } from "../../../../../../../firebase/config";
+import styles from "./AllParticipantsScoresTable.module.css"; // Zaimportowanie arkusza stylów
 
 const AllParticipantsScoresTable = ({ eventId }) => {
   const [allScores, setAllScores] = useState({});
@@ -59,9 +60,9 @@ const AllParticipantsScoresTable = ({ eventId }) => {
   ];
 
   return (
-    <div>
+    <div className={styles.allParticipantsScoresTable}>
       <h2>All Scores for Event ID: {eventId}</h2>
-      <table border="1">
+      <table className={styles.allScoresTable} border="1">
         <thead>
           <tr>
             <th>Participant</th>
@@ -100,7 +101,9 @@ const AllParticipantsScoresTable = ({ eventId }) => {
           ))}
         </tbody>
       </table>
-      {allJudges.length === 0 && <p>No scores available yet!</p>}
+      {allJudges.length === 0 && (
+        <p className={styles.noScoresAvailable}>No scores available yet!</p>
+      )}
     </div>
   );
 };

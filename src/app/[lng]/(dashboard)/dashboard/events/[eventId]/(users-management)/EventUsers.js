@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "../../../../../../../firebase/firestore/fetchData";
+import styles from "./EventUsers.module.css"; // Zaimportowanie arkusza stylów
 
 function EventUsers({ eventId }) {
   const [users, setUsers] = useState([]);
@@ -43,17 +44,21 @@ function EventUsers({ eventId }) {
   }, [eventId]);
 
   if (loading) {
-    return <div>Loading users...</div>;
+    return <div className={styles.loadingMessage}>Loading users...</div>;
   }
 
   return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.id}>
-          {user.username} - Rola: {user.role}
-        </li>
-      ))}
-    </ul>
+    <div className={styles.eventUsersContainer}>
+      <h2 className={styles.sectionHeading}>Event Users</h2>
+      <ul className={styles.userList}>
+        {users.map((user) => (
+          <li key={user.id} className={styles.userItem}>
+            <span className={styles.username}>{user.username}</span> - Rola:{" "}
+            <span className={styles.role}>{user.role}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
