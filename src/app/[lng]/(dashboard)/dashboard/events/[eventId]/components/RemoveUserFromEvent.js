@@ -5,10 +5,10 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   doc,
   updateDoc,
   deleteDoc,
-  arrayRemove, // Importuj arrayRemove z Firebase Firestore
 } from "firebase/firestore";
 
 const RemoveUserFromEvent = ({ eventId }) => {
@@ -34,13 +34,26 @@ const RemoveUserFromEvent = ({ eventId }) => {
 
       const userId = userSnapshot.docs[0].id;
 
-      // 2. Update the event to remove the user role
+      // 2. Pobierz obecne role z dokumentu wydarzenia
       const eventRef = doc(db, "events", eventId);
+      const eventSnapshot = await getDoc(eventRef);
+      const event = eventSnapshot.data();
+
+      if (!event) {
+        setError("Event not found.");
+        return;
+      }
+
+      // 3. Usuń ID użytkownika z tablicy roles
+      const updatedRoles = { ...event.roles };
+      delete updatedRoles[userId];
+
+      // 4. Zaktualizuj dokument wydarzenia
       await updateDoc(eventRef, {
-        [`roles.${userId}`]: null, // Usunięcie pola z obiektu roles
+        roles: updatedRoles,
       });
 
-      // 3. Delete the user's events subcollection record for this event
+      // 5. Delete the user's events subcollection record for this event
       const userEventRef = doc(db, `users/${userId}/userEvents/${eventId}`);
       await deleteDoc(userEventRef);
 
