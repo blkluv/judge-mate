@@ -104,6 +104,12 @@ h3 {
   font-size: 1.17em;
 }
 
+a:-webkit-any-link {
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
 button {
   z-index: 1;
   margin: var(--button-margin);
