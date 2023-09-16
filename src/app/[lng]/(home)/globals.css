@@ -68,7 +68,9 @@ body {
 p {
   margin-bottom: 1em;
 }
-
+span {
+  text-decoration: none;
+}
 /* Ustawienie stylu dla linków */
 a {
   color: var(--color-black);

@@ -1,0 +1,44 @@
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.eventList {
+  list-style: none;
+  padding: 0;
+}
+
+.eventItem {
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.eventItem:hover {
+  background-color: #f5f5f5; /* Kolor podświetlenia po najechaniu */
+  text-decoration: none;
+}
+
+.eventLink {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.eventName {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.eventDate {
+  margin: 8px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.eventRole {
+  margin: 8px;
+  font-size: 14px;
+  color: #666;
+}

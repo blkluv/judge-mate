@@ -1,12 +1,15 @@
 "use client";
 
-import UserCreatedEvents from "./UserCreatedEvents";
+import MyCreatedEventsList from "./MyCreatedEventsList";
+
+import MyEventsList from "./MyEventsList";
 
 function Page() {
   return (
     <div>
       <div>
-        <UserCreatedEvents />
+        <MyCreatedEventsList />
+        <MyEventsList />
       </div>
     </div>
   );

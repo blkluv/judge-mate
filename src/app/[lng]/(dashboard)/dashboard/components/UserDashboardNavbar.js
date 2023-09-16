@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useTranslation } from "../../../../i18n/index";
 import styles from "./UserDashboardNavbar.module.css";
+import LogoutButton from "./logout-button/LogoutButton";
 
 const UserDashboardNavbar = ({ params: { lng } }) => {
   const [t, setT] = useState(() => () => "");
@@ -41,7 +42,7 @@ const UserDashboardNavbar = ({ params: { lng } }) => {
             <Link href="/dashboard/settings">{t("Settings")}</Link>
           </li>
           <li>
-            <Link href="/dashboard/logout">{t("Logout")}</Link>
+            <LogoutButton />
           </li>
         </ul>
       </div>

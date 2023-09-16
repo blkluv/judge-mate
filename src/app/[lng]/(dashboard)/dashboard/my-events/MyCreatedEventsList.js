@@ -5,7 +5,7 @@ import { auth } from "../../../../../firebase/config.js";
 import { useRouter } from "next/navigation";
 import Link from "next/link"; // Import Link z Next.js
 
-function UserCreatedEvents() {
+function MyCreatedEventsList() {
   const [userEvents, setUserEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -82,4 +82,4 @@ function UserCreatedEvents() {
   );
 }
 
-export default UserCreatedEvents;
+export default MyCreatedEventsList;
