@@ -47,5 +47,8 @@
   "haveAccount": "Masz już konto? Zaloguj się",
   "forgotPassword": "Przypomnij hasło",
   "signInBtn": "Zaloguj się",
-  "remindPassword": "Przypomnij hasło"
+  "remindPassword": "Przypomnij hasło",
+  "createEvent": "Stwórz Wydarzenie",
+  "myEvents": "Moje Wydarzenia",
+  "profile": "Profil"
 }

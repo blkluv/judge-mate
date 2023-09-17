@@ -38,11 +38,9 @@ const NavbarDashboard = ({ params: { lng } }) => {
             <Link href="/dashboard/my-events">{t("myEvents")}</Link>
           </li>
           <li>
-            <Link href="/dashboard/profile">{t("Profile")}</Link>
+            <Link href="/dashboard/user-profile">{t("profile")}</Link>
           </li>
-          <li>
-            <Link href="/dashboard/settings">{t("Settings")}</Link>
-          </li>
+
           <li>
             <LogoutButton />
           </li>
