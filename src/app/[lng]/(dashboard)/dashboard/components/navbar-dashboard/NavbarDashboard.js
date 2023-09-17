@@ -18,35 +18,38 @@ const NavbarDashboard = ({ params: { lng } }) => {
 
   return (
     <div className={styles.navbar}>
-      <div className={styles.navbarLogo}>
-        <Link href="/dashboard/">
-          {" "}
-          <img
-            src="/images/JudgeMateLogotypBlack.svg"
-            alt="logo"
-            className={styles.logo}
-          />
-        </Link>
+      <div className={styles.ContainerNavbarLogo}>
+        <div className={styles.navbarLogo}>
+          <Link href="/dashboard/">
+            {" "}
+            <img
+              src="/images/JudgeMateLogotypBlack.svg"
+              alt="logo"
+              className={styles.logo}
+            />
+          </Link>
+        </div>
       </div>
-
-      <div className={styles.navbarLinks}>
-        <ul>
-          <li>
-            <Link href="/dashboard/create-event">{t("createEvent")}</Link>
-          </li>
-          <li>
-            <Link href="/dashboard/my-events">{t("myEvents")}</Link>
-          </li>
-          <li>
-            <Link href="/dashboard/user-profile">{t("profile")}</Link>
-          </li>
-
-          <li>
-            <LogoutButton />
-          </li>
-        </ul>
+      <div className={styles.ContainerMenu}>
+        <div className={styles.navbarLinks}>
+          <ul>
+            <li>
+              <Link href="/dashboard/create-event">{t("createEvent")}</Link>
+            </li>
+            <li>
+              <Link href="/dashboard/my-events">{t("myEvents")}</Link>
+            </li>
+            <li>
+              <Link href="/dashboard/user-profile">{t("profile")}</Link>
+            </li>
+          </ul>
+        </div>
       </div>
-      <UserProfile />
+      <div className={styles.ContainerNavbarUserProfile}>
+        {" "}
+        <UserProfile />
+        <LogoutButton />
+      </div>{" "}
     </div>
   );
 };

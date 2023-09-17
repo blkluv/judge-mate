@@ -45,7 +45,7 @@ function UserProfile() {
   }
 
   return (
-    <Link href="/dashboard/profile" className={styles.userProfile}>
+    <Link href="/dashboard/user-profile" className={styles.userProfile}>
       <img src="/icons/user-circle.svg" alt="logo" className={styles.icon} />
       <p className={styles.userName}>{username}</p>
     </Link>
