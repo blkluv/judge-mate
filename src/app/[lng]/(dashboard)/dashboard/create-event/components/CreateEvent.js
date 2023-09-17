@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation"; // Popraw import
 import { auth } from "../../../../../../firebase/config.js";
 import addData from "../../../../../../firebase/firestore/addData.js";
+import styles from "./CreateEvent.module.css";
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -68,31 +69,39 @@ const CreateEvent = () => {
   };
 
   return (
-    <div>
-      <h1>Create New Event</h1>
-      <form>
-        <label>
-          Event Name:
-          <input
-            type="text"
-            value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
-          />
-        </label>
-        <label>
-          Event Date:
-          <input
-            type="date"
-            value={eventDate}
-            onChange={(e) => setEventDate(e.target.value)}
-          />
-        </label>
-        <button type="button" onClick={handleCreateEvent}>
-          Create Event
-        </button>
-      </form>
+    <div className={styles.container}>
+      <div className={styles.form}>
+        <h1 className={styles.title}>Create New Event</h1>
+        <form>
+          <label className={styles.label}>
+            Event Name:
+            <input
+              type="text"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Event Date:
+            <input
+              type="date"
+              value={eventDate}
+              onChange={(e) => setEventDate(e.target.value)}
+              className={styles.input}
+            />
+          </label>
+          <button
+            type="button"
+            onClick={handleCreateEvent}
+            className={styles.button}
+          >
+            {" "}
+            Create Event
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
-
 export default CreateEvent;

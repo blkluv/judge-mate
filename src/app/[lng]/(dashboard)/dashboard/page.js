@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthContext } from "../../../../firebase/context/AuthContext";
-import UserProfile from "./start/UserProfile";
+import UserProfile from "./components/navbar-dashboard/UserProfile";
 import MyEventsList from "./my-events/MyEventsList";
 
 function Page() {
@@ -12,7 +12,6 @@ function Page() {
     <div>
       {user && (
         <div>
-          <UserProfile />
           <MyEventsList />
         </div>
       )}

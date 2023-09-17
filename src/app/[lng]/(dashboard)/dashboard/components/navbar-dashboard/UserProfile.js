@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../../../firebase/firestore/fetchData";
-import { auth } from "../../../../../firebase/config.js";
+import { fetchData } from "../../../../../../firebase/firestore/fetchData";
+import { auth } from "../../../../../../firebase/config.js";
+import Link from "next/link";
+import styles from "./UserProfile.module.css"; // Importuj moduł CSS
 
 function UserProfile() {
   const [username, setUsername] = useState("");
@@ -43,10 +45,10 @@ function UserProfile() {
   }
 
   return (
-    <div>
-      <h1>User Profile</h1>
-      <p>Username: {username}</p>
-    </div>
+    <Link href="/dashboard/profile" className={styles.userProfile}>
+      <img src="/icons/user-circle.svg" alt="logo" className={styles.icon} />
+      <p className={styles.userName}>{username}</p>
+    </Link>
   );
 }
 

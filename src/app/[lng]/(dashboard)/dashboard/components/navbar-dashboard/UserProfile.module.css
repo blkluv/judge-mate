@@ -1,0 +1,19 @@
+.userProfile {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 8px;
+  vertical-align: middle; /* Ustawienie wyrównania w pionie dla ikony */
+}
+
+.userName {
+  font-size: 1.5rem;
+  margin: 0;
+  vertical-align: middle; /* Ustawienie wyrównania w pionie dla tekstu */
+}

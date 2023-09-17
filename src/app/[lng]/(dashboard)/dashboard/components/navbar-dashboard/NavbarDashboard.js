@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useTranslation } from "../../../../i18n/index";
-import styles from "./UserDashboardNavbar.module.css";
-import LogoutButton from "./logout-button/LogoutButton";
+import { useTranslation } from "../../../../../i18n/index";
+import styles from "./NavbarDashboard.module.css";
+import LogoutButton from "../logout-button/LogoutButton";
+import UserProfile from "./UserProfile";
 
-const UserDashboardNavbar = ({ params: { lng } }) => {
+const NavbarDashboard = ({ params: { lng } }) => {
   const [t, setT] = useState(() => () => "");
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const UserDashboardNavbar = ({ params: { lng } }) => {
           />
         </Link>
       </div>
+
       <div className={styles.navbarLinks}>
         <ul>
           <li>
@@ -46,8 +48,9 @@ const UserDashboardNavbar = ({ params: { lng } }) => {
           </li>
         </ul>
       </div>
+      <UserProfile />
     </div>
   );
 };
 
-export default UserDashboardNavbar;
+export default NavbarDashboard;
