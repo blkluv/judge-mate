@@ -1,4 +1,5 @@
-import { updateDoc, doc } from "firebase/firestore";
+import { updateDoc, doc, getFirestore } from "firebase/firestore";
+import firebase_app from "../config";
 
 export async function updateData(collectionName, id, data) {
   const db = getFirestore(firebase_app);
