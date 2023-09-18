@@ -1,27 +1,28 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "../../../../../../../firebase/firestore/fetchData";
-import styles from "./EventUsers.module.css"; // Zaimportowanie arkusza stylów
+import { collection, getDocs, where, query } from "firebase/firestore";
+import { db } from "../../../../../../../firebase/config";
+import styles from "./EventUsers.module.css";
 
 function EventUsers({ eventId }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Funkcja do pobierania użytkowników na podstawie danego eventId
   async function fetchUsers() {
     const { data, error } = await fetchData("events", eventId);
 
     if (data) {
-      const fetchedUsers = [];
-      for (let userId in data.roles) {
-        const userData = await fetchData("users", userId);
-        if (userData.data) {
-          fetchedUsers.push({
-            id: userId,
-            username: userData.data.username,
-            role: data.roles[userId],
-          });
-        }
-      }
+      const userIds = Object.keys(data.roles);
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("__name__", "in", userIds));
+      const userSnapshots = await getDocs(q);
+
+      const fetchedUsers = userSnapshots.docs.map((doc) => ({
+        id: doc.id,
+        username: doc.data().username,
+        role: data.roles[doc.id],
+      }));
+
       setUsers(fetchedUsers);
     }
     if (error) {
@@ -32,15 +33,13 @@ function EventUsers({ eventId }) {
   }
 
   useEffect(() => {
-    // Wywołaj funkcję fetchUsers, gdy komponent zostanie zamontowany
     fetchUsers();
   }, [eventId]);
 
-  // Nasłuchuj zmian w eventId i ponownie pobieraj użytkowników
   useEffect(() => {
-    setLoading(true); // Ustaw stan "loading" na true podczas ponownego pobierania danych
-    setUsers([]); // Wyczyść istniejącą listę użytkowników
-    fetchUsers(); // Ponownie pobierz użytkowników
+    setLoading(true);
+    setUsers([]);
+    fetchUsers();
   }, [eventId]);
 
   if (loading) {
@@ -53,7 +52,7 @@ function EventUsers({ eventId }) {
       <ul className={styles.userList}>
         {users.map((user) => (
           <li key={user.id} className={styles.userItem}>
-            <span className={styles.username}>{user.username}</span> - Rola:{" "}
+            <span className={styles.username}>{user.username}</span> - Rola:
             <span className={styles.role}>{user.role}</span>
           </li>
         ))}
