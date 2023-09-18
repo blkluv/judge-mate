@@ -5,49 +5,52 @@ import Link from "next/link";
 import styles from "./UserProfile.module.css"; // Importuj moduł CSS
 
 function UserProfile() {
-  const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const currentUser = auth.currentUser;
 
+  // Użyj obiektu stanu do śledzenia nazwy użytkownika, stanu ładowania i błędu
+  const [state, setState] = useState({
+    username: "",
+    loading: true,
+    error: null,
+  });
+
   useEffect(() => {
+    // Pobierz nazwę użytkownika z Firestore, używając kolekcji "users" i identyfikatora "userId"
     async function fetchUsername() {
       if (!currentUser) {
-        setLoading(false);
+        setState({ loading: false, error: "Nie jesteś zalogowany" });
         return;
       }
 
       const userId = currentUser.uid;
-
-      // Pobierz nazwę użytkownika z Firestore, używając kolekcji "users" i identyfikatora "userId"
       const { data, error } = await fetchData("users", userId);
 
       if (data) {
-        setUsername(data.username);
+        setState({ loading: false, username: data.username });
       }
 
       if (error) {
-        setError(error);
+        setState({ error });
       }
-
-      setLoading(false);
     }
 
     fetchUsername();
   }, [currentUser]);
 
-  if (loading) {
+  // Sprawdź, czy nazwa użytkownika jest załadowana i nie wystąpił błąd
+  if (state.loading) {
     return <div>Loading user profile...</div>;
   }
 
-  if (error) {
-    return <div>Error loading user profile: {error.message}</div>;
+  if (state.error) {
+    return <div>Error loading user profile: {state.error.message}</div>;
   }
 
+  // Wyrenderuj link do profilu użytkownika
   return (
     <Link href="/dashboard/user-profile" className={styles.userProfile}>
       <img src="/icons/user-circle.svg" alt="logo" className={styles.icon} />
-      <p className={styles.userName}>{username}</p>
+      <p className={styles.userName}>{state.username}</p>
     </Link>
   );
 }
