@@ -1,59 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "../../../../../firebase/firestore/fetchData";
-import { auth } from "../../../../../firebase/config.js";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import styles from "./MyEventsList.module.css"; // Importuj nowoczesne style
+import styles from "./MyEventsList.module.css";
+import { useAuthContext } from "../../../../../firebase/context/AuthContext";
 
 function MyEventsList() {
-  const [userEvents, setUserEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const currentUser = auth.currentUser;
+  const { user } = useAuthContext();
+  const [state, setState] = useState({
+    userEvents: [],
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
-    async function fetchUserEvents() {
-      if (!currentUser) {
-        setLoading(false);
+    const fetchUserEvents = async () => {
+      if (!user) {
+        setState((prev) => ({ ...prev, loading: false }));
         return;
       }
 
-      const { data, error } = await fetchData("events");
+      try {
+        const { data } = await fetchData("events");
 
-      if (data) {
-        // Odfiltruj wydarzenia, zostawiając tylko te, w których użytkownik bierze udział
-        const userParticipatedEvents = data.filter((event) => {
-          const roles = event.roles;
-          const userRole = roles[currentUser.uid];
-          return userRole && userRole !== "none";
-        });
+        if (data) {
+          const userParticipatedEvents = data.filter((event) => {
+            const roles = event.roles;
+            const userRole = roles[user.uid];
+            return userRole && userRole !== "none";
+          });
 
-        setUserEvents(userParticipatedEvents);
+          setState({
+            userEvents: userParticipatedEvents,
+            loading: false,
+            error: null,
+          });
+        }
+      } catch (error) {
+        setState({ userEvents: [], loading: false, error });
       }
-
-      if (error) {
-        setError(error);
-      }
-
-      setLoading(false);
-    }
+    };
 
     fetchUserEvents();
-  }, [currentUser]);
+  }, [user]);
 
-  if (loading) {
+  if (state.loading) {
     return <div>Loading events...</div>;
   }
 
-  if (error) {
-    return <div>Error loading events: {error.message}</div>;
+  if (state.error) {
+    return <div>Error loading events: {state.error.message}</div>;
   }
 
   return (
     <div>
       <h1 className={styles.title}>Your Participated Events</h1>
       <ul className={styles.eventList}>
-        {userEvents.map((event) => (
+        {state.userEvents.map((event) => (
           <li key={event.id} className={styles.eventItem}>
             <Link
               href={`/dashboard/events/${event.id}`}
@@ -62,7 +64,7 @@ function MyEventsList() {
               <span className={styles.eventName}>{event.eventName}</span>
               <span className={styles.eventDate}>{event.eventDate}</span>
               <span className={styles.eventRole}>
-                Role: {event.roles[currentUser.uid]}
+                Role: {event.roles[user.uid]}
               </span>
             </Link>
           </li>
