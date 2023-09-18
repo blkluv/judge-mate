@@ -20,8 +20,11 @@ export default function DashboardLayout({ children, params: { lng } }) {
         <title>JudgeMate</title>
       </head>
       <body>
-        <NavbarDashboard params={{ lng }} lng={lng} />
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <AuthContextProvider>
+          {" "}
+          <NavbarDashboard params={{ lng }} lng={lng} />
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );

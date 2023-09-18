@@ -31,6 +31,6 @@ export async function fetchData(collectionName, id) {
   } catch (e) {
     error = e;
   }
-
+  console.log("Dane z fetchData:", data);
   return { data, error };
 }

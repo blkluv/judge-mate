@@ -1,47 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../../../../firebase/firestore/fetchData";
-import { auth } from "../../../../../../firebase/config.js";
+import React from "react";
+import { useAuthContext } from "../../../../../../firebase/context/AuthContext";
 import Link from "next/link";
-import styles from "./UserProfile.module.css"; // Importuj moduł CSS
+import styles from "./UserProfile.module.css";
 
 function UserProfile() {
-  const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const currentUser = auth.currentUser;
+  const { currentUserData, loading } = useAuthContext();
+  const username = currentUserData ? currentUserData.username : null;
 
-  useEffect(() => {
-    async function fetchUsername() {
-      if (!currentUser) {
-        setLoading(false);
-        return;
-      }
-
-      const userId = currentUser.uid;
-
-      // Pobierz nazwę użytkownika z Firestore, używając kolekcji "users" i identyfikatora "userId"
-      const { data, error } = await fetchData("users", userId);
-
-      if (data) {
-        setUsername(data.username);
-      }
-
-      if (error) {
-        setError(error);
-      }
-
-      setLoading(false);
-    }
-
-    fetchUsername();
-  }, [currentUser]);
+  console.log("uzytkownik zalogowany userProfile: ", username);
 
   if (loading) {
-    return <div>Loading user profile...</div>;
-  }
-
-  if (error) {
-    return <div>Error loading user profile: {error.message}</div>;
+    return <div>Wczytywanie profilu użytkownika...</div>;
   }
 
   return (
@@ -52,4 +21,4 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+export default React.memo(UserProfile);

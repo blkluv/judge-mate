@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthContext } from "../../../../firebase/context/AuthContext";
-import UserProfile from "./components/navbar-dashboard/UserProfile";
+
 import MyEventsList from "./my-events/MyEventsList";
 
 function Page() {
