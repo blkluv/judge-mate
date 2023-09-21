@@ -1,8 +1,5 @@
-/* JudgingTableCreator.module.css */
-
 /* Ogólny kontener */
 .container {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -14,6 +11,8 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  box-sizing: border-box;
+  overflow-x: auto; /* Dodane dla przewijania */
 }
 
 .title {
@@ -29,6 +28,7 @@
   gap: 10px;
   margin-bottom: 10px;
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .input {
@@ -37,6 +37,8 @@
   border-radius: 4px;
   outline: none;
   transition: border-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input:focus {
@@ -44,11 +46,12 @@
 }
 
 .button {
-  padding: 8px 16px;
-  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   background-color: #007bff;
-  color: #fff;
-  border-radius: 4px;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -62,23 +65,91 @@
   cursor: not-allowed;
 }
 
-/* Style dla widoku nieedytowalnego kategorii */
-.viewMode {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.removeButton {
+  padding: 10px 20px;
   font-size: 16px;
+  background-color: #ff4136;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.viewMode span {
-  display: inline-block;
-  margin-right: 10px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  box-sizing: border-box;
 }
 
-/* Style dla widoku edycji kategorii */
-.editMode {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
+.table th,
+.table td {
+  padding: 8px 12px;
+  border: 1px solid #d0d0d0;
+  word-break: break-word;
+}
+
+.addButton {
+  margin-top: 10px;
+  background-color: #e0e0e0;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.addButton:hover {
+  background-color: #c7c7c7;
+}
+
+/* Style dla urządzeń o szerokości ekranu mniejszej niż 768px */
+@media (max-width: 767px) {
+  .container {
+    padding: 10px;
+    align-items: stretch;
+  }
+
+  .title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .table,
+  .editMode,
+  .viewMode {
+    font-size: 14px;
+  }
+
+  .table th,
+  .table td {
+    padding: 6px 8px;
+  }
+
+  .input {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .button,
+  .removeButton {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .addButton {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .category {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .viewMode,
+  .editMode {
+    flex-wrap: nowrap;
+  }
 }

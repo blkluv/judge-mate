@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ref, get, onValue, off } from "firebase/database";
 import { realTimeDatabase } from "../../../../../../../firebase/config";
+import styles from "./JudgingTableDisplay.module.css";
 
 const JudgingTableDisplay = ({ eventId }) => {
   const [categories, setCategories] = useState([]);
@@ -26,12 +27,12 @@ const JudgingTableDisplay = ({ eventId }) => {
   }, [eventId]);
 
   return (
-    <div>
-      <h2>Judging Table for Event ID: {eventId}</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Judging Table</h2>
       {categories.length === 0 ? (
-        <p>No categories defined yet!</p>
+        <p className={styles.noCategories}>No categories defined yet!</p>
       ) : (
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Category Name</th>
