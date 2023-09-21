@@ -67,7 +67,7 @@
 /* Style dla urządzeń mobilnych */
 @media (max-width: 768px) {
   .container {
-    padding: 15px;
+    width: 100%;
     max-width: 100%;
   }
 

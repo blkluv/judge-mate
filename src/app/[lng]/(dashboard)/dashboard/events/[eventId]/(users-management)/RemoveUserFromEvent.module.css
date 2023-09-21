@@ -75,8 +75,7 @@
 /* Style dla urządzeń mobilnych */
 @media (max-width: 768px) {
   .container {
-    padding: 15px;
-    max-width: 100%;
+    width: 100%;
   }
 
   .title {

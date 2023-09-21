@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { ref, set, get } from "firebase/database";
-import { realTimeDatabase } from "../../../../../../../firebase/config"; // Zakładam, że tak jest skonfigurowana baza danych
-import JudgingTableDisplay from "./JudgingTableDisplay"; // Import komponentu do wyświetlania tabeli
+import { useState } from "react";
+import { ref, set } from "firebase/database";
+import { realTimeDatabase } from "../../../../../../../firebase/config";
+import JudgingTableDisplay from "./JudgingTableDisplay";
 import styles from "./JudgingTableCreator.module.css";
 
 const JudgingTableCreator = ({ eventId }) => {
@@ -20,6 +20,12 @@ const JudgingTableCreator = ({ eventId }) => {
     setEditableCategoryIndex(-1);
   };
 
+  const removeCategory = (idx) => {
+    const newCategories = [...categories];
+    newCategories.splice(idx, 1);
+    setCategories(newCategories);
+  };
+
   const handleChange = (idx, field, value) => {
     const newCategories = [...categories];
     newCategories[idx][field] = value;
@@ -27,7 +33,13 @@ const JudgingTableCreator = ({ eventId }) => {
   };
 
   const handleSubmit = async () => {
-    // Zapisz kategorie w Firebase Realtime Database pod konkretnym eventId
+    const isValid = categories.every(
+      (cat) => cat.name && cat.range[0] < cat.range[1]
+    );
+    if (!isValid) {
+      alert("Please ensure all categories are valid before submitting.");
+      return;
+    }
     const tableRef = ref(realTimeDatabase, `judgingTables/${eventId}`);
     await set(tableRef, categories);
     alert("Judging table defined for event!");
@@ -66,6 +78,7 @@ const JudgingTableCreator = ({ eventId }) => {
                 }
               />
               <button onClick={saveCategory}>Save</button>
+              <button onClick={() => removeCategory(idx)}>Remove</button>
             </div>
           ) : (
             <div className={styles.viewMode}>
