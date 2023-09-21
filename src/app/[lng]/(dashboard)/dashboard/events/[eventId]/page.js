@@ -17,6 +17,7 @@ function Page({ params: { eventId } }) {
   const [eventData, setEventData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
     async function fetchEvent() {
@@ -51,9 +52,14 @@ function Page({ params: { eventId } }) {
       <div>
         <h1>{eventData?.eventName}</h1>
         <p>Date: {eventData?.eventDate}</p>
-        {isOrganizer && <AddUserToEvent eventId={eventId} />}
+        {isOrganizer && (
+          <AddUserToEvent
+            eventId={eventId}
+            onUserAdded={() => setRefreshData((prev) => !prev)}
+          />
+        )}
         {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}
-        <EventUsers eventId={eventId} />
+        <EventUsers eventId={eventId} refreshData={refreshData} />
         {isOrganizer && <JudgingTableCreator eventId={eventId} />}
         {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}
         <AllParticipantsScoresTable eventId={eventId} />

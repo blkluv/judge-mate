@@ -4,7 +4,7 @@ import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../../../../../firebase/config";
 import styles from "./EventUsers.module.css";
 
-function EventUsers({ eventId }) {
+function EventUsers({ eventId, refreshData }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,13 +34,7 @@ function EventUsers({ eventId }) {
 
   useEffect(() => {
     fetchUsers();
-  }, [eventId]);
-
-  useEffect(() => {
-    setLoading(true);
-    setUsers([]);
-    fetchUsers();
-  }, [eventId]);
+  }, [eventId, refreshData]);
 
   if (loading) {
     return <div className={styles.loadingMessage}>Loading users...</div>;

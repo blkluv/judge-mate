@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-const AddUserToEvent = ({ eventId }) => {
+const AddUserToEvent = ({ eventId, onUserAdded }) => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("participant"); // default role
 
@@ -49,6 +49,11 @@ const AddUserToEvent = ({ eventId }) => {
 
       alert("User successfully added to the event!");
       setUsername(""); // Clear the input
+
+      // Notify parent component about the user addition
+      if (typeof onUserAdded === "function") {
+        onUserAdded();
+      }
     } catch (error) {
       console.error("Error adding user to event:", error);
 
