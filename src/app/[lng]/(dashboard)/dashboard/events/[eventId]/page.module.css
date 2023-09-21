@@ -1,9 +1,63 @@
+/* page.module.css */
+
 .container {
-  gap: 2rem;
-  margin: 3vw;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Roboto", sans-serif; /* Dodanie nowoczesnej czcionki */
 }
+
 .eventManagementSection {
-  gap: 2rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Obejmuje elementy w kolejnych wierszach, jeśli nie ma miejsca */
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Stylowanie ekranu ładowania */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5em;
+  color: #555;
+}
+
+/* Stylowanie wiadomości o błędzie */
+.error {
+  padding: 20px;
+  background-color: #ffdddd;
+  border: 1px solid #ff8888;
+  color: #ff0000;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Style dla komputerów */
+
+@media (min-width: 769px) {
+  .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .eventManagementSection {
+    flex-direction: row;
+    gap: 20px; /* Dodanie odstępów pomiędzy komponentami */
+  }
+}
+
+/* Style dla urządzeń mobilnych */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .eventManagementSection {
+    gap: 10px;
+  }
 }

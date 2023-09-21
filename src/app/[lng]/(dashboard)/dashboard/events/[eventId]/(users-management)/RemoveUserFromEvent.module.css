@@ -10,7 +10,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-  max-width: 250px;
+  width: 20%;
 }
 
 .title {
@@ -70,4 +70,41 @@
   color: #ff4136;
   font-size: 14px;
   margin-top: 10px;
+}
+
+/* Style dla urządzeń mobilnych */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .inputGroup {
+    gap: 10px;
+  }
+
+  .label {
+    font-size: 14px;
+    gap: 3px;
+  }
+
+  .input {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .errorMessage {
+    font-size: 12px;
+    margin-top: 8px;
+  }
 }

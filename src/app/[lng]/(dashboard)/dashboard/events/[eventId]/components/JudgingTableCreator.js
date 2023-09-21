@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ref, set, get } from "firebase/database";
 import { realTimeDatabase } from "../../../../../../../firebase/config"; // Zakładam, że tak jest skonfigurowana baza danych
 import JudgingTableDisplay from "./JudgingTableDisplay"; // Import komponentu do wyświetlania tabeli
+import styles from "./JudgingTableCreator.module.css";
 
 const JudgingTableCreator = ({ eventId }) => {
   const [categories, setCategories] = useState([{ name: "", range: [1, 10] }]);
@@ -33,18 +34,22 @@ const JudgingTableCreator = ({ eventId }) => {
   };
 
   return (
-    <div>
-      <h2>Define Judging Table for Event ID: {eventId}</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>
+        Define Judging Table for Event ID: {eventId}
+      </h2>
       {categories.map((cat, idx) => (
-        <div key={idx}>
+        <div className={styles.category} key={idx}>
           {editableCategoryIndex === idx ? (
-            <div>
+            <div className={styles.editMode}>
               <input
+                className={styles.input}
                 value={cat.name}
                 placeholder="Category Name"
                 onChange={(e) => handleChange(idx, "name", e.target.value)}
               />
               <input
+                className={styles.input}
                 type="number"
                 value={cat.range[0]}
                 onChange={(e) =>
@@ -53,6 +58,7 @@ const JudgingTableCreator = ({ eventId }) => {
               />
               to
               <input
+                className={styles.input}
                 type="number"
                 value={cat.range[1]}
                 onChange={(e) =>
@@ -62,7 +68,7 @@ const JudgingTableCreator = ({ eventId }) => {
               <button onClick={saveCategory}>Save</button>
             </div>
           ) : (
-            <div>
+            <div className={styles.viewMode}>
               <span>
                 <strong>Category Name:</strong> {cat.name}
               </span>
@@ -75,9 +81,13 @@ const JudgingTableCreator = ({ eventId }) => {
           )}
         </div>
       ))}
-      <button onClick={addCategory}>Add Category</button>
-      <button onClick={handleSubmit}>Submit Judging Table</button>
-      {/* Wyświetl tabelę po zdefiniowaniu */}
+
+      <button className={styles.button} onClick={addCategory}>
+        Add Category
+      </button>
+      <button className={styles.button} onClick={handleSubmit}>
+        Submit Judging Table
+      </button>
       <JudgingTableDisplay eventId={eventId} />
     </div>
   );

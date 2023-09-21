@@ -43,14 +43,22 @@ function EventUsers({ eventId, refreshData }) {
   return (
     <div className={styles.eventUsersContainer}>
       <h2 className={styles.sectionHeading}>Event Users</h2>
-      <ul className={styles.userList}>
-        {users.map((user) => (
-          <li key={user.id} className={styles.userItem}>
-            <span className={styles.username}>{user.username}</span> - Rola:
-            <span className={styles.role}>{user.role}</span>
-          </li>
-        ))}
-      </ul>
+      <table className={styles.userTable}>
+        <thead>
+          <tr>
+            <th className={styles.tableHeading}>Username</th>
+            <th className={styles.tableHeading}>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id} className={styles.userItem}>
+              <td className={styles.username}>{user.username}</td>
+              <td className={styles.role}>{user.role}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
