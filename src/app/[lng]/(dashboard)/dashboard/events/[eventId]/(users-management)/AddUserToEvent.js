@@ -9,6 +9,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import styles from "./AddUserToEvent.module.css";
 
 const AddUserToEvent = ({ eventId, onUserAdded }) => {
   const [username, setUsername] = useState("");
@@ -69,27 +70,32 @@ const AddUserToEvent = ({ eventId, onUserAdded }) => {
   };
 
   return (
-    <div>
-      <h2>Add User to Event</h2>
-      <div>
-        <label>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Add User to Event</h2>
+      <div className={styles.inputGroup}>
+        <label className={styles.label}>
           Username:
           <input
+            className={styles.input}
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
-        <label>
+        <label className={styles.label}>
           Role:
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <select
+            className={styles.select}
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
             <option value="participant">Participant</option>
             <option value="judge">Judge</option>
             <option value="cameraman">Cameraman</option>
             {/* Add more roles as needed */}
           </select>
         </label>
-        <button type="button" onClick={handleAddUser}>
+        <button className={styles.button} type="button" onClick={handleAddUser}>
           Add User
         </button>
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useContext, createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { fetchData } from "../../../../../../firebase/firestore/fetchData";
 import { useAuthContext } from "../../../../../../firebase/context/AuthContext";
 import styles from "./page.module.css";
@@ -49,17 +49,22 @@ function Page({ params: { eventId } }) {
 
   return (
     <EventContext.Provider value={eventData}>
-      <div>
-        <h1>{eventData?.eventName}</h1>
-        <p>Date: {eventData?.eventDate}</p>
-        {isOrganizer && (
-          <AddUserToEvent
-            eventId={eventId}
-            onUserAdded={() => setRefreshData((prev) => !prev)}
-          />
-        )}
-        {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}
-        <EventUsers eventId={eventId} refreshData={refreshData} />
+      <div className={styles.container}>
+        <div>
+          <h1>{eventData?.eventName}</h1>
+          <p>Date: {eventData?.eventDate}</p>
+        </div>
+        <div className={styles.eventManagementSection}>
+          {isOrganizer && (
+            <AddUserToEvent
+              eventId={eventId}
+              onUserAdded={() => setRefreshData((prev) => !prev)}
+            />
+          )}
+          {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}{" "}
+          <EventUsers eventId={eventId} refreshData={refreshData} />
+        </div>
+
         {isOrganizer && <JudgingTableCreator eventId={eventId} />}
         {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}
         <AllParticipantsScoresTable eventId={eventId} />

@@ -10,6 +10,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
+import styles from "./RemoveUserFromEvent.module.css";
 
 const RemoveUserFromEvent = ({ eventId }) => {
   const [username, setUsername] = useState("");
@@ -69,21 +70,26 @@ const RemoveUserFromEvent = ({ eventId }) => {
   };
 
   return (
-    <div>
-      <h2>Remove User from Event</h2>
-      <div>
-        <label>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Remove User from Event</h2>
+      <div className={styles.inputGroup}>
+        <label className={styles.label}>
           Username:
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className={styles.input}
           />
         </label>
-        <button type="button" onClick={handleRemoveUser}>
+        <button
+          type="button"
+          onClick={handleRemoveUser}
+          className={styles.button}
+        >
           Remove User
         </button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className={styles.errorMessage}>{error}</p>}
       </div>
     </div>
   );
