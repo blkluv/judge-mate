@@ -1,87 +1,78 @@
+/* EventUsers.module.css */
+
 .eventUsersContainer {
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  width: 40%;
-  overflow-x: auto; /* Dodane dla obsługi przewijania */
+  background-color: #f9f9fa;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin-top: 40px;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .sectionHeading {
-  font-size: 24px;
-  margin-bottom: 15px;
-  font-weight: 600;
-  border-bottom: 2px solid #e1e1e1;
-  padding-bottom: 10px;
+  font-size: 28px;
+  margin-bottom: 40px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .userTable {
   width: 100%;
-  border-collapse: collapse; /* Usuwa podwójne ramki */
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.userTable th,
+.userTable td {
+  padding: 14px 18px;
+  text-align: left;
 }
 
 .tableHeading {
-  background-color: #f2f2f2;
-  font-weight: bold;
-  padding: 8px;
+  background-color: #34495e;
+  color: #ecf0f1;
+  border-bottom: 2px solid #2c3e50;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-.userItem {
-  padding: 10px 0;
-  border-bottom: 1px solid #e1e1e1;
+.userItem:hover {
+  background-color: #f5f7fa;
 }
 
 .username,
 .role {
-  padding: 8px;
-}
-
-.username {
-  font-weight: 600;
-  color: #333;
-}
-
-.role {
-  font-style: italic;
-  color: #666;
+  color: #5a6b7c;
+  border-bottom: 1px solid #eaeef1;
+  transition: background-color 0.3s ease;
 }
 
 .loadingMessage {
+  color: #5a6b7c;
   font-size: 18px;
-  color: #888;
   text-align: center;
   margin-top: 20px;
 }
-/* Style dla urządzeń mobilnych */
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .eventUsersContainer {
-    width: 100%;
+    padding: 20px;
   }
 
   .sectionHeading {
-    font-size: 20px;
+    font-size: 24px;
+    margin-bottom: 24px;
   }
 
-  .userTable {
-    font-size: 14px; /* Zmniejszenie rozmiaru czcionki */
-  }
-
-  .tableHeading {
-    padding: 6px; /* Zmniejszenie paddingu */
-  }
-
-  .username,
-  .role {
-    padding: 6px;
-  }
-
-  .loadingMessage {
-    font-size: 16px;
-    margin-top: 15px;
+  .userTable th,
+  .userTable td {
+    padding: 10px;
   }
 }
