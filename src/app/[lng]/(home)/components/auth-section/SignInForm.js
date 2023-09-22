@@ -115,7 +115,6 @@ const SignInForm = ({ lng }) => {
   return (
     <form onSubmit={handleForm} className={styles.form}>
       <label htmlFor="email">
-        <p className={styles.label}>{t("emailLabel")}</p>
         <div className={styles.inputContainer}>
           <input
             onChange={(e) => setEmail(e.target.value)}
@@ -123,14 +122,13 @@ const SignInForm = ({ lng }) => {
             type="email"
             name="email"
             id="email"
-            placeholder={t("emailPlaceholder")}
+            placeholder={t("emailLabel")}
             className={styles.input}
           />
         </div>
       </label>
 
       <label htmlFor="password">
-        <p className={styles.label}>{t("passwordLabel")}</p>
         <div className={styles.inputContainer}>
           <input
             onChange={(e) => setPassword(e.target.value)}
@@ -138,21 +136,20 @@ const SignInForm = ({ lng }) => {
             type="password"
             name="password"
             id="password"
-            placeholder={t("passwordPlaceholder")}
+            placeholder={t("passwordLabel")}
             className={styles.input}
           />
         </div>
       </label>
-
+      <a className={styles.forgotPasswordLink} onClick={handleForgotPassword}>
+        {t("remindPassword")}
+      </a>
       <button type="submit" className={styles.button} disabled={isLoading}>
         {isLoading ? t("loggingIn") : t("signInBtn")}
       </button>
 
       {formErrors.message && <p>{formErrors.message}</p>}
 
-      <a className={styles.forgotPasswordLink} onClick={handleForgotPassword}>
-        {t("remindPassword")}
-      </a>
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

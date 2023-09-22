@@ -34,7 +34,7 @@ const AuthContainer = ({ lng }) => {
         <div className={styles.elements}>
           <div className={styles.tabs}>
             <button
-              className={`${styles.buttonBlue} ${
+              className={`${styles.createAccount} ${
                 activeTab === "signIn" ? styles.activeTab : ""
               }`}
               onClick={() => toggleTab("signIn")}
@@ -42,7 +42,7 @@ const AuthContainer = ({ lng }) => {
               {t("signInTitle")}
             </button>
             <button
-              className={`${styles.buttonBlue} ${
+              className={`${styles.createAccount} ${
                 activeTab === "signUp" ? styles.activeTab : ""
               }`}
               onClick={() => toggleTab("signUp")}

@@ -40,6 +40,14 @@
 .activeTab {
   display: none;
 }
+.button {
+  width: 100%;
+}
+.createAccount {
+  width: 100%;
+  border-radius: var(--border-radius);
+  background-color: black;
+}
 
 /* Style dla urządzeń mobilnych (np. o szerokości ekranu mniejszej niż 768px) */
 @media (max-width: 768px) {

@@ -69,41 +69,44 @@ const SignUpForm = ({ lng }) => {
     <form onSubmit={handleForm} className={styles.form}>
       <h1 className={styles.heading}>{t("registerTitle")}</h1>
       <label htmlFor="username">
-        <p className={styles.label}>{t("usernameLabel")}</p>
-        <input
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          type="text"
-          name="username"
-          id="username"
-          placeholder={t("usernamePlaceholder")}
-          className={styles.input}
-        />
+        <div className={styles.inputContainer}>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            type="text"
+            name="username"
+            id="username"
+            placeholder={t("usernamePlaceholder")}
+            className={styles.input}
+          />
+        </div>
       </label>
       <label htmlFor="email">
-        <p className={styles.label}>{t("emailLabel")}</p>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          type="email"
-          name="email"
-          id="email"
-          placeholder={t("emailPlaceholder")}
-          className={styles.input}
-        />
-        {emailError && <p className={styles.error}>{emailError}</p>}
+        <div className={styles.inputContainer}>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            type="email"
+            name="email"
+            id="email"
+            placeholder={t("emailPlaceholder")}
+            className={styles.input}
+          />
+          {emailError && <p className={styles.error}>{emailError}</p>}
+        </div>
       </label>
       <label htmlFor="password">
-        <p className={styles.label}>{t("passwordLabel")}</p>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          type="password"
-          name="password"
-          id="password"
-          placeholder={t("passwordPlaceholder")}
-          className={styles.input}
-        />
+        <div className={styles.inputContainer}>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            type="password"
+            name="password"
+            id="password"
+            placeholder={t("passwordPlaceholder")}
+            className={styles.input}
+          />
+        </div>
       </label>
       <button type="submit" className={styles.button}>
         {t("registerButton")}
