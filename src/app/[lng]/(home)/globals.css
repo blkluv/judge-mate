@@ -29,6 +29,8 @@
   --color-light-silver: #d9d9d9;
   --color-blue: #0054e6;
   --color-battery-charged-blue: #15b8dc;
+  --color-button-red: #ff6347;
+  --color-button-red-hover: #e74c3c;
 }
 
 ::-webkit-scrollbar {
@@ -67,6 +69,8 @@ body {
     var(--color-battery-charged-blue)
   );
   margin: 0 auto; /* Wyśrodkowanie strony */
+  height: 100%;
+  min-height: 100vh;
 }
 
 /* Ustawienie marginesu dla wszystkich elementów typu "p" */
@@ -121,7 +125,7 @@ button {
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -155,6 +159,12 @@ tr:hover {
   background-color: #f5f5f5;
 }
 
+hr {
+  margin: 1rem 0;
+  overflow: visible;
+  color: var(--color-light-silver);
+  width: 100%;
+}
 /* Dla szerokości ekranu mobilnego */
 @media only screen and (max-width: 767px) {
   .buttonBlue {

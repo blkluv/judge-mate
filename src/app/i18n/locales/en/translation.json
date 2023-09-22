@@ -47,5 +47,6 @@
   "remindPassword": "Remind password",
   "createEvent": "Create Event",
   "myEvents": "My Events",
-  "profile": "Profile"
+  "profile": "Profile",
+  "loggingIn": "loading..."
 }

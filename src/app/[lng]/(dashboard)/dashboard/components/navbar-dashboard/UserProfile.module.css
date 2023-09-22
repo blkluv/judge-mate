@@ -3,12 +3,13 @@
   align-items: center;
   text-decoration: none;
   color: inherit;
+  max-height: 2rem;
 }
 
 .icon {
-  width: 3rem;
-  height: 3rem;
-  margin-right: 8px;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
   vertical-align: middle; /* Ustawienie wyrównania w pionie dla ikony */
 }
 

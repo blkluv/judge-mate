@@ -7,7 +7,7 @@
   align-items: center;
   padding: 20px;
   border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   width: 20%;
@@ -37,7 +37,7 @@
 .input {
   padding: 10px;
   border: 1px solid #d0d0d0;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   font-size: 14px;
   outline: none;
   transition: border-color 0.3s;
@@ -53,7 +53,7 @@
   background-color: #ff4136; /* Red background for button, to indicate danger action */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.3s;
 }

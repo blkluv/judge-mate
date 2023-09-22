@@ -1,15 +1,16 @@
 .detailsContainer {
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f4f4f4;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  background-color: var(--color-white);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .eventName {
   font-size: 1.5em;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .eventDate {

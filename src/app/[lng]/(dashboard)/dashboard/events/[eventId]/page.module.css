@@ -29,7 +29,7 @@
   background-color: #ffdddd;
   border: 1px solid #ff8888;
   color: #ff0000;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   text-align: center;
   margin-top: 20px;
 }

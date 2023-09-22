@@ -32,6 +32,7 @@ const AuthContainer = ({ lng }) => {
           <SignUpForm lng={lng} />
         )}{" "}
         <div className={styles.elements}>
+          <hr></hr>
           <div className={styles.tabs}>
             <button
               className={`${styles.createAccount} ${
