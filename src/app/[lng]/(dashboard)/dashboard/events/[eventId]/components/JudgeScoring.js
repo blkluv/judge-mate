@@ -4,6 +4,7 @@ import { realTimeDatabase } from "../../../../../../../firebase/config";
 import { db } from "../../../../../../../firebase/config";
 import { collection, doc, getDoc } from "firebase/firestore";
 import debounce from "lodash.debounce";
+import styles from "./JudgeScoring.module.css";
 
 const JudgeScoring = ({ eventId, userId }) => {
   const [categories, setCategories] = useState([]);
@@ -113,9 +114,9 @@ const JudgeScoring = ({ eventId, userId }) => {
   };
 
   return (
-    <div>
-      <h3>Score the participants:</h3>
-      <table>
+    <div className={styles.judgeScoringContainer}>
+      <h3 className={styles.judgeSectionHeading}>Score the participants:</h3>
+      <table className={styles.scoringTable}>
         <thead>
           <tr>
             <th>Participant</th>
@@ -131,6 +132,7 @@ const JudgeScoring = ({ eventId, userId }) => {
               {categories.map((cat, idx) => (
                 <td key={idx}>
                   <input
+                    className={styles.scoringInput}
                     type="number"
                     min={cat.range[0]}
                     max={cat.range[1]}

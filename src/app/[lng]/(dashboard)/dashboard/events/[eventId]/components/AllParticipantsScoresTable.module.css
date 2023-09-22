@@ -1,47 +1,67 @@
 /* AllParticipantsScoresTable.module.css */
-
 .allParticipantsScoresTable {
-  width: 100%;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  width: 90%;
+  overflow-x: auto;
 }
 
 .allScoresTable {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #d0d0d0;
-  font-size: 14px;
+  margin-top: 20px;
 }
 
 .allScoresTable th,
 .allScoresTable td {
-  border: 1px solid #d0d0d0;
-  padding: 8px 12px;
+  padding: 8px;
   text-align: center;
 }
 
 .allScoresTable th {
-  background-color: #f7f7f7;
+  background-color: #f2f2f2;
   font-weight: bold;
 }
 
-.noScoresAvailable {
-  color: #777;
-  font-style: italic;
+.allScoresTable tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
 }
 
-/* Responsive styles for smaller devices (e.g., mobile phones) */
+.allScoresTable tbody tr:hover {
+  background-color: #e6e6e6;
+}
 
+.noScoresAvailable {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Styles for mobile devices */
 @media (max-width: 768px) {
+  .allParticipantsScoresTable {
+    width: 100%;
+  }
+
   .allScoresTable {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .allScoresTable th,
   .allScoresTable td {
-    padding: 5px 8px;
+    padding: 6px;
+  }
+
+  .noScoresAvailable {
+    font-size: 16px;
+    margin-top: 15px;
   }
 }

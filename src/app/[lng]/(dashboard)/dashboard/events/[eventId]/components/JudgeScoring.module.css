@@ -1,0 +1,74 @@
+/* JudgeScoring.module.css */
+.judgeScoringContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  width: 60%;
+  overflow-x: auto;
+}
+
+.judgeSectionHeading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.scoringTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scoringTable th {
+  padding: 10px 15px;
+  background-color: #f5f7fa;
+  color: #333;
+  border-bottom: 2px solid #e3e8ee;
+  font-weight: 500;
+}
+
+.scoringTable td {
+  padding: 12px 15px;
+  color: #555;
+  border-bottom: 1px solid #e3e8ee;
+}
+
+.scoringTable tr:last-child td {
+  border-bottom: none;
+}
+
+.scoringInput {
+  width: 50px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #dcdfe6;
+  transition: border 0.2s ease;
+}
+
+.scoringInput:focus {
+  border: 1px solid #5071ff;
+  outline: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .judgeScoringContainer {
+    width: 100%;
+  }
+
+  .judgeSectionHeading {
+    font-size: 20px;
+  }
+
+  .scoringTable {
+    font-size: 14px;
+  }
+
+  .scoringTable th,
+  .scoringTable td {
+    padding: 8px 10px;
+  }
+}
