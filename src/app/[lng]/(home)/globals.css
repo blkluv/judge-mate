@@ -61,7 +61,11 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: #333;
-  background-color: var(--color-light-silver);
+  background: linear-gradient(
+    to bottom right,
+    var(--color-light-silver),
+    var(--color-battery-charged-blue)
+  );
   margin: 0 auto; /* Wyśrodkowanie strony */
 }
 
@@ -112,20 +116,16 @@ a:-webkit-any-link {
 }
 
 button {
-  z-index: 1;
-  margin: var(--button-margin);
-  display: inline-block;
-  transition: all 0.2s ease-in;
-  position: relative;
-  overflow: hidden;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
   color: white;
-  padding: var(--button-padding);
-  font-size: 12px;
-  border-radius: 0; /* Poprawka wartości */
-  background-color: var(--color-blue);
-  border: 1px solid #e8e8e8;
-  box-shadow: 1px 1px 6px #c5c5c5, -1px -1px 7px #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
 button:hover {
   background-color: var(--color-battery-charged-blue);
 }
@@ -157,8 +157,9 @@ tr:hover {
 
 /* Dla szerokości ekranu mobilnego */
 @media only screen and (max-width: 767px) {
-  button {
-    padding: 2.77777778vw 6.66666667vw;
+  .buttonBlue {
+    padding: 8px 15px;
+    font-size: 14px;
   }
   input {
     font-size: 16px;

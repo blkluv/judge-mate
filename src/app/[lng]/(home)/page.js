@@ -2,10 +2,9 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import Image from "next/image";
 
 import { useTranslation } from "../../i18n/index";
-import VersionInfo from "../(home)/components/version-info/VersionInfo";
+
 import WelcomeSection from "./components/WelcomeSection";
 import FeatureSection from "./components/FeatureSection";
 import AboutSection from "./components/AboutSection";

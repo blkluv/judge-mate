@@ -1,4 +1,4 @@
-import "./globals.css";
+import styles from "./globals.css";
 import React from "react";
 import { dir } from "i18next";
 import { languages } from "../../i18n/settings";
