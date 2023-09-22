@@ -4,6 +4,7 @@ import { useTranslation } from "../../../i18n/index";
 import styles from "./Footer.module.css"; // Załóżmy, że używasz modułów CSS
 import Image from "next/image";
 import Link from "next/link";
+import LanguageSwitcher from "./LanguageSwitcher/LanguageSwitcher";
 
 const Footer = ({ lng }) => {
   const [t, setT] = useState(() => () => "");
@@ -44,6 +45,7 @@ const Footer = ({ lng }) => {
           <p>
             &copy; {new Date().getFullYear()} {t("copyRights")}
           </p>
+          <LanguageSwitcher lng={lng} />
         </div>
       </div>
     </footer>

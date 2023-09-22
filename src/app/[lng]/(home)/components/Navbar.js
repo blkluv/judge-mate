@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "../../../i18n/index";
-import LanguageSwitcher from "./LanguageSwitcher/LanguageSwitcher";
 
 const Navbar = ({ params: { lng } }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +42,7 @@ const Navbar = ({ params: { lng } }) => {
       <div className={styles.navbarInner}>
         <Link href={`/${lng}/`}>
           <img
-            src="/images/JudgeMateLogotypWhite.svg"
+            src="/images/JudgeMateLogotypBlack.svg"
             alt="logo"
             className={styles.logo}
           />
@@ -73,7 +72,7 @@ const Navbar = ({ params: { lng } }) => {
       )}
 
       {isOpen && (
-        <div className={styles.sidebar}>
+        <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
           <ul>
             <Link className={styles.link} href={`/${lng}/features`}>
               <li
@@ -125,9 +124,7 @@ const Navbar = ({ params: { lng } }) => {
               </li>
             </Link>
 
-            <li>
-              <LanguageSwitcher lng={lng} />
-            </li>
+            <li></li>
           </ul>
         </div>
       )}
