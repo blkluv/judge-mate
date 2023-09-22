@@ -72,7 +72,7 @@ const Navbar = ({ params: { lng } }) => {
       )}
 
       {isOpen && (
-        <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+        <div className={styles.sidebar}>
           <ul>
             <Link className={styles.link} href={`/${lng}/features`}>
               <li
