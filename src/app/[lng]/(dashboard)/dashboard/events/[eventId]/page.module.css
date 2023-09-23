@@ -4,15 +4,21 @@
   margin: 0 auto;
   padding: 20px;
   font-family: "Roboto", sans-serif; /* Dodanie nowoczesnej czcionki */
-}
-
-.eventManagementSection {
   display: flex;
-  flex-wrap: wrap; /* Obejmuje elementy w kolejnych wierszach, jeśli nie ma miejsca */
-  justify-content: space-between;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 1rem;
+}
+.eventUserManagementSection {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
+.eventTableCreatorSection {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
 /* Stylowanie ekranu ładowania */
 .loading {
   display: flex;
@@ -34,21 +40,6 @@
   margin-top: 20px;
 }
 
-/* Style dla komputerów */
-
-@media (min-width: 769px) {
-  .container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .eventManagementSection {
-    flex-direction: row;
-    gap: 20px; /* Dodanie odstępów pomiędzy komponentami */
-  }
-}
-
 /* Style dla urządzeń mobilnych */
 
 @media (max-width: 768px) {
@@ -57,7 +48,15 @@
     gap: 10px;
   }
 
-  .eventManagementSection {
-    gap: 10px;
+  .eventUserManagementSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .eventTableCreatorSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }

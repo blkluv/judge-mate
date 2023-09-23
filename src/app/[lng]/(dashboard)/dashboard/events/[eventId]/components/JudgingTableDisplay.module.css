@@ -5,8 +5,7 @@
   padding: 30px; /* Reduced padding for a tighter design */
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  margin: 20px auto; /* Added auto to horizontally center and reduced margin */
-  max-width: 95%; /* Added some space around the component */
+  height: -webkit-fill-available;
   overflow-x: auto;
 }
 

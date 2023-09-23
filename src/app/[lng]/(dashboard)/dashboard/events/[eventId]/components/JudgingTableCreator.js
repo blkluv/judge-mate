@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ref, set } from "firebase/database";
 import { realTimeDatabase } from "../../../../../../../firebase/config";
-import JudgingTableDisplay from "./JudgingTableDisplay";
+
 import styles from "./JudgingTableCreator.module.css";
 
 const JudgingTableCreator = ({ eventId }) => {
@@ -103,7 +103,6 @@ const JudgingTableCreator = ({ eventId }) => {
       <button className={styles.button} onClick={handleSubmit}>
         Submit Judging Table
       </button>
-      <JudgingTableDisplay eventId={eventId} />
     </div>
   );
 };

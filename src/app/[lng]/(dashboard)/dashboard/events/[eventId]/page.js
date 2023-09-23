@@ -10,6 +10,7 @@ import RemoveUserFromEvent from "./(users-management)/RemoveUserFromEvent";
 import JudgeScoring from "./components/JudgeScoring";
 import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
 import EventDetails from "./components/EventDetails";
+import JudgingTableDisplay from "./components/JudgingTableDisplay";
 
 const EventContext = createContext();
 
@@ -52,7 +53,7 @@ function Page({ params: { eventId } }) {
     <EventContext.Provider value={eventData}>
       <div className={styles.container}>
         <EventDetails eventData={eventData} />
-        <div className={styles.eventManagementSection}>
+        <div className={styles.eventUserManagementSection}>
           {isOrganizer && (
             <AddUserToEvent
               eventId={eventId}
@@ -62,7 +63,12 @@ function Page({ params: { eventId } }) {
           <EventUsers eventId={eventId} refreshData={refreshData} />
           {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}{" "}
         </div>
-        {isOrganizer && <JudgingTableCreator eventId={eventId} />}
+        <div className={styles.eventTableCreatorSection}>
+          {" "}
+          {isOrganizer && <JudgingTableCreator eventId={eventId} />}
+          <JudgingTableDisplay eventId={eventId} />
+        </div>
+
         {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}
         <AllParticipantsScoresTable eventId={eventId} />
       </div>
