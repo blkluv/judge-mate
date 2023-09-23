@@ -1,155 +1,124 @@
-/* Ogólny kontener */
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  border: 1px solid #d0d0d0;
-  margin-bottom: 20px;
-  background-color: var(--color-white);
-  align-items: center;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
   box-sizing: border-box;
-  overflow-x: auto; /* Dodane dla przewijania */
+  background-color: #f9f9fa;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin: 20px auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  width: 100%;
 }
 
 .title {
-  font-size: 22px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* Style dla pojedynczej kategorii */
-.category {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-
-.input {
-  padding: 8px 12px;
-  border: 1px solid #d0d0d0;
-  border-radius: var(--border-radius);
-  outline: none;
-  transition: border-color 0.3s;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.input:focus {
-  border-color: #007bff;
-}
-
-.button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.button:hover {
-  background-color: #0056b3;
-}
-
-.button:disabled {
-  background-color: #a6a6a6;
-  cursor: not-allowed;
-}
-
-.removeButton {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #ff4136;
-  color: white;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .table {
+  box-sizing: border-box;
   width: 100%;
   border-collapse: collapse;
-  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .table th,
 .table td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #34495e;
+  color: #ecf0f1;
+  border-bottom: 2px solid #2c3e50;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
   padding: 8px 12px;
-  border: 1px solid #d0d0d0;
-  word-break: break-word;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  max-width: 100%;
 }
 
-.addButton {
-  margin-top: 10px;
-  background-color: #e0e0e0;
-  color: #333;
-  cursor: pointer;
+.input:focus {
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
+}
+
+.addButton,
+.removeButton,
+.button {
+  margin-top: 15px;
+  padding: 10px 20px;
   border: none;
-  padding: 6px 12px;
-  border-radius: var(--border-radius);
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #5cb85c;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
 }
 
-.addButton:hover {
-  background-color: #c7c7c7;
+.addButton:hover,
+.removeButton:hover,
+.button:hover {
+  background-color: #4cae4c;
 }
 
-/* Style dla urządzeń o szerokości ekranu mniejszej niż 768px */
-@media (max-width: 767px) {
+.removeButton {
+  background-color: #d9534f;
+}
+
+.removeButton:hover {
+  background-color: #c9302c;
+}
+
+@media (max-width: 768px) {
   .container {
-    padding: 10px;
-    align-items: stretch;
+    padding: 10px 10px; /* zmniejszono padding z 15px */
   }
 
   .title {
-    font-size: 18px;
-    text-align: center;
+    font-size: 18px; /* zmniejszono z 20px */
+    margin-bottom: 15px; /* zmniejszono margines z 20px */
   }
 
-  .table,
-  .editMode,
-  .viewMode {
-    font-size: 14px;
+  .tableContainer {
+    overflow-x: auto; /* umożliwia poziome przewijanie tylko dla tabeli */
   }
 
   .table th,
   .table td {
-    padding: 6px 8px;
+    padding: 6px 8px; /* zmniejszono padding dla komórek */
   }
 
   .input {
+    font-size: 12px; /* zmniejszono rozmiar czcionki dla inputów */
+    padding: 6px 8px; /* zmniejszono padding dla inputów */
+  }
+
+  .addButton,
+  .removeButton,
+  .button {
     font-size: 14px;
-    padding: 6px 10px;
-  }
-
-  .button,
-  .removeButton {
-    padding: 8px 15px;
-    font-size: 14px;
-  }
-
-  .addButton {
-    font-size: 14px;
-    padding: 6px 10px;
-  }
-
-  .category {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
-  }
-
-  .viewMode,
-  .editMode {
-    flex-wrap: nowrap;
+    margin-top: 10px;
+    padding: 6px 10px; /* zmniejszono padding dla przycisków */
   }
 }

@@ -39,58 +39,64 @@ const JudgingTableCreator = ({ eventId }) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Define Judging Table</h2>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Category Name</th>
-            <th>Range Start</th>
-            <th>Range End</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((cat, idx) => (
-            <tr key={idx}>
-              <td>
-                <input
-                  className={styles.input}
-                  value={cat.name}
-                  placeholder="Category Name"
-                  onChange={(e) => handleChange(idx, "name", e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  className={styles.input}
-                  type="number"
-                  value={cat.range[0]}
-                  onChange={(e) =>
-                    handleChange(idx, "range", [e.target.value, cat.range[1]])
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  className={styles.input}
-                  type="number"
-                  value={cat.range[1]}
-                  onChange={(e) =>
-                    handleChange(idx, "range", [cat.range[0], e.target.value])
-                  }
-                />
-              </td>
-              <td>
-                <button
-                  className={styles.removeButton}
-                  onClick={() => removeCategory(idx)}
-                >
-                  Remove
-                </button>
-              </td>
+      <div class="tableContainer">
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th>Range Start</th>
+              <th>Range End</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {categories.map((cat, idx) => (
+              <tr key={idx}>
+                <td>
+                  <input
+                    className={styles.input}
+                    value={cat.name}
+                    placeholder="Category Name"
+                    onChange={(e) => handleChange(idx, "name", e.target.value)}
+                  />
+                </td>
+                <td>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    value={cat.range[0]}
+                    onChange={(e) =>
+                      handleChange(idx, "range", [e.target.value, cat.range[1]])
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    value={cat.range[1]}
+                    onChange={(e) =>
+                      handleChange(idx, "range", [cat.range[0], e.target.value])
+                    }
+                  />
+                </td>
+                <td>
+                  <button
+                    className={styles.removeButton}
+                    onClick={() => removeCategory(idx)}
+                  >
+                    <img
+                      src="/icons/delete.svg"
+                      alt="logo"
+                      className={styles.logo}
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <button className={styles.addButton} onClick={addCategory}>
         + Add Category
       </button>
