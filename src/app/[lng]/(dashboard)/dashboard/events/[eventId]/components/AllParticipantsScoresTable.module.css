@@ -8,6 +8,9 @@
   margin: 20px auto;
   max-width: 95%;
   overflow-x: auto;
+  height: -moz-available; /* WebFirefox */
+  height: -webkit-fill-available; /* WebKit */
+  height: fill-available; /* Standard */
 }
 
 .allScoresTable {
