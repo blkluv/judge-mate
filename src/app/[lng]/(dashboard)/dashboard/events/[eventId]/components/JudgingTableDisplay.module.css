@@ -5,9 +5,6 @@
   padding: 30px; /* Reduced padding for a tighter design */
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  height: -moz-available; /* WebFirefox */
-  height: -webkit-fill-available; /* WebKit */
-  height: fill-available; /* Standard */
   overflow-x: auto;
 }
 

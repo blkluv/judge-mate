@@ -6,9 +6,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   max-width: 800px;
   width: 100%;
-  height: -moz-available; /* WebFirefox */
-  height: -webkit-fill-available; /* WebKit */
-  height: fill-available; /* Standard */
+  /* Usunięte style związane z wysokością */
 }
 
 .tableContainer {
