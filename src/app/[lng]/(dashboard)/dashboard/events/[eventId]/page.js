@@ -11,6 +11,7 @@ import JudgeScoring from "./components/JudgeScoring";
 import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
 import EventDetails from "./components/EventDetails";
 import JudgingTableDisplay from "./components/JudgingTableDisplay";
+import ManageUserEvent from "./(users-management)/ManageUserEvent";
 
 const EventContext = createContext();
 
@@ -54,6 +55,12 @@ function Page({ params: { eventId } }) {
       <div className={styles.container}>
         <EventDetails eventData={eventData} />
         <div className={styles.eventUserManagementSection}>
+          {isOrganizer && (
+            <ManageUserEvent
+              eventId={eventId}
+              onUserUpdated={() => setRefreshData((prev) => !prev)}
+            />
+          )}
           {isOrganizer && (
             <AddUserToEvent
               eventId={eventId}
