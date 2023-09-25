@@ -61,14 +61,8 @@ function Page({ params: { eventId } }) {
               onUserUpdated={() => setRefreshData((prev) => !prev)}
             />
           )}
-          {isOrganizer && (
-            <AddUserToEvent
-              eventId={eventId}
-              onUserAdded={() => setRefreshData((prev) => !prev)}
-            />
-          )}{" "}
+
           <EventUsers eventId={eventId} refreshData={refreshData} />
-          {isOrganizer && <RemoveUserFromEvent eventId={eventId} />}{" "}
         </div>
         <div className={styles.eventTableCreatorSection}>
           {" "}
