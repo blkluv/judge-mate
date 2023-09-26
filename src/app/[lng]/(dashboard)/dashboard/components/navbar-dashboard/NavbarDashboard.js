@@ -40,6 +40,9 @@ const NavbarDashboard = ({ params: { lng } }) => {
               <Link href="/dashboard/my-events">{t("myEvents")}</Link>
             </li>
             <li>
+              <Link href="/dashboard/events-base">{t("eventsBase")}</Link>
+            </li>
+            <li>
               <Link href="/dashboard/user-profile">{t("profile")}</Link>
             </li>
           </ul>

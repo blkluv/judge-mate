@@ -1,0 +1,77 @@
+/* UpcomingEvents.module.css */
+
+.container {
+  box-sizing: border-box;
+  background-color: #f9f9fa;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  width: 100%;
+}
+
+.eventList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.eventItem {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #ecf0f1;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.eventItem:hover {
+  background-color: #bdc3c7;
+}
+
+.eventLink {
+  text-decoration: none;
+  color: #2c3e50;
+  display: block;
+}
+
+.eventName {
+  font-weight: 600;
+  display: block;
+}
+
+.eventDate {
+  font-size: 14px;
+  color: #7f8c8d;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px 10px;
+  }
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .eventItem {
+    padding: 6px 8px;
+  }
+
+  .eventName {
+    font-size: 16px;
+  }
+
+  .eventDate {
+    font-size: 12px;
+  }
+}

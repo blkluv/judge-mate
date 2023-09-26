@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "../../../../../../../firebase/firestore/fetchData";
-import { collection, getDocs, where, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  where,
+  query,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../../../../../../../firebase/config";
 import styles from "./EventUsers.module.css";
 
@@ -8,6 +15,7 @@ function EventUsers({ eventId, refreshData }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRole, setSelectedRole] = useState("all");
+  const [approvalFilter, setApprovalFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,11 +29,21 @@ function EventUsers({ eventId, refreshData }) {
       const q = query(usersRef, where("__name__", "in", userIds));
       const userSnapshots = await getDocs(q);
 
-      const fetchedUsers = userSnapshots.docs.map((doc) => ({
-        id: doc.id,
-        username: doc.data().username,
-        role: data.roles[doc.id],
-      }));
+      const fetchedUsers = await Promise.all(
+        userSnapshots.docs.map(async (userDoc) => {
+          const userEventRef = doc(
+            db,
+            `users/${userDoc.id}/userEvents/${eventId}`
+          );
+          const userEventData = (await getDoc(userEventRef)).data();
+          return {
+            id: userDoc.id,
+            username: userDoc.data().username,
+            role: data.roles[userDoc.id],
+            isApproved: userEventData?.isApproved || false,
+          };
+        })
+      );
 
       setUsers(fetchedUsers);
     }
@@ -42,6 +60,13 @@ function EventUsers({ eventId, refreshData }) {
 
   const filteredUsers = users
     .filter((user) => selectedRole === "all" || user.role === selectedRole)
+    .filter((user) =>
+      approvalFilter === "all"
+        ? true
+        : approvalFilter === "approved"
+        ? user.isApproved
+        : !user.isApproved
+    )
     .filter((user) =>
       user.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -60,7 +85,6 @@ function EventUsers({ eventId, refreshData }) {
       <h2 className={styles.sectionHeading}>Event Users</h2>
 
       <div className={styles.filtersContainer}>
-        {/* Filtrowanie po roli */}
         <div>
           <label>Filtruj po roli: </label>
           <select
@@ -70,11 +94,21 @@ function EventUsers({ eventId, refreshData }) {
             <option value="all">Wszyscy</option>
             <option value="judge">Sędzia</option>
             <option value="organizer">Organizator</option>
-            {/* ... inne role */}
           </select>
         </div>
 
-        {/* Wyszukiwanie użytkownika */}
+        <div>
+          <label>Status zatwierdzenia: </label>
+          <select
+            className={styles.selectApproval}
+            onChange={(e) => setApprovalFilter(e.target.value)}
+          >
+            <option value="all">Wszyscy</option>
+            <option value="approved">Zatwierdzeni</option>
+            <option value="notApproved">Nie zatwierdzeni</option>
+          </select>
+        </div>
+
         <div>
           <label>Wyszukaj: </label>
           <input
@@ -91,6 +125,7 @@ function EventUsers({ eventId, refreshData }) {
           <tr>
             <th className={styles.tableHeading}>Username</th>
             <th className={styles.tableHeading}>Role</th>
+            <th className={styles.tableHeading}>Zatwierdzony</th>
           </tr>
         </thead>
         <tbody>
@@ -98,12 +133,14 @@ function EventUsers({ eventId, refreshData }) {
             <tr key={user.id} className={styles.userItem}>
               <td className={styles.username}>{user.username}</td>
               <td className={styles.role}>{user.role}</td>
+              <td className={styles.approved}>
+                {user.isApproved ? "Tak" : "Nie"}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Paginacja */}
       <div className={styles.paginationContainer}>
         <button
           className={styles.paginationButton}

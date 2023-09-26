@@ -43,6 +43,7 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
       const userEventRole = {
         role,
         joinedAt: new Date().toISOString(),
+        isApproved: false, // domyślnie ustawiamy na false
       };
       const userEventRef = doc(db, `users/${userId}/userEvents`, eventId);
       await setDoc(userEventRef, userEventRole);
@@ -116,6 +117,43 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
     }
   };
 
+  const handleApproveUser = async () => {
+    if (!username) {
+      setError("Please provide a username.");
+      return;
+    }
+
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("username", "==", username));
+      const userSnapshot = await getDocs(q);
+
+      if (userSnapshot.empty) {
+        setError("User not found.");
+        return;
+      }
+
+      const userId = userSnapshot.docs[0].id;
+      const userEventRef = doc(db, `users/${userId}/userEvents/${eventId}`);
+      await updateDoc(userEventRef, {
+        isApproved: true,
+      });
+
+      setError(""); // Clear any previous error
+      setUsername(""); // Clear the input
+      alert("User participation approved!");
+
+      if (typeof onUserUpdated === "function") {
+        onUserUpdated();
+      }
+    } catch (error) {
+      console.error("Error approving user participation:", error);
+      setError(
+        "An error occurred while trying to approve the user's participation."
+      );
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Manage User in Event</h2>
@@ -151,6 +189,13 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
           onClick={handleRemoveUser}
         >
           Remove User
+        </button>
+        <button
+          className={styles.button}
+          type="button"
+          onClick={handleApproveUser}
+        >
+          Approve User Participation
         </button>
         {error && <p className={styles.errorMessage}>{error}</p>}
       </div>

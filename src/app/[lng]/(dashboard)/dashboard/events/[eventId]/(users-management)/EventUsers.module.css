@@ -50,6 +50,7 @@
 }
 
 .searchInput,
+.selectApproval,
 .selectRole {
   box-sizing: border-box;
   width: 100%;
@@ -61,6 +62,7 @@
 }
 
 .searchInput:focus,
+.selectApproval:focus,
 .selectRole:focus {
   border-color: #5cb85c;
   box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
@@ -103,6 +105,7 @@
   }
 
   .searchInput,
+  .selectApproval,
   .selectRole {
     font-size: 12px;
     padding: 6px 8px;
