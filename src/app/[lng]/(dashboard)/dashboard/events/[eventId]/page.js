@@ -12,6 +12,7 @@ import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable"
 import EventDetails from "./components/EventDetails";
 import JudgingTableDisplay from "./components/JudgingTableDisplay";
 import ManageUserEvent from "./(users-management)/ManageUserEvent";
+import JoinEvent from "./components/JoinEvent";
 
 const EventContext = createContext();
 
@@ -39,8 +40,10 @@ function Page({ params: { eventId } }) {
     if (eventId) fetchEvent();
   }, [eventId]);
 
-  const isJudge = eventData?.roles?.[user?.uid] === "judge";
-  const isOrganizer = eventData?.roles?.[user?.uid] === "organizer";
+  const userRole = eventData?.roles?.[user?.uid];
+  const isJudge = userRole === "judge";
+  const isOrganizer = userRole === "organizer";
+  const hasNoRole = !userRole;
 
   if (loading) {
     return <div>Loading event...</div>;
@@ -55,6 +58,7 @@ function Page({ params: { eventId } }) {
       <div className={styles.container}>
         <EventDetails eventData={eventData} />
         <div className={styles.eventUserManagementSection}>
+          {hasNoRole && <JoinEvent eventId={eventId} currentUser={user} />}
           {isOrganizer && (
             <ManageUserEvent
               eventId={eventId}
@@ -65,7 +69,6 @@ function Page({ params: { eventId } }) {
           <EventUsers eventId={eventId} refreshData={refreshData} />
         </div>
         <div className={styles.eventTableCreatorSection}>
-          {" "}
           {isOrganizer && <JudgingTableCreator eventId={eventId} />}
           <JudgingTableDisplay eventId={eventId} />
         </div>
