@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useTranslation } from "../../../../../i18n/index";
 import styles from "./NavbarDashboard.module.css";
-import LogoutButton from "../logout-button/LogoutButton";
+import LogoutButton from "../../user-profile/components/LogoutButton";
 import UserProfile from "./UserProfile";
 
 const NavbarDashboard = ({ params: { lng } }) => {
@@ -51,7 +51,6 @@ const NavbarDashboard = ({ params: { lng } }) => {
       <div className={styles.ContainerNavbarUserProfile}>
         {" "}
         <UserProfile />
-        <LogoutButton />
       </div>{" "}
     </div>
   );

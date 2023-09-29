@@ -1,0 +1,57 @@
+/* page.module.css */
+
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.eventUserManagementSection {
+  display: grid;
+  grid-template-columns: 1fr 3fr; /* ManageUserEvent będzie miał 1fr, a EventUsers 3fr */
+  gap: 1rem;
+}
+
+.eventTableCreatorSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Stylowanie ekranu ładowania */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5em;
+  color: #555;
+}
+
+/* Stylowanie wiadomości o błędzie */
+.error {
+  padding: 20px;
+  background-color: #ffdddd;
+  border: 1px solid #ff8888;
+  color: #ff0000;
+  border-radius: 8px; /* Zaktualizowane wartości border-radius */
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Style dla urządzeń mobilnych */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .eventUserManagementSection,
+  .eventTableCreatorSection {
+    grid-template-columns: 1fr;
+  }
+}

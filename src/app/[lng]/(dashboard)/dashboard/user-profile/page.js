@@ -1,10 +1,13 @@
 "use client";
 
-import EditUserProfile from "./EditUserProfile";
+import EditUserProfile from "./components/EditUserProfile";
+import LogoutButton from "./components/LogoutButton";
+import styles from "./page.module.css";
 
 function Page() {
   return (
-    <div>
+    <div className={styles.container}>
+      <LogoutButton />
       <EditUserProfile />
     </div>
   );
