@@ -3,7 +3,8 @@ import { fetchData } from "../../../../../firebase/firestore/fetchData";
 import deleteData from "../../../../../firebase/firestore/deleteData";
 import { auth } from "../../../../../firebase/config.js";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; // Import Link z Next.js
+import Link from "next/link";
+import styles from "./MyCreatedEventsList.module.css";
 
 function MyCreatedEventsList() {
   const [userEvents, setUserEvents] = useState([]);
@@ -22,7 +23,6 @@ function MyCreatedEventsList() {
       const { data, error } = await fetchData("events");
 
       if (data) {
-        // Odfiltruj wydarzenia, zostawiając tylko te utworzone przez zalogowanego użytkownika
         const userCreatedEvents = data.filter(
           (event) => event.roles[currentUser.uid] === "organizer"
         );
@@ -41,14 +41,9 @@ function MyCreatedEventsList() {
 
   const handleDeleteEvent = async (eventId) => {
     try {
-      // Usuń wydarzenie z kolekcji "events"
       await deleteData("events", eventId);
-
-      // Usuń również informacje o wydarzeniu z kolekcji "userEvents" w dokumencie użytkownika
       await deleteData(`users/${currentUser.uid}/userEvents`, eventId);
-
-      // Przekieruj użytkownika na stronę z listą wydarzeń po usunięciu
-      router.push("/dashboard/my-events"); // Zmień na właściwą ścieżkę URL
+      router.push("/dashboard/my-events");
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("There was an error deleting the event. Please try again.");
@@ -64,20 +59,29 @@ function MyCreatedEventsList() {
   }
 
   return (
-    <div>
-      <h1>Your Created Events</h1>
-      <ul>
-        {userEvents.map((event) => (
-          <li key={event.id}>
-            <Link href={`/dashboard/events/${event.id}`}>
-              {event.eventName} - {event.eventDate}
-            </Link>
-            <button onClick={() => handleDeleteEvent(event.id)}>
-              Delete Event
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Your Created Events</h1>
+      {userEvents.length ? (
+        <ul className={styles.eventsList}>
+          {userEvents.map((event) => (
+            <li key={event.id} className={styles.eventItem}>
+              <Link href={`/dashboard/events/${event.id}`}>
+                <span className={styles.eventLink}>
+                  {event.eventName} - {event.eventDate}
+                </span>
+              </Link>
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDeleteEvent(event.id)}
+              >
+                Delete Event
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No events created yet.</p>
+      )}
     </div>
   );
 }

@@ -1,0 +1,80 @@
+/* MyCreatedEventsList.module.css */
+
+.container {
+  box-sizing: border-box;
+  background-color: #f9f9fa;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.eventsList {
+  list-style: none;
+  padding: 0;
+}
+
+.eventItem {
+  margin-bottom: 15px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eventLink {
+  text-decoration: none;
+  color: #2c3e50;
+  transition: color 0.15s ease-in-out;
+}
+
+.eventLink:hover {
+  color: #5cb85c;
+}
+
+.deleteButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #d9534f;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.deleteButton:hover {
+  background-color: #c9302c;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px 10px;
+  }
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .eventItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .eventLink,
+  .deleteButton {
+    margin-bottom: 8px;
+  }
+}
