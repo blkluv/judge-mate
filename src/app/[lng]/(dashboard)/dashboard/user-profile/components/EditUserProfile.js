@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "../../../../../../firebase/firestore/fetchData";
 import { auth } from "../../../../../../firebase/config";
 import { updateData } from "../../../../../../firebase/firestore/updateData";
-
 import styles from "./EditUserProfile.module.css";
 
 function EditUserProfile() {
+  const [initialData, setInitialData] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     lastName: "",
@@ -22,6 +22,7 @@ function EditUserProfile() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const currentUser = auth.currentUser;
 
   useEffect(() => {
@@ -36,6 +37,7 @@ function EditUserProfile() {
 
       if (data) {
         setFormData(data);
+        setInitialData(data);
       }
 
       if (error) {
@@ -56,7 +58,8 @@ function EditUserProfile() {
     }));
   };
 
-  const handleUpdateProfile = async () => {
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
     try {
       const { success, error } = await updateData(
         "users",
@@ -66,6 +69,7 @@ function EditUserProfile() {
 
       if (success) {
         alert("Profile updated successfully!");
+        setIsEditing(false);
       } else {
         throw error;
       }
@@ -73,6 +77,14 @@ function EditUserProfile() {
       console.error("Error updating profile:", error);
       alert("There was an error updating the profile. Please try again.");
     }
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+  const handleCancelClick = () => {
+    setFormData(initialData); // Reset to initial data
+    setIsEditing(false);
   };
 
   if (loading) {
@@ -83,166 +95,187 @@ function EditUserProfile() {
     return <div>Error loading user profile: {error.message}</div>;
   }
 
-  return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Edit User Profile</h1>
-      <form onSubmit={handleUpdateProfile}>
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Imię*:</label>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+  if (isEditing) {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.title}>Edit User Profile</h1>
+        <form onSubmit={handleUpdateProfile}>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Imię*:</label>
+            <input
+              className={styles.inputField}
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Nazwisko*:</label>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Nazwisko*:</label>
+            <input
+              className={styles.inputField}
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Data urodzenia*:</label>
-          <input
-            className={styles.inputField}
-            type="date"
-            name="birthDate"
-            value={formData.birthDate}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Data urodzenia*:</label>
+            <input
+              className={styles.inputField}
+              type="date"
+              name="birthDate"
+              value={formData.birthDate}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Płeć*:</label>
-          <select
-            className={styles.selectField}
-            name="gender"
-            value={formData.gender}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="Mężczyzna">Mężczyzna</option>
-            <option value="Kobieta">Kobieta</option>
-          </select>
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Płeć*:</label>
+            <select
+              className={styles.selectField}
+              name="gender"
+              value={formData.gender}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="Mężczyzna">Mężczyzna</option>
+              <option value="Kobieta">Kobieta</option>
+            </select>
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>E-mail*:</label>
-          <input
-            className={styles.inputField}
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>E-mail*:</label>
+            <input
+              className={styles.inputField}
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Adres*:</label>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Adres*:</label>
+            <input
+              className={styles.inputField}
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Kod pocztowy*:</label>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="postalCode"
-            value={formData.postalCode}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Kod pocztowy*:</label>
+            <input
+              className={styles.inputField}
+              type="text"
+              name="postalCode"
+              value={formData.postalCode}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Miejscowość*:</label>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Miejscowość*:</label>
+            <input
+              className={styles.inputField}
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Kraj*:</label>
-          <select
-            className={styles.selectField}
-            name="country"
-            value={formData.country}
-            onChange={handleInputChange}
-          >
-            <option value="Polska">Polska</option>
-            {/* Możesz dodać więcej krajów tutaj */}
-          </select>
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Kraj*:</label>
+            <select
+              className={styles.selectField}
+              name="country"
+              value={formData.country}
+              onChange={handleInputChange}
+            >
+              <option value="Polska">Polska</option>
+              {/* Możesz dodać więcej krajów tutaj */}
+            </select>
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Telefon*:</label>
-          <input
-            className={styles.inputField}
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Telefon*:</label>
+            <input
+              className={styles.inputField}
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>
-            Telefon alarmowy ICE w nagłym przypadku:
-          </label>
-          <input
-            className={styles.inputField}
-            type="tel"
-            name="emergencyPhone"
-            value={formData.emergencyPhone}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>
+              Telefon alarmowy ICE w nagłym przypadku:
+            </label>
+            <input
+              className={styles.inputField}
+              type="tel"
+              name="emergencyPhone"
+              value={formData.emergencyPhone}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Klub:</label>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="club"
-            value={formData.club}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className={styles.buttonContainer}>
-          <button className={styles.updateButton} type="submit">
-            Update Profile
-          </button>
-        </div>
-      </form>
-      {error && <p className={styles.errorMessage}>{error.message}</p>}
-    </div>
-  );
+          <div className={styles.inputContainer}>
+            <label className={styles.inputLabel}>Klub:</label>
+            <input
+              className={styles.inputField}
+              type="text"
+              name="club"
+              value={formData.club}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={styles.buttonContainer}>
+            <button className={styles.updateButton} type="submit">
+              Update Profile
+            </button>
+            <button
+              className={styles.cancelButton}
+              type="button"
+              onClick={handleCancelClick}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+        {error && <p className={styles.errorMessage}>{error.message}</p>}
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.title}>Your Profile</h1>
+        <p>
+          <strong>Imię:</strong> {formData.firstName}
+        </p>
+        <p>
+          <strong>Nazwisko:</strong> {formData.lastName}
+        </p>
+        <button onClick={handleEditClick}>Edytuj profil</button>
+      </div>
+    );
+  }
 }
 
 export default EditUserProfile;

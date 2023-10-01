@@ -35,10 +35,9 @@ function Page() {
           </li>
           <li onClick={() => setSelectedOption("Pomoc i FAQ")}>Pomoc i FAQ</li>
         </ul>
+        <LogoutButton />
       </div>
       <div className={styles.content}>{renderContent()}</div>
-      {/* <LogoutButton />
-       */}
     </div>
   );
 }
