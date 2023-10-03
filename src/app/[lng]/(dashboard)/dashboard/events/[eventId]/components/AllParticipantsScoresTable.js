@@ -58,32 +58,58 @@ const AllParticipantsScoresTable = ({ eventId }) => {
   const allParticipants = [
     ...new Set(allJudges.flatMap((judgeId) => Object.keys(allScores[judgeId]))),
   ];
+  // Oblicz sumę punktów dla każdego uczestnika
+  const calculateTotalScores = () => {
+    const totalScores = {};
+    for (const judgeId in allScores) {
+      for (const participantId in allScores[judgeId]) {
+        if (!totalScores[participantId]) {
+          totalScores[participantId] = 0;
+        }
+        totalScores[participantId] += Object.values(
+          allScores[judgeId][participantId]
+        ).reduce((a, b) => a + b, 0);
+      }
+    }
+    return totalScores;
+  };
 
+  const totalScores = calculateTotalScores();
+
+  // Posortuj uczestników według ich łącznej liczby punktów
+  const sortedParticipants = allParticipants.sort(
+    (a, b) => totalScores[b] - totalScores[a]
+  );
   return (
     <div className={styles.allParticipantsScoresTable}>
       <h2>All Scores for Event ID: {eventId}</h2>
       <table className={styles.allScoresTable} border="1">
         <thead>
           <tr>
+            <th>#</th>
             <th>Participant</th>
             {allJudges.map((judgeId) => (
               <th colSpan={categories.length} key={judgeId}>
                 {usernames[judgeId] || judgeId}
               </th>
             ))}
+            <th>Total</th>
           </tr>
           <tr>
+            <th></th>
             <th></th>
             {allJudges.flatMap((judgeId) =>
               categories.map((category) => (
                 <th key={`${judgeId}-${category}`}>{category}</th>
               ))
             )}
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {allParticipants.map((participantId) => (
+          {sortedParticipants.map((participantId, index) => (
             <tr key={participantId}>
+              <td>{index + 1}</td>
               <td>{usernames[participantId] || participantId}</td>
               {allJudges.flatMap((judgeId) =>
                 categories.map((category, categoryIndex) => (
@@ -97,6 +123,7 @@ const AllParticipantsScoresTable = ({ eventId }) => {
                   </td>
                 ))
               )}
+              <td>{totalScores[participantId]}</td>
             </tr>
           ))}
         </tbody>

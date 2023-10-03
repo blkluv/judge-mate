@@ -10,7 +10,7 @@ import RemoveUserFromEvent from "./(users-management)/RemoveUserFromEvent";
 import JudgeScoring from "./components/JudgeScoring";
 import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
 import EventDetails from "./components/EventDetails";
-import JudgingTableDisplay from "./components/JudgingTableDisplay";
+import JudgingCriteriaDisplay from "./components/JudgingCriteriaDisplay";
 import ManageUserEvent from "./(users-management)/ManageUserEvent";
 import JoinEvent from "./components/JoinEvent";
 
@@ -70,7 +70,7 @@ function Page({ params: { eventId } }) {
         </div>
         <div className={styles.eventTableCreatorSection}>
           {isOrganizer && <JudgingTableCreator eventId={eventId} />}
-          <JudgingTableDisplay eventId={eventId} />
+          <JudgingCriteriaDisplay eventId={eventId} />
         </div>
 
         {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}

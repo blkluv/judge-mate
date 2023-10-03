@@ -45,9 +45,25 @@ const JudgeScoring = ({ eventId, userId }) => {
     }
   };
 
+  const fetchPreviousScores = async () => {
+    const scoresRef = ref(
+      realTimeDatabase,
+      `eventJudging/${eventId}/${userId}`
+    );
+    try {
+      const snapshot = await get(scoresRef);
+      if (snapshot.exists()) {
+        setScores(snapshot.val());
+      }
+    } catch (error) {
+      console.error("Error fetching previous scores:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCategories();
     fetchParticipants();
+    fetchPreviousScores();
   }, [eventId]);
 
   const debouncedSave = useCallback(
@@ -66,7 +82,6 @@ const JudgeScoring = ({ eventId, userId }) => {
   );
 
   useEffect(() => {
-    // Clean up debounced calls
     return () => {
       debouncedSave.cancel();
     };

@@ -1,26 +1,21 @@
 import { useState, useEffect } from "react";
 import { ref, get, onValue, off } from "firebase/database";
 import { realTimeDatabase } from "../../../../../../../firebase/config";
-import styles from "./JudgingTableDisplay.module.css";
+import styles from "./JudgingCriteriaDisplay.module.css"; // Zmieniony import stylów
 
-const JudgingTableDisplay = ({ eventId }) => {
+const JudgingCriteriaDisplay = ({ eventId }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    // Funkcja do obsługi zmian w bazie danych
     const handleDataChange = (snapshot) => {
       if (snapshot.exists()) {
         setCategories(snapshot.val());
       }
     };
 
-    // Referencja do tabeli w bazie danych
     const tableRef = ref(realTimeDatabase, `judgingTables/${eventId}`);
-
-    // Nasłuchuj zmian w bazie danych i aktualizuj widok
     onValue(tableRef, handleDataChange);
 
-    // Zatrzymaj nasłuchiwanie po odmontowaniu komponentu
     return () => {
       off(tableRef, "value", handleDataChange);
     };
@@ -28,9 +23,9 @@ const JudgingTableDisplay = ({ eventId }) => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Judging Table</h2>
+      <h2 className={styles.title}>Judging Criteria</h2> {/* Zmieniony tytuł */}
       {categories.length === 0 ? (
-        <p className={styles.noCategories}>No categories defined yet!</p>
+        <p className={styles.noCategories}>No criteria defined yet!</p>
       ) : (
         <table className={styles.table}>
           <thead>
@@ -55,4 +50,4 @@ const JudgingTableDisplay = ({ eventId }) => {
   );
 };
 
-export default JudgingTableDisplay;
+export default JudgingCriteriaDisplay; // Zmieniona nazwa eksportowanego komponentu
