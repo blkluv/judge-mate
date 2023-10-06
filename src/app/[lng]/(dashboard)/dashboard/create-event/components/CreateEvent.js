@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // Popraw import
+import { useRouter } from "next/navigation"; // Poprawiony import
 import { auth } from "../../../../../../firebase/config.js";
 import addData from "../../../../../../firebase/firestore/addData.js";
 import styles from "./CreateEvent.module.css";
@@ -7,8 +7,13 @@ import styles from "./CreateEvent.module.css";
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+  const [eventCategories, setEventCategories] = useState("");
+  const [eventSafety, setEventSafety] = useState("");
+  const [eventFees, setEventFees] = useState("");
+  const [eventContact, setEventContact] = useState("");
 
-  // Get the current user
   const currentUser = auth.currentUser;
   const router = useRouter();
 
@@ -21,13 +26,18 @@ const CreateEvent = () => {
     const eventData = {
       eventName,
       eventDate,
+      eventLocation,
+      eventDescription,
+      eventCategories,
+      eventSafety,
+      eventFees,
+      eventContact,
       roles: {
         [currentUser.uid]: "organizer",
       },
     };
 
     try {
-      // Add the new event to the events collection
       const { result: eventDocRef, error } = await addData(
         "events",
         null,
@@ -38,13 +48,11 @@ const CreateEvent = () => {
         throw error;
       }
 
-      // Update the user's events subcollection to include the event role
       const userEventRole = {
         role: "organizer",
         joinedAt: new Date().toISOString(),
       };
 
-      // This now writes to the subcollection 'userEvents' of the user's document
       const { error: userUpdateError } = await addData(
         `users/${currentUser.uid}/userEvents`,
         eventDocRef.id,
@@ -57,11 +65,15 @@ const CreateEvent = () => {
 
       setEventName("");
       setEventDate("");
+      setEventLocation("");
+      setEventDescription("");
+      setEventCategories("");
+      setEventSafety("");
+      setEventFees("");
+      setEventContact("");
 
       alert("Event successfully created!");
-
-      // Przekieruj użytkownika na stronę wydarzenia po jego utworzeniu
-      router.push(`/dashboard/events/${eventDocRef.id}`); // Zmień na właściwą ścieżkę URL
+      router.push(`/dashboard/events/${eventDocRef.id}`);
     } catch (error) {
       console.error("Error creating event:", error);
       alert("There was an error creating the event. Please try again.");
@@ -91,12 +103,63 @@ const CreateEvent = () => {
               className={styles.input}
             />
           </label>
+          <label className={styles.label}>
+            Location:
+            <input
+              type="text"
+              value={eventLocation}
+              onChange={(e) => setEventLocation(e.target.value)}
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Description:
+            <textarea
+              value={eventDescription}
+              onChange={(e) => setEventDescription(e.target.value)}
+              className={styles.textarea}
+            />
+          </label>
+          <label className={styles.label}>
+            Categories:
+            <input
+              type="text"
+              value={eventCategories}
+              onChange={(e) => setEventCategories(e.target.value)}
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Safety Information:
+            <textarea
+              value={eventSafety}
+              onChange={(e) => setEventSafety(e.target.value)}
+              className={styles.textarea}
+            />
+          </label>
+          <label className={styles.label}>
+            Fees:
+            <input
+              type="text"
+              value={eventFees}
+              onChange={(e) => setEventFees(e.target.value)}
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Contact Information:
+            <input
+              type="text"
+              value={eventContact}
+              onChange={(e) => setEventContact(e.target.value)}
+              className={styles.input}
+            />
+          </label>
           <button
             type="button"
             onClick={handleCreateEvent}
             className={styles.button}
           >
-            {" "}
             Create Event
           </button>
         </form>
@@ -104,4 +167,5 @@ const CreateEvent = () => {
     </div>
   );
 };
+
 export default CreateEvent;
