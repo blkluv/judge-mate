@@ -1,8 +1,19 @@
-import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // Poprawiony import
+import React, { useState, useEffect, useRef } from "react";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { useRouter } from "next/navigation"; // Corrected import
 import { auth } from "../../../../../../firebase/config.js";
 import addData from "../../../../../../firebase/firestore/addData.js";
 import styles from "./CreateEvent.module.css";
+
+const mapStyles = {
+  height: "400px",
+  width: "100%",
+};
+
+const defaultCenter = {
+  lat: 50.0151,
+  lng: 19.9342,
+};
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -16,6 +27,21 @@ const CreateEvent = () => {
 
   const currentUser = auth.currentUser;
   const router = useRouter();
+
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      const googleMap = mapRef.current;
+
+      googleMap.addListener("click", (e) => {
+        const { lat, lng } = e.latLng;
+        const locationString = `${lat()}, ${lng()}`;
+        setEventLocation(locationString);
+        console.log(locationString);
+      });
+    }
+  }, [mapRef]);
 
   const handleCreateEvent = async () => {
     if (!eventName || !eventDate) {
@@ -112,6 +138,18 @@ const CreateEvent = () => {
               className={styles.input}
             />
           </label>
+          <div className={styles.mapContainer}>
+            <LoadScript googleMapsApiKey="AIzaSyD_fS9Rc8WWC9pZ81GR0zVqlMv0hnMoBQc">
+              <GoogleMap
+                mapContainerStyle={mapStyles}
+                zoom={12}
+                center={defaultCenter}
+                onLoad={(map) => {
+                  mapRef.current = map;
+                }}
+              />
+            </LoadScript>
+          </div>
           <label className={styles.label}>
             Description:
             <textarea
