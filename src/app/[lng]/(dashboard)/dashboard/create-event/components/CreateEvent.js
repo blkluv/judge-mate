@@ -126,7 +126,7 @@ const CreateEvent = () => {
               type="text"
               value={eventCategories}
               onChange={(e) => setEventCategories(e.target.value)}
-              className={styles.input}
+              className={styles.textarea}
             />
           </label>
           <label className={styles.label}>
