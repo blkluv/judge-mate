@@ -139,7 +139,9 @@ const CreateEvent = () => {
             />
           </label>
           <div className={styles.mapContainer}>
-            <LoadScript googleMapsApiKey="AIzaSyD_fS9Rc8WWC9pZ81GR0zVqlMv0hnMoBQc">
+            <LoadScript
+              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+            >
               <GoogleMap
                 mapContainerStyle={mapStyles}
                 zoom={12}
