@@ -116,7 +116,6 @@ const CreateEvent = () => {
       alert("There was an error creating the event. Please try again.");
     }
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.form}>
@@ -142,7 +141,7 @@ const CreateEvent = () => {
                 className={styles.input}
               />
             </label>
-            <label className={styles.label}>
+            <label className={`${styles.label} ${styles.descriptionField}`}>
               Description:
               <textarea
                 value={eventDescription}
@@ -156,7 +155,7 @@ const CreateEvent = () => {
                 type="text"
                 value={eventCategories}
                 onChange={(e) => setEventCategories(e.target.value)}
-                className={styles.textarea}
+                className={styles.input}
               />
             </label>
             <label className={styles.label}>
@@ -216,15 +215,31 @@ const CreateEvent = () => {
                   onLoad={(map) => {
                     mapRef.current = map;
                   }}
+                  onClick={(e) => {
+                    const lat = e.latLng.lat();
+                    const lng = e.latLng.lng();
+                    setMarkerPosition({ lat, lng });
+
+                    // Utworzenie instancji Geocoder
+                    const geocoder = new google.maps.Geocoder();
+
+                    geocoder.geocode(
+                      { location: { lat, lng } },
+                      (results, status) => {
+                        if (status === "OK" && results[0]) {
+                          // Aktualizacja stanu eventLocation na podstawie uzyskanego adresu
+                          setEventLocation(results[0].formatted_address);
+                        } else {
+                          console.error("Geocoder failed due to: " + status);
+                        }
+                      }
+                    );
+                  }}
                 >
                   {markerPosition && <Marker position={markerPosition} />}
                 </GoogleMap>
               </LoadScript>
             </div>
-          </div>
-
-          {/* Button */}
-          <div style={{ gridColumn: "span 2", marginTop: "20px" }}>
             <button
               type="button"
               onClick={handleCreateEvent}

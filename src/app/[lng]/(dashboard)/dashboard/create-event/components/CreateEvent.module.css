@@ -1,42 +1,26 @@
 /* CreateEvent.module.css */
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
+  box-sizing: border-box;
+  background-color: #f9f9fa;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
   width: 100%;
-  max-width: 1200px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2-column grid for larger screens */
-  gap: 20px;
-}
-
-.mapContainer {
-  width: 100%;
-  height: 400px;
 }
 
 .title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: 600;
+  font-size: 24px;
   margin-bottom: 30px;
-  color: #0054e6;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .label {
@@ -49,59 +33,67 @@
 
 .input,
 .textarea {
+  box-sizing: border-box;
   width: 100%;
-  min-height: 2rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #f4f4f4;
-  transition: border-color 0.3s;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  max-width: 100%;
+  resize: vertical; /* Pozwala użytkownikowi na zmianę wysokości, ale nie szerokości */
 }
 
 .input:focus,
 .textarea:focus {
-  border-color: #0054e6;
-  outline: none;
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
 }
-
+.textarea {
+  min-height: 6rem;
+}
 .button {
-  width: 100%;
-  padding: 12px;
-  background-color: #0054e6;
-  color: #fff;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  font-size: 18px;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #5cb85c;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 20px;
+  transition: background-color 0.15s ease-in-out;
 }
 
 .button:hover {
-  background-color: #15b8dc;
+  background-color: #4cae4c;
 }
 
-/* Responsive styles for mobile devices */
+.descriptionField {
+  min-height: 200px;
+}
+
+.mapContainer {
+  margin: 1rem 0 2rem 0;
+  width: 100%;
+  height: 400px;
+}
+
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr; /* 1-column grid for mobile screens */
+  .container {
+    padding: 10px 10px;
   }
 
   .title {
-    font-size: 22px;
-  }
-
-  .label {
-    font-size: 14px;
+    font-size: 18px;
+    margin-bottom: 15px;
   }
 
   .input,
   .textarea {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 6px 8px;
   }
 
   .button {
-    padding: 15px;
-    font-size: 16px;
+    font-size: 14px;
+    padding: 6px 10px;
   }
 }
