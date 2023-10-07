@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  StandaloneSearchBox,
+} from "@react-google-maps/api";
 import { useRouter } from "next/navigation"; // Corrected import
 import { auth } from "../../../../../../firebase/config.js";
 import addData from "../../../../../../firebase/firestore/addData.js";
@@ -15,6 +20,8 @@ const defaultCenter = {
   lng: 19.9342,
 };
 
+const libraries = ["places"];
+
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -24,24 +31,28 @@ const CreateEvent = () => {
   const [eventSafety, setEventSafety] = useState("");
   const [eventFees, setEventFees] = useState("");
   const [eventContact, setEventContact] = useState("");
-
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [mapZoom, setMapZoom] = useState(12); // initial zoom level
   const currentUser = auth.currentUser;
   const router = useRouter();
-
   const mapRef = useRef(null);
+  const searchBoxRef = useRef(null);
 
   useEffect(() => {
-    if (mapRef.current) {
-      const googleMap = mapRef.current;
-
-      googleMap.addListener("click", (e) => {
-        const { lat, lng } = e.latLng;
-        const locationString = `${lat()}, ${lng()}`;
-        setEventLocation(locationString);
-        console.log(locationString);
-      });
+    if (mapRef.current && markerPosition) {
+      mapRef.current.panTo(markerPosition);
+      setMapZoom(15); // Adjust zoom level when a marker is placed
     }
-  }, [mapRef]);
+  }, [markerPosition]);
+
+  const handlePlacesChanged = () => {
+    const place = searchBoxRef.current.getPlaces()[0];
+    if (place) {
+      const location = place.geometry.location;
+      setEventLocation(place.formatted_address);
+      setMarkerPosition({ lat: location.lat(), lng: location.lng() });
+    }
+  };
 
   const handleCreateEvent = async () => {
     if (!eventName || !eventDate) {
@@ -110,98 +121,118 @@ const CreateEvent = () => {
     <div className={styles.container}>
       <div className={styles.form}>
         <h1 className={styles.title}>Create New Event</h1>
-        <form>
-          <label className={styles.label}>
-            Event Name:
-            <input
-              type="text"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-              className={styles.input}
-            />
-          </label>
-          <label className={styles.label}>
-            Event Date:
-            <input
-              type="date"
-              value={eventDate}
-              onChange={(e) => setEventDate(e.target.value)}
-              className={styles.input}
-            />
-          </label>
-          <label className={styles.label}>
-            Location:
-            <input
-              type="text"
-              value={eventLocation}
-              onChange={(e) => setEventLocation(e.target.value)}
-              className={styles.input}
-            />
-          </label>
-          <div className={styles.mapContainer}>
-            <LoadScript
-              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-            >
-              <GoogleMap
-                mapContainerStyle={mapStyles}
-                zoom={12}
-                center={defaultCenter}
-                onLoad={(map) => {
-                  mapRef.current = map;
-                }}
+        <form className={styles.grid}>
+          {/* Left Column: Form Fields */}
+          <div>
+            <label className={styles.label}>
+              Event Name:
+              <input
+                type="text"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+                className={styles.input}
               />
-            </LoadScript>
+            </label>
+            <label className={styles.label}>
+              Event Date:
+              <input
+                type="date"
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+                className={styles.input}
+              />
+            </label>
+            <label className={styles.label}>
+              Description:
+              <textarea
+                value={eventDescription}
+                onChange={(e) => setEventDescription(e.target.value)}
+                className={styles.textarea}
+              />
+            </label>
+            <label className={styles.label}>
+              Categories:
+              <input
+                type="text"
+                value={eventCategories}
+                onChange={(e) => setEventCategories(e.target.value)}
+                className={styles.textarea}
+              />
+            </label>
+            <label className={styles.label}>
+              Safety Information:
+              <textarea
+                value={eventSafety}
+                onChange={(e) => setEventSafety(e.target.value)}
+                className={styles.textarea}
+              />
+            </label>
+            <label className={styles.label}>
+              Fees:
+              <input
+                type="text"
+                value={eventFees}
+                onChange={(e) => setEventFees(e.target.value)}
+                className={styles.input}
+              />
+            </label>
+            <label className={styles.label}>
+              Contact Information:
+              <input
+                type="text"
+                value={eventContact}
+                onChange={(e) => setEventContact(e.target.value)}
+                className={styles.input}
+              />
+            </label>
           </div>
-          <label className={styles.label}>
-            Description:
-            <textarea
-              value={eventDescription}
-              onChange={(e) => setEventDescription(e.target.value)}
-              className={styles.textarea}
-            />
-          </label>
-          <label className={styles.label}>
-            Categories:
-            <input
-              type="text"
-              value={eventCategories}
-              onChange={(e) => setEventCategories(e.target.value)}
-              className={styles.textarea}
-            />
-          </label>
-          <label className={styles.label}>
-            Safety Information:
-            <textarea
-              value={eventSafety}
-              onChange={(e) => setEventSafety(e.target.value)}
-              className={styles.textarea}
-            />
-          </label>
-          <label className={styles.label}>
-            Fees:
-            <input
-              type="text"
-              value={eventFees}
-              onChange={(e) => setEventFees(e.target.value)}
-              className={styles.input}
-            />
-          </label>
-          <label className={styles.label}>
-            Contact Information:
-            <input
-              type="text"
-              value={eventContact}
-              onChange={(e) => setEventContact(e.target.value)}
-              className={styles.input}
-            />
-          </label>
-          <button
-            type="button"
-            onClick={handleCreateEvent}
-            className={styles.button}
-          >
-            Create Event
-          </button>
+
+          {/* Right Column: Map and Search Box */}
+          <div>
+            <div className={styles.mapContainer}>
+              <LoadScript
+                googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+                libraries={libraries}
+              >
+                <label className={styles.label}>
+                  Location:
+                  <StandaloneSearchBox
+                    onLoad={(ref) => (searchBoxRef.current = ref)}
+                    onPlacesChanged={handlePlacesChanged}
+                  >
+                    <input
+                      type="text"
+                      value={eventLocation}
+                      onChange={(e) => setEventLocation(e.target.value)}
+                      className={styles.input}
+                      placeholder="Search for location"
+                    />
+                  </StandaloneSearchBox>
+                </label>
+                <GoogleMap
+                  mapContainerStyle={mapStyles}
+                  zoom={mapZoom}
+                  center={markerPosition || defaultCenter}
+                  onLoad={(map) => {
+                    mapRef.current = map;
+                  }}
+                >
+                  {markerPosition && <Marker position={markerPosition} />}
+                </GoogleMap>
+              </LoadScript>
+            </div>
+          </div>
+
+          {/* Button */}
+          <div style={{ gridColumn: "span 2", marginTop: "20px" }}>
+            <button
+              type="button"
+              onClick={handleCreateEvent}
+              className={styles.button}
+            >
+              Create Event
+            </button>
+          </div>
         </form>
       </div>
     </div>
