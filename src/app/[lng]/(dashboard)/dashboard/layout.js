@@ -19,7 +19,7 @@ export default function DashboardLayout({ children, params: { lng } }) {
       <head>
         <title>JudgeMate</title>
       </head>
-      <body>
+      <body suppressHydrationWarning={true}>
         <AuthContextProvider>
           {" "}
           <NavbarDashboard params={{ lng }} lng={lng} />
