@@ -99,7 +99,7 @@ function EditUserProfile() {
     return (
       <div className={styles.container}>
         <h1 className={styles.title}>Edit User Profile</h1>
-        <form onSubmit={handleUpdateProfile}>
+        <form className={styles.from} onSubmit={handleUpdateProfile}>
           <div className={styles.inputContainer}>
             <label className={styles.inputLabel}>Imię*:</label>
             <input
@@ -267,11 +267,43 @@ function EditUserProfile() {
       <div className={styles.container}>
         <h1 className={styles.title}>Your Profile</h1>
         <p>
+          <strong>Login:</strong> {formData.username}
+        </p>
+        <p>
           <strong>Imię:</strong> {formData.firstName}
         </p>
         <p>
-          <strong>Nazwisko:</strong> {formData.lastName}
+          <strong>Nazwisko:</strong> {formData.birthDate}
         </p>
+        <p>
+          <strong>Płeć:</strong> {formData.gender}
+        </p>
+        <p>
+          <strong>Email:</strong> {formData.email}
+        </p>
+        <p>
+          <strong>Ulica:</strong> {formData.address}
+        </p>
+        <p>
+          <strong>Kod pocztowy:</strong> {formData.postalCode}
+        </p>
+        <p>
+          <strong>Miejscowość:</strong> {formData.city}
+        </p>
+        <p>
+          <strong>Kraj:</strong> {formData.country}
+        </p>
+        <p>
+          <strong>Telefon:</strong> {formData.phone}
+        </p>
+        <p>
+          <strong>Telefon alarmowy ICE w nagłym przypadku:</strong>{" "}
+          {formData.emergencyPhone}
+        </p>
+        <p>
+          <strong>Klub:</strong> {formData.club}
+        </p>
+
         <button onClick={handleEditClick}>Edytuj profil</button>
       </div>
     );
