@@ -1,0 +1,42 @@
+.userProfileNavbar {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-radius: 12px;
+}
+
+.sidebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.ulstyle {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  gap: 10px;
+}
+
+.listyle {
+  padding: 10px 15px;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.listyle:hover {
+  background-color: #357ab7;
+}
+
+@media (max-width: 768px) {
+  .listyle {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+}
