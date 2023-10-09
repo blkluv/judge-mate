@@ -131,3 +131,17 @@
 .editButton:hover {
   background-color: #357ab7;
 }
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .inputContainer,
+  .buttonContainer {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}

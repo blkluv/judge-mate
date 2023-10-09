@@ -6,6 +6,8 @@ export async function updateData(collectionName, id, data) {
   const docRef = doc(db, collectionName, id);
 
   try {
+    console.log("Aktualizacja danych:", data);
+
     await updateDoc(docRef, data);
     return { success: true, error: null };
   } catch (e) {

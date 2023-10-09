@@ -14,49 +14,44 @@ const FORM_FIELDS = [
     name: "gender",
     type: "select",
     required: true,
-    options: ["Mężczyzna", "Kobieta"],
+    options: ["", "Mężczyzna", "Kobieta"],
   },
   { label: "E-mail", name: "email", type: "email", required: true },
   { label: "Adres", name: "address", type: "text", required: true },
   { label: "Kod pocztowy", name: "postalCode", type: "text", required: true },
   { label: "Miejscowość", name: "city", type: "text", required: true },
-  { label: "Kraj", name: "country", type: "select", options: ["Polska"] }, // Możesz dodać więcej krajów
+  {
+    label: "Kraj",
+    name: "country",
+    type: "select",
+    options: ["", "Polska", "England"],
+  },
   { label: "Telefon", name: "phone", type: "tel", required: true },
   { label: "Telefon alarmowy ICE", name: "emergencyPhone", type: "tel" },
   { label: "Klub", name: "club", type: "text" },
 ];
 
 function EditUserProfile() {
-  const [initialData, setInitialData] = useState({});
   const [formData, setFormData] = useState({});
+  const [originalData, setOriginalData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setCurrentUser(user);
-      } else {
-        setLoading(false);
-      }
-    });
+    if (!currentUser) {
+      setLoading(false);
+      return;
+    }
 
-    return () => unsubscribe();
-  }, []);
-
-  // Pobieranie danych na podstawie currentUser
-  useEffect(() => {
     async function fetchUserData() {
-      if (!currentUser) return;
-
       const userId = currentUser.uid;
       const { data, error } = await fetchData("users", userId);
 
       if (data) {
         setFormData(data);
-        setInitialData(data);
+        setOriginalData(data); // Store the original data
       }
 
       if (error) {
@@ -79,16 +74,30 @@ function EditUserProfile() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+
+    const updatedFields = {};
+    for (let field in formData) {
+      if (formData[field] !== originalData[field]) {
+        updatedFields[field] = formData[field];
+      }
+    }
+
+    if (Object.keys(updatedFields).length === 0) {
+      alert("No changes detected!");
+      return;
+    }
+
     try {
       const { success, error } = await updateData(
         "users",
         currentUser.uid,
-        formData
+        updatedFields
       );
 
       if (success) {
         alert("Profile updated successfully!");
         setIsEditing(false);
+        setOriginalData(formData); // Update the original data
       } else {
         throw error;
       }

@@ -46,3 +46,23 @@
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .sidebar,
+  .content {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .sidebar li {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
