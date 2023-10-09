@@ -7,7 +7,7 @@
 
 .sidebar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px 0;
 }
@@ -38,5 +38,8 @@
   .listyle {
     font-size: 0.8rem;
     padding: 8px 12px;
+  }
+  .sidebar {
+    align-items: flex-start;
   }
 }

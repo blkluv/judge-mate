@@ -109,69 +109,66 @@ function EditUserProfile() {
 
   if (loading) return <div>Loading user profile...</div>;
   if (error) return <div>Error loading user profile: {error.message}</div>;
-
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>
-        {isEditing ? "Edit User Profile" : "Your Profile"}
-      </h1>
+      <h1 className={styles.title}>User Profile</h1>
+
+      <table>
+        <tbody>
+          {FORM_FIELDS.map((field) => (
+            <tr key={field.name}>
+              <td className={styles.inputLabel}>{field.label}:</td>
+              <td>
+                {isEditing ? (
+                  field.type === "select" ? (
+                    <select
+                      className={styles.selectField}
+                      name={field.name}
+                      value={formData[field.name] || ""}
+                      onChange={handleInputChange}
+                      required={field.required}
+                    >
+                      {field.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      className={styles.inputField}
+                      type={field.type}
+                      name={field.name}
+                      value={formData[field.name] || ""}
+                      onChange={handleInputChange}
+                      required={field.required}
+                    />
+                  )
+                ) : (
+                  formData[field.name] || "Brak danych"
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
       {isEditing ? (
-        <form className={styles.form} onSubmit={handleUpdateProfile}>
-          {FORM_FIELDS.map((field) => (
-            <div key={field.name} className={styles.inputContainer}>
-              <label className={styles.inputLabel}>{field.label}:</label>
-              {field.type === "select" ? (
-                <select
-                  className={styles.selectField}
-                  name={field.name}
-                  value={formData[field.name] || ""}
-                  onChange={handleInputChange}
-                  required={field.required}
-                >
-                  {field.options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  className={styles.inputField}
-                  type={field.type}
-                  name={field.name}
-                  value={formData[field.name] || ""}
-                  onChange={handleInputChange}
-                  required={field.required}
-                />
-              )}
-            </div>
-          ))}
-          <div className={styles.buttonContainer}>
-            <button className={styles.updateButton} type="submit">
-              Update Profile
-            </button>
-            <button
-              className={styles.cancelButton}
-              type="button"
-              onClick={() => setIsEditing(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+        <div className={styles.buttonContainer}>
+          <button className={styles.updateButton} onClick={handleUpdateProfile}>
+            Save
+          </button>
+          <button
+            className={styles.cancelButton}
+            onClick={() => setIsEditing(false)}
+          >
+            Cancel
+          </button>
+        </div>
       ) : (
-        <>
-          {FORM_FIELDS.map((field) => (
-            <p key={field.name}>
-              <strong>{field.label}:</strong>{" "}
-              {formData[field.name] || "Brak danych"}
-            </p>
-          ))}
-          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-        </>
+        <button onClick={() => setIsEditing(true)}>Edit Profile</button>
       )}
     </div>
   );
 }
-
 export default EditUserProfile;
