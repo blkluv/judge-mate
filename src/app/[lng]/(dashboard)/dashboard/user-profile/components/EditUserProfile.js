@@ -4,33 +4,52 @@ import { auth } from "../../../../../../firebase/config";
 import { updateData } from "../../../../../../firebase/firestore/updateData";
 import styles from "./EditUserProfile.module.css";
 
+const FORM_FIELDS = [
+  { label: "Login", name: "username", type: "text" },
+  { label: "Imię", name: "firstName", type: "text", required: true },
+  { label: "Nazwisko", name: "lastName", type: "text", required: true },
+  { label: "Data urodzenia", name: "birthDate", type: "date", required: true },
+  {
+    label: "Płeć",
+    name: "gender",
+    type: "select",
+    required: true,
+    options: ["Mężczyzna", "Kobieta"],
+  },
+  { label: "E-mail", name: "email", type: "email", required: true },
+  { label: "Adres", name: "address", type: "text", required: true },
+  { label: "Kod pocztowy", name: "postalCode", type: "text", required: true },
+  { label: "Miejscowość", name: "city", type: "text", required: true },
+  { label: "Kraj", name: "country", type: "select", options: ["Polska"] }, // Możesz dodać więcej krajów
+  { label: "Telefon", name: "phone", type: "tel", required: true },
+  { label: "Telefon alarmowy ICE", name: "emergencyPhone", type: "tel" },
+  { label: "Klub", name: "club", type: "text" },
+];
+
 function EditUserProfile() {
-  const [initialData, setInitialData] = useState(null);
-  const [formData, setFormData] = useState({
-    username: "",
-    lastName: "",
-    birthDate: "",
-    gender: "",
-    email: "",
-    address: "",
-    postalCode: "",
-    city: "",
-    country: "Polska",
-    phone: "",
-    emergencyPhone: "",
-    club: "",
-  });
+  const [initialData, setInitialData] = useState({});
+  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const currentUser = auth.currentUser;
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    async function fetchUserData() {
-      if (!currentUser) {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
         setLoading(false);
-        return;
       }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Pobieranie danych na podstawie currentUser
+  useEffect(() => {
+    async function fetchUserData() {
+      if (!currentUser) return;
 
       const userId = currentUser.uid;
       const { data, error } = await fetchData("users", userId);
@@ -79,173 +98,45 @@ function EditUserProfile() {
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-  const handleCancelClick = () => {
-    setFormData(initialData); // Reset to initial data
-    setIsEditing(false);
-  };
+  if (loading) return <div>Loading user profile...</div>;
+  if (error) return <div>Error loading user profile: {error.message}</div>;
 
-  if (loading) {
-    return <div>Loading user profile...</div>;
-  }
-
-  if (error) {
-    return <div>Error loading user profile: {error.message}</div>;
-  }
-
-  if (isEditing) {
-    return (
-      <div className={styles.container}>
-        <h1 className={styles.title}>Edit User Profile</h1>
-        <form className={styles.from} onSubmit={handleUpdateProfile}>
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Imię*:</label>
-            <input
-              className={styles.inputField}
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Nazwisko*:</label>
-            <input
-              className={styles.inputField}
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Data urodzenia*:</label>
-            <input
-              className={styles.inputField}
-              type="date"
-              name="birthDate"
-              value={formData.birthDate}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Płeć*:</label>
-            <select
-              className={styles.selectField}
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="Mężczyzna">Mężczyzna</option>
-              <option value="Kobieta">Kobieta</option>
-            </select>
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>E-mail*:</label>
-            <input
-              className={styles.inputField}
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Adres*:</label>
-            <input
-              className={styles.inputField}
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Kod pocztowy*:</label>
-            <input
-              className={styles.inputField}
-              type="text"
-              name="postalCode"
-              value={formData.postalCode}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Miejscowość*:</label>
-            <input
-              className={styles.inputField}
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Kraj*:</label>
-            <select
-              className={styles.selectField}
-              name="country"
-              value={formData.country}
-              onChange={handleInputChange}
-            >
-              <option value="Polska">Polska</option>
-              {/* Możesz dodać więcej krajów tutaj */}
-            </select>
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Telefon*:</label>
-            <input
-              className={styles.inputField}
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>
-              Telefon alarmowy ICE w nagłym przypadku:
-            </label>
-            <input
-              className={styles.inputField}
-              type="tel"
-              name="emergencyPhone"
-              value={formData.emergencyPhone}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className={styles.inputContainer}>
-            <label className={styles.inputLabel}>Klub:</label>
-            <input
-              className={styles.inputField}
-              type="text"
-              name="club"
-              value={formData.club}
-              onChange={handleInputChange}
-            />
-          </div>
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.title}>
+        {isEditing ? "Edit User Profile" : "Your Profile"}
+      </h1>
+      {isEditing ? (
+        <form className={styles.form} onSubmit={handleUpdateProfile}>
+          {FORM_FIELDS.map((field) => (
+            <div key={field.name} className={styles.inputContainer}>
+              <label className={styles.inputLabel}>{field.label}:</label>
+              {field.type === "select" ? (
+                <select
+                  className={styles.selectField}
+                  name={field.name}
+                  value={formData[field.name] || ""}
+                  onChange={handleInputChange}
+                  required={field.required}
+                >
+                  {field.options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  className={styles.inputField}
+                  type={field.type}
+                  name={field.name}
+                  value={formData[field.name] || ""}
+                  onChange={handleInputChange}
+                  required={field.required}
+                />
+              )}
+            </div>
+          ))}
           <div className={styles.buttonContainer}>
             <button className={styles.updateButton} type="submit">
               Update Profile
@@ -253,61 +144,25 @@ function EditUserProfile() {
             <button
               className={styles.cancelButton}
               type="button"
-              onClick={handleCancelClick}
+              onClick={() => setIsEditing(false)}
             >
               Cancel
             </button>
           </div>
         </form>
-        {error && <p className={styles.errorMessage}>{error.message}</p>}
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.container}>
-        <h1 className={styles.title}>Your Profile</h1>
-        <p>
-          <strong>Login:</strong> {formData.username}
-        </p>
-        <p>
-          <strong>Imię:</strong> {formData.firstName}
-        </p>
-        <p>
-          <strong>Nazwisko:</strong> {formData.birthDate}
-        </p>
-        <p>
-          <strong>Płeć:</strong> {formData.gender}
-        </p>
-        <p>
-          <strong>Email:</strong> {formData.email}
-        </p>
-        <p>
-          <strong>Ulica:</strong> {formData.address}
-        </p>
-        <p>
-          <strong>Kod pocztowy:</strong> {formData.postalCode}
-        </p>
-        <p>
-          <strong>Miejscowość:</strong> {formData.city}
-        </p>
-        <p>
-          <strong>Kraj:</strong> {formData.country}
-        </p>
-        <p>
-          <strong>Telefon:</strong> {formData.phone}
-        </p>
-        <p>
-          <strong>Telefon alarmowy ICE w nagłym przypadku:</strong>{" "}
-          {formData.emergencyPhone}
-        </p>
-        <p>
-          <strong>Klub:</strong> {formData.club}
-        </p>
-
-        <button onClick={handleEditClick}>Edytuj profil</button>
-      </div>
-    );
-  }
+      ) : (
+        <>
+          {FORM_FIELDS.map((field) => (
+            <p key={field.name}>
+              <strong>{field.label}:</strong>{" "}
+              {formData[field.name] || "Brak danych"}
+            </p>
+          ))}
+          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default EditUserProfile;
