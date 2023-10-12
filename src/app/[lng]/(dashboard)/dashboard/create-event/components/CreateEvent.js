@@ -27,9 +27,7 @@ const CreateEvent = () => {
   const [eventDate, setEventDate] = useState("");
   const [eventLocation, setEventLocation] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [eventCategories, setEventCategories] = useState("");
-  const [eventSafety, setEventSafety] = useState("");
-  const [eventFees, setEventFees] = useState("");
+  const [eventType, setEventType] = useState("");
   const [eventContact, setEventContact] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapZoom, setMapZoom] = useState(12); // initial zoom level
@@ -57,8 +55,8 @@ const CreateEvent = () => {
   };
 
   const handleCreateEvent = async () => {
-    if (!eventName || !eventDate || !eventTime) {
-      alert("Please provide the event name, date, and time.");
+    if (!eventName || !eventDate || !eventTime || !eventType) {
+      alert("Please provide the event name, date, time and event type.");
       return;
     }
 
@@ -68,9 +66,7 @@ const CreateEvent = () => {
       eventTime,
       eventLocation,
       eventDescription,
-      eventCategories,
-      eventSafety,
-      eventFees,
+      eventType,
       eventContact,
       roles: {
         [currentUser.uid]: "organizer",
@@ -107,9 +103,7 @@ const CreateEvent = () => {
       setEventDate("");
       setEventLocation("");
       setEventDescription("");
-      setEventCategories("");
-      setEventSafety("");
-      setEventFees("");
+      setEventType("");
       setEventContact("");
       setEventTime("");
 
@@ -137,55 +131,43 @@ const CreateEvent = () => {
               />
             </label>
             <label className={styles.label}>
-              Event Date:
-              <input
-                type="date"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-                className={styles.input}
-              />
+              Event Type: {/* Zmienione "Categories" na "Event Type" */}
+              <select
+                value={eventType}
+                onChange={(e) => setEventType(e.target.value)}
+                className={styles.dropdown}
+              >
+                <option value="">Select an event type</option>
+                <option value="Extreme Scootering">Hulajnoga wyczynowa</option>
+                <option value="Extreme Skateboarding">Deskorolka</option>
+              </select>
             </label>
-            <label className={styles.label}>
-              Event Time:
-              <input
-                type="time"
-                value={eventTime}
-                onChange={(e) => setEventTime(e.target.value)}
-                className={styles.input}
-              />
-            </label>
+            <div className={styles.row}>
+              <label className={styles.label}>
+                Event Date:
+                <input
+                  type="date"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  className={styles.input}
+                />
+              </label>
+              <label className={styles.label}>
+                Event Time:
+                <input
+                  type="time"
+                  value={eventTime}
+                  onChange={(e) => setEventTime(e.target.value)}
+                  className={styles.input}
+                />
+              </label>
+            </div>
             <label className={`${styles.label} ${styles.descriptionField}`}>
               Description:
               <textarea
                 value={eventDescription}
                 onChange={(e) => setEventDescription(e.target.value)}
                 className={styles.textarea}
-              />
-            </label>
-            <label className={styles.label}>
-              Categories:
-              <input
-                type="text"
-                value={eventCategories}
-                onChange={(e) => setEventCategories(e.target.value)}
-                className={styles.input}
-              />
-            </label>
-            <label className={styles.label}>
-              Safety Information:
-              <textarea
-                value={eventSafety}
-                onChange={(e) => setEventSafety(e.target.value)}
-                className={styles.textarea}
-              />
-            </label>
-            <label className={styles.label}>
-              Fees:
-              <input
-                type="text"
-                value={eventFees}
-                onChange={(e) => setEventFees(e.target.value)}
-                className={styles.input}
               />
             </label>
             <label className={styles.label}>

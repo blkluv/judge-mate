@@ -31,8 +31,30 @@
   color: #555;
 }
 
-.input,
 .textarea {
+  resize: vertical; /* Pozwala użytkownikowi na zmianę wysokości, ale nie szerokości */
+}
+
+.dropdown {
+  appearance: none; /* Usuwa domyślny styl dla różnych przeglądarek */
+  -webkit-appearance: none; /* Dla przeglądarek opartych na WebKit */
+  -moz-appearance: none; /* Dla Firefox */
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6"><path d="M1.292 0.292a1 1 0 0 1 1.414 0L6 3.586 9.294.292a1 1 0 1 1 1.412 1.416l-4 4a1 1 0 0 1-1.412 0l-4-4a1 1 0 0 1 0-1.416z" fill="currentColor"></path></svg>')
+      no-repeat right 0.5rem center,
+    linear-gradient(to bottom, #fff 0%, #f9f9fa 100%);
+  background-size: 12px 6px, 100%;
+  cursor: pointer;
+  padding-right: 1.75rem; /* Dodatkowa przestrzeń dla ikony strzałki */
+}
+
+.dropdown:focus {
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
+}
+
+.input,
+.textarea,
+.dropdown {
   box-sizing: border-box;
   width: 100%;
   padding: 8px 12px;
@@ -40,7 +62,6 @@
   border: 1px solid #ced4da;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   max-width: 100%;
-  resize: vertical; /* Pozwala użytkownikowi na zmianę wysokości, ale nie szerokości */
 }
 
 .input:focus,
@@ -67,14 +88,15 @@
   background-color: #4cae4c;
 }
 
-.descriptionField {
-  min-height: 200px;
-}
-
 .mapContainer {
   margin: 1rem 0 2rem 0;
   width: 100%;
   height: 400px;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
 }
 
 @media (max-width: 768px) {
