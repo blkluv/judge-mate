@@ -25,9 +25,11 @@ const EventDetails = ({ eventData, currentUser }) => {
         <h1 className={styles.eventName}>{eventName}</h1>
 
         <div className={styles.eventInfo}>
-          <p className={styles.eventDate}>Date: {eventDate}</p>
-          <p className={styles.eventTime}>Time: {eventTime}</p>
-          <p className={styles.eventContact}>Contact: {eventContact}</p>
+          <div className={styles.shortEventInfo}>
+            <p className={styles.eventDate}>Date: {eventDate}</p>
+            <p className={styles.eventTime}>Time: {eventTime}</p>
+            <p className={styles.eventContact}>Contact: {eventContact}</p>
+          </div>
           <details className={styles.eventDescriptionDetails}>
             <summary>Description</summary>
             <p className={styles.eventDescription}>{eventDescription}</p>
