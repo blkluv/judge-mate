@@ -54,7 +54,7 @@ function Page({ params: { eventId } }) {
   return (
     <EventContext.Provider value={eventData}>
       <div className={styles.container}>
-        <EventDetails eventData={eventData} />
+        <EventDetails eventData={eventData} currentUser={user} />
         <div className={styles.eventUserManagementSection}>
           {hasNoRole && <JoinEvent eventId={eventId} currentUser={user} />}
           {isOrganizer && (

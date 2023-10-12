@@ -39,7 +39,7 @@ const JudgingTableCreator = ({ eventId }) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Define Judging Table</h2>
-      <div class="tableContainer">
+      <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>
             <tr>

@@ -55,7 +55,13 @@ const CreateEvent = () => {
   };
 
   const handleCreateEvent = async () => {
-    if (!eventName || !eventDate || !eventTime || !eventType) {
+    if (
+      !eventName ||
+      !eventDate ||
+      !eventTime ||
+      !eventType ||
+      !markerPosition
+    ) {
       alert("Please provide the event name, date, time and event type.");
       return;
     }
@@ -64,7 +70,7 @@ const CreateEvent = () => {
       eventName,
       eventDate,
       eventTime,
-      eventLocation,
+      eventLatLng: markerPosition,
       eventDescription,
       eventType,
       eventContact,
