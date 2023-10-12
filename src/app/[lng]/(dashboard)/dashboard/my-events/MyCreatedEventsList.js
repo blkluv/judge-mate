@@ -5,11 +5,14 @@ import { auth } from "../../../../../firebase/config.js";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./MyCreatedEventsList.module.css";
+import PopupConfirmation from "../components/popup-confirmation/PopupConfirmation";
 
 function MyCreatedEventsList() {
   const [userEvents, setUserEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // State to control the popup visibility
+  const [eventToDelete, setEventToDelete] = useState(null); // State to store the event ID to delete
   const currentUser = auth.currentUser;
   const router = useRouter();
 
@@ -39,11 +42,17 @@ function MyCreatedEventsList() {
     fetchUserEvents();
   }, [currentUser]);
 
-  const handleDeleteEvent = async (eventId) => {
+  const handleDeleteEvent = async () => {
     try {
-      await deleteData("events", eventId);
-      await deleteData(`users/${currentUser.uid}/userEvents`, eventId);
-      router.push("/dashboard/my-events");
+      await deleteData("events", eventToDelete);
+      await deleteData(`users/${currentUser.uid}/userEvents`, eventToDelete);
+
+      // Aktualizacja stanu userEvents po usunięciu wydarzenia
+      setUserEvents((prevEvents) =>
+        prevEvents.filter((event) => event.id !== eventToDelete)
+      );
+
+      setShowPopup(false); // Close the popup after deleting
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("There was an error deleting the event. Please try again.");
@@ -62,28 +71,50 @@ function MyCreatedEventsList() {
     <div className={styles.container}>
       <h1 className={styles.title}>Your Created Events</h1>
       {userEvents.length ? (
-        <ul className={styles.eventsList}>
-          {userEvents.map((event) => (
-            <li key={event.id} className={styles.eventItem}>
-              <Link href={`/dashboard/events/${event.id}`}>
-                <span className={styles.eventLink}>
-                  {event.eventName} - {event.eventDate}
-                </span>
-              </Link>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDeleteEvent(event.id)}
-              >
-                Delete Event
-              </button>
-            </li>
-          ))}
-        </ul>
+        <table className={styles.eventsTable}>
+          <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Event Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userEvents.map((event) => (
+              <tr key={event.id}>
+                <td>
+                  <Link href={`/dashboard/events/${event.id}`}>
+                    <div className={styles.eventLink}>{event.eventName}</div>
+                  </Link>
+                </td>
+                <td>{event.eventDate}</td>
+                <td>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => {
+                      setEventToDelete(event.id);
+                      setShowPopup(true);
+                    }}
+                  >
+                    Delete Event
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>No events created yet.</p>
+      )}
+
+      {showPopup && (
+        <PopupConfirmation
+          message="Are you sure you want to delete this event?"
+          onConfirm={handleDeleteEvent}
+          onCancel={() => setShowPopup(false)}
+        />
       )}
     </div>
   );
 }
-
 export default MyCreatedEventsList;

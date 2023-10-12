@@ -6,52 +6,67 @@
   padding: 20px 30px;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
   width: 100%;
+  margin: 20px auto;
 }
 
 .title {
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-weight: 700;
   color: #2c3e50;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.eventsList {
-  list-style: none;
-  padding: 0;
+.eventsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.eventItem {
-  margin-bottom: 15px;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.eventsTable thead th {
+  background-color: #2c3e50;
+  color: #f9f9fa;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.eventsTable tbody tr {
+  transition: background-color 0.2s;
+}
+
+.eventsTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.eventsTable tbody td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .eventLink {
+  font-size: 18px;
+  color: #34495e;
   text-decoration: none;
-  color: #2c3e50;
-  transition: color 0.15s ease-in-out;
+  transition: color 0.2s;
 }
 
 .eventLink:hover {
-  color: #5cb85c;
+  color: #2c3e50;
 }
 
 .deleteButton {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
   background-color: #d9534f;
   color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
   cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.2s;
 }
 
 .deleteButton:hover {
@@ -60,21 +75,24 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 10px 10px;
+    padding: 10px 15px;
   }
 
   .title {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 15px;
   }
 
-  .eventItem {
-    flex-direction: column;
-    align-items: flex-start;
+  .eventsTable thead th,
+  .eventsTable tbody td {
+    padding: 8px 10px;
   }
 
-  .eventLink,
+  .eventLink {
+    font-size: 16px;
+  }
+
   .deleteButton {
-    margin-bottom: 8px;
+    padding: 6px 10px;
   }
 }
