@@ -3,42 +3,60 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  background-color: #f9f9fa;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  max-width: 900px;
-  width: 100%;
-  margin: 20px auto;
+  background-color: #f9f9fa;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .eventName {
   font-size: 24px;
-  color: #2c3e50;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.eventDate {
-  font-size: 18px;
-  color: #34495e;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .mapContainer {
   width: 100%;
-  margin-top: 20px;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+.eventInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eventDate,
+.eventTime,
+.eventContact {
+  font-size: 16px;
+}
+
+.eventDescriptionDetails {
+  background-color: #e6e6e6;
+  padding: 10px;
+  border-radius: 6px;
+  width: initial;
+}
+
+.eventDescription {
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 .editButton {
-  background-color: #3498db;
-  color: #fff;
+  align-self: flex-end;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 6px;
   padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .editButton:hover {
-  background-color: #2980b9;
+  background-color: #0056b3;
 }

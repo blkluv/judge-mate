@@ -3,34 +3,40 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import styles from "./EventDetails.module.css";
 
 const mapStyles = {
-  height: "300px",
+  height: "100px",
   width: "100%",
-  borderRadius: "12px",
-  overflow: "hidden",
 };
 
 const EventDetails = ({ eventData, currentUser }) => {
   const {
     eventName,
     eventDate,
-    eventLocation,
-    eventDescription,
-    eventType,
-    eventContact,
     eventTime,
+    eventDescription,
+    eventContact,
+    eventLatLng,
     roles,
   } = eventData;
-
   const isOrganizer = eventData?.roles?.[currentUser?.uid] === "organizer";
 
   return (
-    <div className={styles.detailsContainer}>
-      <h1 className={styles.eventName}>{eventName}</h1>
-      <p className={styles.eventDate}>Date: {eventDate}</p>
-      <p className={styles.eventTime}>Time: {eventTime}</p>
-      <p className={styles.eventType}>Type: {eventType}</p>
-      <p className={styles.eventDescription}>Description: {eventDescription}</p>
-      <p className={styles.eventContact}>Contact: {eventContact}</p>
+    <div>
+      <div className={styles.detailsContainer}>
+        <h1 className={styles.eventName}>{eventName}</h1>
+
+        <div className={styles.eventInfo}>
+          <p className={styles.eventDate}>Date: {eventDate}</p>
+          <p className={styles.eventTime}>Time: {eventTime}</p>
+          <p className={styles.eventContact}>Contact: {eventContact}</p>
+          <details className={styles.eventDescriptionDetails}>
+            <summary>Description</summary>
+            <p className={styles.eventDescription}>{eventDescription}</p>
+          </details>
+          {isOrganizer && (
+            <button className={styles.editButton}>Edit Event</button>
+          )}
+        </div>
+      </div>{" "}
       <div className={styles.mapContainer}>
         <LoadScript
           googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
@@ -38,13 +44,12 @@ const EventDetails = ({ eventData, currentUser }) => {
           <GoogleMap
             mapContainerStyle={mapStyles}
             zoom={15}
-            center={eventLocation}
+            center={eventLatLng}
           >
-            <Marker position={eventLocation} />
+            <Marker position={eventLatLng} />
           </GoogleMap>
         </LoadScript>
       </div>
-      {isOrganizer && <button className={styles.editButton}>Edit Event</button>}
     </div>
   );
 };
