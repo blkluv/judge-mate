@@ -33,6 +33,8 @@ const CreateEvent = () => {
   const [eventContact, setEventContact] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapZoom, setMapZoom] = useState(12); // initial zoom level
+  const [eventTime, setEventTime] = useState("");
+
   const currentUser = auth.currentUser;
   const router = useRouter();
   const mapRef = useRef(null);
@@ -55,14 +57,15 @@ const CreateEvent = () => {
   };
 
   const handleCreateEvent = async () => {
-    if (!eventName || !eventDate) {
-      alert("Please provide both event name and date.");
+    if (!eventName || !eventDate || !eventTime) {
+      alert("Please provide the event name, date, and time.");
       return;
     }
 
     const eventData = {
       eventName,
       eventDate,
+      eventTime,
       eventLocation,
       eventDescription,
       eventCategories,
@@ -108,6 +111,7 @@ const CreateEvent = () => {
       setEventSafety("");
       setEventFees("");
       setEventContact("");
+      setEventTime("");
 
       alert("Event successfully created!");
       router.push(`/dashboard/events/${eventDocRef.id}`);
@@ -138,6 +142,15 @@ const CreateEvent = () => {
                 type="date"
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
+                className={styles.input}
+              />
+            </label>
+            <label className={styles.label}>
+              Event Time:
+              <input
+                type="time"
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
                 className={styles.input}
               />
             </label>
