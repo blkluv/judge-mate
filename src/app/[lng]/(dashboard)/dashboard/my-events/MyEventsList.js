@@ -52,24 +52,34 @@ function MyEventsList() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1 className={styles.title}>Your Participated Events</h1>
-      <ul className={styles.eventList}>
-        {state.userEvents.map((event) => (
-          <li key={event.id} className={styles.eventItem}>
-            <Link
-              href={`/dashboard/events/${event.id}`}
-              className={styles.eventLink}
-            >
-              <span className={styles.eventName}>{event.eventName}</span>
-              <span className={styles.eventDate}>{event.eventDate}</span>
-              <span className={styles.eventRole}>
-                Role: {event.roles[user.uid]}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {state.userEvents.length ? (
+        <table className={styles.eventsTable}>
+          <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Event Date</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {state.userEvents.map((event) => (
+              <tr key={event.id}>
+                <td>
+                  <Link href={`/dashboard/events/${event.id}`}>
+                    <div className={styles.eventLink}>{event.eventName}</div>
+                  </Link>
+                </td>
+                <td>{event.eventDate}</td>
+                <td>{event.roles[user.uid]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No events participated in yet.</p>
+      )}
     </div>
   );
 }

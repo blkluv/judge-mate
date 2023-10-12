@@ -22,8 +22,11 @@
 
 .eventsTable {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate; /* Zmienione z collapse na separate */
   margin-top: 20px;
+  border-radius: 12px;
+  border-spacing: 0; /* Dodane, aby usunąć odstępy między komórkami */
+  overflow: hidden;
 }
 
 .eventsTable thead th {
