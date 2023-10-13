@@ -1,69 +1,94 @@
+/* EventDetails.module.css */
 .detailsContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
   padding: 20px;
-  background-color: #f9f9fa;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .eventName {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c2c2c;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .shortEventInfo {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
-}
-
-.mapContainer {
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  border-radius: 0 0 12px 12px;
-  overflow: hidden;
 }
 
-.eventInfo {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.eventDate,
-.eventTime,
-.eventContact {
+.infoItem {
   font-size: 16px;
+  color: #555;
+  margin: 0.5rem 0;
 }
 
 .eventDescriptionDetails {
-  background-color: #e6e6e6;
-  padding: 10px;
+  background-color: #f6f6f6;
+  padding: 12px;
   border-radius: 6px;
-  width: initial;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .eventDescription {
   font-size: 16px;
-  margin-top: 10px;
+  color: #444;
 }
 
 .editButton {
-  align-self: flex-end;
+  padding-top: 3rem;
+  align-self: center;
   background-color: #007bff;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
-  border-radius: 6px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
+  font-weight: 600;
 }
 
 .editButton:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.mapContainer {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
 }
