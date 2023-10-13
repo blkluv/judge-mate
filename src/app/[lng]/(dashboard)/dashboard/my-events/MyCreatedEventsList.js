@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./MyCreatedEventsList.module.css";
 import PopupConfirmation from "../components/popup-confirmation/PopupConfirmation";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../../../firebase/config";
 
 function MyCreatedEventsList() {
   const [userEvents, setUserEvents] = useState([]);
@@ -44,14 +46,38 @@ function MyCreatedEventsList() {
 
   const handleDeleteEvent = async () => {
     try {
+      console.log(
+        "Starting event deletion process for event ID:",
+        eventToDelete
+      );
+
+      const eventRef = doc(db, "events", eventToDelete);
+      const eventSnapshot = await getDoc(eventRef);
+      const event = eventSnapshot.data();
+
+      if (event && event.roles) {
+        console.log("Found event roles:", event.roles);
+
+        // Usuń wydarzenie z kolekcji userEvents dla każdego użytkownika
+        for (const userId in event.roles) {
+          console.log("Deleting event for user ID:", userId);
+          await deleteData(`users/${userId}/userEvents`, eventToDelete);
+        }
+      } else {
+        console.log("No roles found for the event or event not found.");
+      }
+
+      // Usuń wydarzenie z kolekcji "events"
+      console.log("Deleting event from main events collection.");
       await deleteData("events", eventToDelete);
-      await deleteData(`users/${currentUser.uid}/userEvents`, eventToDelete);
 
       // Aktualizacja stanu userEvents po usunięciu wydarzenia
+      console.log("Updating local state for user events.");
       setUserEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== eventToDelete)
       );
 
+      console.log("Closing confirmation popup.");
       setShowPopup(false); // Close the popup after deleting
     } catch (error) {
       console.error("Error deleting event:", error);

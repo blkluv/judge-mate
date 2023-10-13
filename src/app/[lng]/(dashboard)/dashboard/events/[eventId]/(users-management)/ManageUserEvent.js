@@ -17,6 +17,14 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("participant"); // default role
   const [error, setError] = useState("");
+  const [action, setAction] = useState(""); // 'add', 'remove', 'approve', 'changeRole' or ''
+
+  const handleActionClick = (selectedAction) => {
+    setAction(selectedAction);
+    setUsername("");
+    setRole("participant");
+    setError("");
+  };
 
   const handleAddUser = async () => {
     if (!username || !role) {
@@ -154,51 +162,182 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
     }
   };
 
+  const handleChangeRole = async () => {
+    if (!username || !role) {
+      alert("Please provide both username and role.");
+      return;
+    }
+
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("username", "==", username));
+      const userSnapshot = await getDocs(q);
+
+      if (userSnapshot.empty) {
+        alert("User not found.");
+        return;
+      }
+
+      const userId = userSnapshot.docs[0].id;
+      const eventRef = doc(db, "events", eventId);
+      await updateDoc(eventRef, {
+        [`roles.${userId}`]: role,
+      });
+
+      const userEventRef = doc(db, `users/${userId}/userEvents`, eventId);
+      const userEventSnapshot = await getDoc(userEventRef);
+      if (userEventSnapshot.exists()) {
+        await updateDoc(userEventRef, {
+          role,
+        });
+      } else {
+        alert("User is not associated with this event.");
+        return;
+      }
+
+      alert("User role successfully updated!");
+      setUsername(""); // Clear the input
+      setRole("participant"); // Reset to default role
+
+      if (typeof onUserUpdated === "function") {
+        onUserUpdated();
+      }
+    } catch (error) {
+      console.error("Error updating user role:", error);
+      alert("An error occurred while trying to update the user's role.");
+    }
+  };
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Manage User in Event</h2>
-      <div className={styles.inputGroup}>
-        <label className={styles.label}>
-          Username:
-          <input
-            className={styles.input}
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <label className={styles.label}>
-          Role:
-          <select
-            className={styles.select}
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="participant">Participant</option>
-            <option value="judge">Judge</option>
-            <option value="cameraman">Cameraman</option>
-            {/* Add more roles as needed */}
-          </select>
-        </label>
-        <button className={styles.button} type="button" onClick={handleAddUser}>
+      <div className={styles.buttonsContainer}>
+        <button
+          className={styles.button}
+          onClick={() => handleActionClick("add")}
+        >
           Add User
         </button>
         <button
           className={styles.button}
-          type="button"
-          onClick={handleRemoveUser}
+          onClick={() => handleActionClick("remove")}
         >
           Remove User
         </button>
         <button
           className={styles.button}
-          type="button"
-          onClick={handleApproveUser}
+          onClick={() => handleActionClick("approve")}
         >
           Approve User Participation
         </button>
-        {error && <p className={styles.errorMessage}>{error}</p>}
+        <button
+          className={styles.button}
+          onClick={() => handleActionClick("changeRole")}
+        >
+          Change User Role
+        </button>
       </div>
+
+      {action === "add" && (
+        <>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>
+              Username:
+              <input
+                className={styles.input}
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+            <label className={styles.label}>
+              Role:
+              <select
+                className={styles.select}
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="participant">Participant</option>
+                <option value="judge">Judge</option>
+                <option value="cameraman">Cameraman</option>
+              </select>
+            </label>
+          </div>
+          <button className={styles.button} onClick={handleAddUser}>
+            Confirm Add
+          </button>
+        </>
+      )}
+
+      {action === "remove" && (
+        <>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>
+              Username:
+              <input
+                className={styles.input}
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+          </div>
+          <button className={styles.button} onClick={handleRemoveUser}>
+            Confirm Remove
+          </button>
+        </>
+      )}
+
+      {action === "approve" && (
+        <>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>
+              Username:
+              <input
+                className={styles.input}
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+          </div>
+          <button className={styles.button} onClick={handleApproveUser}>
+            Confirm Approve
+          </button>
+        </>
+      )}
+
+      {action === "changeRole" && (
+        <>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>
+              Username:
+              <input
+                className={styles.input}
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+            <label className={styles.label}>
+              Role:
+              <select
+                className={styles.select}
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="participant">Participant</option>
+                <option value="judge">Judge</option>
+                <option value="cameraman">Cameraman</option>
+              </select>
+            </label>
+          </div>
+          <button className={styles.button} onClick={handleChangeRole}>
+            Confirm Change
+          </button>
+        </>
+      )}
+
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };
