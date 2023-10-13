@@ -29,7 +29,7 @@ function MyCreatedEventsList({ onEventDeleted }) {
 
       if (data) {
         const userCreatedEvents = data.filter(
-          (event) => event.roles[currentUser.uid] === "organizer"
+          (event) => event.roles[currentUser.uid]?.role === "organizer"
         );
         setUserEvents(userCreatedEvents);
       }

@@ -45,16 +45,14 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
       const userId = userSnapshot.docs[0].id;
       const eventRef = doc(db, "events", eventId);
       await updateDoc(eventRef, {
-        [`roles.${userId}`]: role,
+        [`roles.${userId}`]: {
+          role: role,
+          isApproved: false, // default to false
+        },
       });
 
-      const userEventRole = {
-        role,
-        joinedAt: new Date().toISOString(),
-        isApproved: false, // domyślnie ustawiamy na false
-      };
       const userEventRef = doc(db, `users/${userId}/userEvents`, eventId);
-      await setDoc(userEventRef, userEventRole);
+      await setDoc(userEventRef, { eventId: eventId });
 
       alert("User successfully added to the event!");
       setUsername(""); // Clear the input
@@ -64,13 +62,7 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
       }
     } catch (error) {
       console.error("Error adding user to event:", error);
-      if (error.code === "INVALID_ARGUMENT") {
-        alert("The user does not exist.");
-      } else if (error.code === "ALREADY_EXISTS") {
-        alert("The user already has the role.");
-      } else {
-        alert("An unknown error occurred.");
-      }
+      alert("An unknown error occurred.");
     }
   };
 
@@ -142,9 +134,9 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
       }
 
       const userId = userSnapshot.docs[0].id;
-      const userEventRef = doc(db, `users/${userId}/userEvents/${eventId}`);
-      await updateDoc(userEventRef, {
-        isApproved: true,
+      const eventRef = doc(db, "events", eventId);
+      await updateDoc(eventRef, {
+        [`roles.${userId}.isApproved`]: true,
       });
 
       setError(""); // Clear any previous error
@@ -161,7 +153,6 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
       );
     }
   };
-
   const handleChangeRole = async () => {
     if (!username || !role) {
       alert("Please provide both username and role.");
@@ -180,17 +171,15 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
 
       const userId = userSnapshot.docs[0].id;
       const eventRef = doc(db, "events", eventId);
+
+      // Update only the role field without touching the isApproved field
       await updateDoc(eventRef, {
-        [`roles.${userId}`]: role,
+        [`roles.${userId}.role`]: role,
       });
 
       const userEventRef = doc(db, `users/${userId}/userEvents`, eventId);
       const userEventSnapshot = await getDoc(userEventRef);
-      if (userEventSnapshot.exists()) {
-        await updateDoc(userEventRef, {
-          role,
-        });
-      } else {
+      if (!userEventSnapshot.exists()) {
         alert("User is not associated with this event.");
         return;
       }
@@ -207,6 +196,7 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
       alert("An error occurred while trying to update the user's role.");
     }
   };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Manage User in Event</h2>

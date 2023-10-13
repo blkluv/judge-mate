@@ -13,34 +13,24 @@ const JoinEvent = ({ eventId, currentUser }) => {
     }
 
     try {
-      const userEventRef = doc(
-        db,
-        `users/${currentUser.uid}/userEvents`,
-        eventId
-      );
-      const userEventSnapshot = await getDoc(userEventRef);
-      const userData = userEventSnapshot.data();
+      const eventRef = doc(db, "events", eventId);
+      const eventSnapshot = await getDoc(eventRef);
+      const eventData = eventSnapshot.data();
 
-      console.log("User Event Data:", userData);
+      console.log("Event Data:", eventData);
 
-      if (userData) {
+      if (eventData.roles && eventData.roles[currentUser.uid]) {
         alert("You have already joined this event.");
         return;
       }
 
-      const userEventRole = {
-        role,
-        joinedAt: new Date().toISOString(),
-        isApproved: false,
-      };
-
-      // Update the user's events subcollection to reflect their role and the event
-      await setDoc(userEventRef, userEventRole);
-
-      // Update the event to include the new user role
-      const eventRef = doc(db, "events", eventId);
+      // Update the event to include the new user role and approval status
       await updateDoc(eventRef, {
-        [`roles.${currentUser.uid}`]: role,
+        [`roles.${currentUser.uid}`]: {
+          role,
+          isApproved: false,
+          joinedAt: new Date().toISOString(),
+        },
       });
 
       alert("Successfully joined the event!");

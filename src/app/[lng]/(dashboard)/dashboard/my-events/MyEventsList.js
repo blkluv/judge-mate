@@ -4,10 +4,11 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import { fetchData } from "../../../../../firebase/firestore/fetchData";
 import Link from "next/link";
 import styles from "./MyEventsList.module.css";
 import { useAuthContext } from "../../../../../firebase/context/AuthContext";
+import { db } from "../../../../../firebase/config";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
 const MyEventsList = forwardRef((props, ref) => {
   const { user } = useAuthContext();
@@ -28,21 +29,30 @@ const MyEventsList = forwardRef((props, ref) => {
     }
 
     try {
-      const { data } = await fetchData("events");
+      const userEventsRef = collection(db, `users/${user.uid}/userEvents`);
+      const userEventsSnapshot = await getDocs(userEventsRef);
 
-      if (data) {
-        const userParticipatedEvents = data.filter((event) => {
-          const roles = event.roles;
-          const userRole = roles[user.uid];
-          return userRole && userRole !== "none";
-        });
+      const eventIds = userEventsSnapshot.docs.map((doc) => doc.id);
 
-        setState({
-          userEvents: userParticipatedEvents,
-          loading: false,
-          error: null,
-        });
+      const eventsData = [];
+      for (let eventId of eventIds) {
+        const eventRef = doc(db, "events", eventId);
+        const eventSnapshot = await getDoc(eventRef);
+        const eventData = eventSnapshot.data();
+        if (eventData && eventData.roles[user.uid]) {
+          eventsData.push({
+            id: eventId,
+            ...eventData,
+            role: eventData.roles[user.uid].role,
+          });
+        }
       }
+
+      setState({
+        userEvents: eventsData,
+        loading: false,
+        error: null,
+      });
     } catch (error) {
       setState({ userEvents: [], loading: false, error });
     }
@@ -83,7 +93,7 @@ const MyEventsList = forwardRef((props, ref) => {
                   </Link>
                 </td>
                 <td>{event.eventDate}</td>
-                <td>{event.roles[user.uid]}</td>
+                <td>{event.role}</td>
               </tr>
             ))}
           </tbody>

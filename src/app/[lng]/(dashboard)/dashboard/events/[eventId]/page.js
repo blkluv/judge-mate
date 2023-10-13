@@ -38,7 +38,7 @@ function Page({ params: { eventId } }) {
     if (eventId) fetchEvent();
   }, [eventId]);
 
-  const userRole = eventData?.roles?.[user?.uid];
+  const userRole = eventData?.roles?.[user?.uid]?.role;
   const isJudge = userRole === "judge";
   const isOrganizer = userRole === "organizer";
   const hasNoRole = !userRole;

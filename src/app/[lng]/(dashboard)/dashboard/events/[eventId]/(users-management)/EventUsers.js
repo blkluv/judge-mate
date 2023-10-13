@@ -29,21 +29,14 @@ function EventUsers({ eventId, refreshData }) {
       const q = query(usersRef, where("__name__", "in", userIds));
       const userSnapshots = await getDocs(q);
 
-      const fetchedUsers = await Promise.all(
-        userSnapshots.docs.map(async (userDoc) => {
-          const userEventRef = doc(
-            db,
-            `users/${userDoc.id}/userEvents/${eventId}`
-          );
-          const userEventData = (await getDoc(userEventRef)).data();
-          return {
-            id: userDoc.id,
-            username: userDoc.data().username,
-            role: data.roles[userDoc.id],
-            isApproved: userEventData?.isApproved || false,
-          };
-        })
-      );
+      const fetchedUsers = userSnapshots.docs.map((userDoc) => {
+        return {
+          id: userDoc.id,
+          username: userDoc.data().username,
+          role: data.roles[userDoc.id].role,
+          isApproved: data.roles[userDoc.id].isApproved || false,
+        };
+      });
 
       setUsers(fetchedUsers);
     }

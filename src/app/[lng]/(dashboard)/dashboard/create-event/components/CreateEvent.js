@@ -75,7 +75,11 @@ const CreateEvent = () => {
       eventType,
       eventContact,
       roles: {
-        [currentUser.uid]: "organizer",
+        [currentUser.uid]: {
+          role: "organizer",
+          isApproved: true, // Organizer is always approved
+          joinedAt: new Date().toISOString(),
+        },
       },
     };
 
@@ -90,36 +94,17 @@ const CreateEvent = () => {
         throw error;
       }
 
-      const userEventRole = {
-        role: "organizer",
-        joinedAt: new Date().toISOString(),
-      };
-
-      const { error: userUpdateError } = await addData(
-        `users/${currentUser.uid}/userEvents`,
-        eventDocRef.id,
-        userEventRole
-      );
-
-      if (userUpdateError) {
-        throw userUpdateError;
-      }
-
-      setEventName("");
-      setEventDate("");
-      setEventLocation("");
-      setEventDescription("");
-      setEventType("");
-      setEventContact("");
-      setEventTime("");
-
-      alert("Event successfully created!");
+      // Update the user's events subcollection to reflect they joined this event
+      await addData(`users/${currentUser.uid}/userEvents`, eventDocRef.id, {
+        eventId: eventDocRef.id,
+      });
       router.push(`/dashboard/events/${eventDocRef.id}`);
     } catch (error) {
       console.error("Error creating event:", error);
       alert("There was an error creating the event. Please try again.");
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.form}>
