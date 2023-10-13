@@ -9,12 +9,12 @@ import PopupConfirmation from "../components/popup-confirmation/PopupConfirmatio
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../../firebase/config";
 
-function MyCreatedEventsList() {
+function MyCreatedEventsList({ onEventDeleted }) {
   const [userEvents, setUserEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showPopup, setShowPopup] = useState(false); // State to control the popup visibility
-  const [eventToDelete, setEventToDelete] = useState(null); // State to store the event ID to delete
+  const [showPopup, setShowPopup] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState(null);
   const currentUser = auth.currentUser;
   const router = useRouter();
 
@@ -58,7 +58,6 @@ function MyCreatedEventsList() {
       if (event && event.roles) {
         console.log("Found event roles:", event.roles);
 
-        // Usuń wydarzenie z kolekcji userEvents dla każdego użytkownika
         for (const userId in event.roles) {
           console.log("Deleting event for user ID:", userId);
           await deleteData(`users/${userId}/userEvents`, eventToDelete);
@@ -67,18 +66,20 @@ function MyCreatedEventsList() {
         console.log("No roles found for the event or event not found.");
       }
 
-      // Usuń wydarzenie z kolekcji "events"
       console.log("Deleting event from main events collection.");
       await deleteData("events", eventToDelete);
 
-      // Aktualizacja stanu userEvents po usunięciu wydarzenia
       console.log("Updating local state for user events.");
       setUserEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== eventToDelete)
       );
 
       console.log("Closing confirmation popup.");
-      setShowPopup(false); // Close the popup after deleting
+      setShowPopup(false);
+
+      if (typeof onEventDeleted === "function") {
+        onEventDeleted();
+      }
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("There was an error deleting the event. Please try again.");
@@ -143,4 +144,5 @@ function MyCreatedEventsList() {
     </div>
   );
 }
+
 export default MyCreatedEventsList;

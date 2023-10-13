@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { fetchData } from "../../../../../firebase/firestore/fetchData";
 import Link from "next/link";
 import styles from "./MyEventsList.module.css";
 import { useAuthContext } from "../../../../../firebase/context/AuthContext";
 
-function MyEventsList() {
+const MyEventsList = forwardRef((props, ref) => {
   const { user } = useAuthContext();
   const [state, setState] = useState({
     userEvents: [],
@@ -13,35 +18,41 @@ function MyEventsList() {
   });
 
   useEffect(() => {
-    const fetchUserEvents = async () => {
-      if (!user) {
-        setState((prev) => ({ ...prev, loading: false }));
-        return;
-      }
-
-      try {
-        const { data } = await fetchData("events");
-
-        if (data) {
-          const userParticipatedEvents = data.filter((event) => {
-            const roles = event.roles;
-            const userRole = roles[user.uid];
-            return userRole && userRole !== "none";
-          });
-
-          setState({
-            userEvents: userParticipatedEvents,
-            loading: false,
-            error: null,
-          });
-        }
-      } catch (error) {
-        setState({ userEvents: [], loading: false, error });
-      }
-    };
-
     fetchUserEvents();
   }, [user]);
+
+  const fetchUserEvents = async () => {
+    if (!user) {
+      setState((prev) => ({ ...prev, loading: false }));
+      return;
+    }
+
+    try {
+      const { data } = await fetchData("events");
+
+      if (data) {
+        const userParticipatedEvents = data.filter((event) => {
+          const roles = event.roles;
+          const userRole = roles[user.uid];
+          return userRole && userRole !== "none";
+        });
+
+        setState({
+          userEvents: userParticipatedEvents,
+          loading: false,
+          error: null,
+        });
+      }
+    } catch (error) {
+      setState({ userEvents: [], loading: false, error });
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    refreshEvents: () => {
+      fetchUserEvents();
+    },
+  }));
 
   if (state.loading) {
     return <div>Loading events...</div>;
@@ -82,6 +93,6 @@ function MyEventsList() {
       )}
     </div>
   );
-}
+});
 
 export default MyEventsList;
