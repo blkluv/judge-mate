@@ -71,6 +71,7 @@ const CreateEvent = () => {
       eventDate,
       eventTime,
       eventLatLng: markerPosition,
+      eventLocation, // This is the addition
       eventDescription,
       eventType,
       eventContact,
