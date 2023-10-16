@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { db } from "../../../../../../../firebase/config.js";
 import { updateDoc, doc } from "firebase/firestore";
 import styles from "./EditEvent.module.css";
+import { useGoogleMaps } from "./GoogleMapsContext";
 
 const mapStyles = {
   height: "400px",
@@ -18,6 +19,7 @@ const mapStyles = {
 const libraries = ["places"];
 
 const EditEvent = ({ eventId, initialEventData, onClose }) => {
+  const isGoogleMapsLoaded = useGoogleMaps();
   console.log(initialEventData);
   console.log(eventId);
   const [isModified, setIsModified] = useState(false);
@@ -192,30 +194,25 @@ const EditEvent = ({ eventId, initialEventData, onClose }) => {
               {/* Right Column: Map and Search Box */}
               <div>
                 <div className={styles.mapContainer}>
-                  <LoadScript
-                    googleMapsApiKey={
-                      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-                    }
-                    libraries={libraries}
-                  >
-                    <label className={styles.label}>
-                      Location:
-                      <StandaloneSearchBox
-                        onLoad={(ref) => (searchBoxRef.current = ref)}
-                        onPlacesChanged={handlePlacesChanged}
-                      >
-                        <input
-                          type="text"
-                          value={eventLocation}
-                          onChange={(e) => {
-                            setEventLocation(e.target.value);
-                            setIsModified(true);
-                          }}
-                          className={styles.input}
-                          placeholder="Search for location"
-                        />
-                      </StandaloneSearchBox>
-                    </label>
+                  <label className={styles.label}>
+                    Location:
+                    <StandaloneSearchBox
+                      onLoad={(ref) => (searchBoxRef.current = ref)}
+                      onPlacesChanged={handlePlacesChanged}
+                    >
+                      <input
+                        type="text"
+                        value={eventLocation}
+                        onChange={(e) => {
+                          setEventLocation(e.target.value);
+                          setIsModified(true);
+                        }}
+                        className={styles.input}
+                        placeholder="Search for location"
+                      />
+                    </StandaloneSearchBox>
+                  </label>
+                  {isGoogleMapsLoaded && (
                     <GoogleMap
                       mapContainerStyle={mapStyles}
                       zoom={mapZoom}
@@ -232,11 +229,10 @@ const EditEvent = ({ eventId, initialEventData, onClose }) => {
                     >
                       {markerPosition && <Marker position={markerPosition} />}
                     </GoogleMap>
-                  </LoadScript>
+                  )}
                 </div>
               </div>
             </div>
-
             <div className={styles.buttonGroup}>
               <button
                 type="button"

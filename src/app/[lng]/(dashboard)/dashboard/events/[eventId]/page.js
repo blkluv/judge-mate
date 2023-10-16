@@ -7,10 +7,14 @@ import EventUsers from "./(users-management)/EventUsers";
 import JudgingTableCreator from "./components/JudgingTableCreator";
 import JudgeScoring from "./components/JudgeScoring";
 import AllParticipantsScoresTable from "./components/AllParticipantsScoresTable";
-import EventDetails from "./components/EventDetails";
+import EventDetails from "./(event-details)/EventDetails";
 import JudgingCriteriaDisplay from "./components/JudgingCriteriaDisplay";
 import ManageUserEvent from "./(users-management)/ManageUserEvent";
 import JoinEvent from "./components/JoinEvent";
+import {
+  GoogleMapsProvider,
+  useGoogleMaps,
+} from "./(event-details)/GoogleMapsContext";
 
 const EventContext = createContext();
 
@@ -52,33 +56,35 @@ function Page({ params: { eventId } }) {
   }
 
   return (
-    <EventContext.Provider value={eventData}>
-      <div className={styles.container}>
-        <EventDetails
-          eventId={eventId}
-          eventData={eventData}
-          currentUser={user}
-        />
-        <div className={styles.eventUserManagementSection}>
-          {hasNoRole && <JoinEvent eventId={eventId} currentUser={user} />}
-          {isOrganizer && (
-            <ManageUserEvent
-              eventId={eventId}
-              onUserUpdated={() => setRefreshData((prev) => !prev)}
-            />
-          )}
+    <GoogleMapsProvider>
+      <EventContext.Provider value={eventData}>
+        <div className={styles.container}>
+          <EventDetails
+            eventId={eventId}
+            eventData={eventData}
+            currentUser={user}
+          />
+          <div className={styles.eventUserManagementSection}>
+            {hasNoRole && <JoinEvent eventId={eventId} currentUser={user} />}
+            {isOrganizer && (
+              <ManageUserEvent
+                eventId={eventId}
+                onUserUpdated={() => setRefreshData((prev) => !prev)}
+              />
+            )}
 
-          <EventUsers eventId={eventId} refreshData={refreshData} />
-        </div>
-        <div className={styles.eventTableCreatorSection}>
-          {isOrganizer && <JudgingTableCreator eventId={eventId} />}
-          <JudgingCriteriaDisplay eventId={eventId} />
-        </div>
+            <EventUsers eventId={eventId} refreshData={refreshData} />
+          </div>
+          <div className={styles.eventTableCreatorSection}>
+            {isOrganizer && <JudgingTableCreator eventId={eventId} />}
+            <JudgingCriteriaDisplay eventId={eventId} />
+          </div>
 
-        {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}
-        <AllParticipantsScoresTable eventId={eventId} />
-      </div>
-    </EventContext.Provider>
+          {isJudge && <JudgeScoring eventId={eventId} userId={user.uid} />}
+          <AllParticipantsScoresTable eventId={eventId} />
+        </div>
+      </EventContext.Provider>{" "}
+    </GoogleMapsProvider>
   );
 }
 

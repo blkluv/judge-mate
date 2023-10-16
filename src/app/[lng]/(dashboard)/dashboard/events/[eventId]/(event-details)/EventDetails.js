@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import styles from "./EventDetails.module.css";
 import EditEvent from "./EditEvent";
+import { useGoogleMaps } from "./GoogleMapsContext"; // Zaimportuj hook
 
 const mapStyles = {
   height: "100px",
@@ -31,7 +32,7 @@ const EventDetails = ({ eventId, eventData, currentUser }) => {
   const handleCloseModal = () => {
     setIsEditing(false);
   };
-
+  const isGoogleMapsLoaded = useGoogleMaps();
   return (
     <div className={styles.detailsContainer}>
       <h1 className={styles.eventName}>{eventName}</h1>
@@ -67,10 +68,8 @@ const EventDetails = ({ eventId, eventData, currentUser }) => {
         )}
       </div>
 
-      <div className={styles.mapContainer}>
-        <LoadScript
-          googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-        >
+      {isGoogleMapsLoaded && (
+        <div className={styles.mapContainer}>
           <GoogleMap
             mapContainerStyle={mapStyles}
             zoom={15}
@@ -78,8 +77,8 @@ const EventDetails = ({ eventId, eventData, currentUser }) => {
           >
             <Marker position={eventLatLng} />
           </GoogleMap>
-        </LoadScript>
-      </div>
+        </div>
+      )}
 
       {isEditing && (
         <div className={styles.modalOverlay} onClick={handleCloseModal}>
