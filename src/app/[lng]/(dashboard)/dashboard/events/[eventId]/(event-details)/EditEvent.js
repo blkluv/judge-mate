@@ -107,7 +107,6 @@ const EditEvent = ({ eventId, initialEventData, onClose }) => {
         <div className={styles.container}>
           <div className={styles.form}>
             <h1 className={styles.title}>Edit Event</h1>
-
             <div className={styles.grid}>
               {/* Left Column: Form Fields */}
               <div>
@@ -192,45 +191,44 @@ const EditEvent = ({ eventId, initialEventData, onClose }) => {
               </div>
 
               {/* Right Column: Map and Search Box */}
-              <div>
-                <div className={styles.mapContainer}>
-                  <label className={styles.label}>
-                    Location:
-                    <StandaloneSearchBox
-                      onLoad={(ref) => (searchBoxRef.current = ref)}
-                      onPlacesChanged={handlePlacesChanged}
-                    >
-                      <input
-                        type="text"
-                        value={eventLocation}
-                        onChange={(e) => {
-                          setEventLocation(e.target.value);
-                          setIsModified(true);
-                        }}
-                        className={styles.input}
-                        placeholder="Search for location"
-                      />
-                    </StandaloneSearchBox>
-                  </label>
-                  {isGoogleMapsLoaded && (
-                    <GoogleMap
-                      mapContainerStyle={mapStyles}
-                      zoom={mapZoom}
-                      center={markerPosition}
-                      onLoad={(map) => {
-                        mapRef.current = map;
-                      }}
-                      onClick={(e) => {
-                        const lat = e.latLng.lat();
-                        const lng = e.latLng.lng();
-                        setMarkerPosition({ lat, lng });
+
+              <div className={styles.mapContainer}>
+                <label className={styles.label}>
+                  Location:
+                  <StandaloneSearchBox
+                    onLoad={(ref) => (searchBoxRef.current = ref)}
+                    onPlacesChanged={handlePlacesChanged}
+                  >
+                    <input
+                      type="text"
+                      value={eventLocation}
+                      onChange={(e) => {
+                        setEventLocation(e.target.value);
                         setIsModified(true);
                       }}
-                    >
-                      {markerPosition && <Marker position={markerPosition} />}
-                    </GoogleMap>
-                  )}
-                </div>
+                      className={styles.mapInput}
+                      placeholder="Search for location"
+                    />
+                  </StandaloneSearchBox>
+                </label>
+                {isGoogleMapsLoaded && (
+                  <GoogleMap
+                    mapContainerStyle={mapStyles}
+                    zoom={mapZoom}
+                    center={markerPosition}
+                    onLoad={(map) => {
+                      mapRef.current = map;
+                    }}
+                    onClick={(e) => {
+                      const lat = e.latLng.lat();
+                      const lng = e.latLng.lng();
+                      setMarkerPosition({ lat, lng });
+                      setIsModified(true);
+                    }}
+                  >
+                    {markerPosition && <Marker position={markerPosition} />}
+                  </GoogleMap>
+                )}
               </div>
             </div>
             <div className={styles.buttonGroup}>

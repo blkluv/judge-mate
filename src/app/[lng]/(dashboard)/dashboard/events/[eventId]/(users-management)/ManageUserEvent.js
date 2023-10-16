@@ -13,56 +13,67 @@ import {
 } from "firebase/firestore";
 import styles from "./ManageUserEvent.module.css";
 
+const Modal = ({ children, onClose }) => (
+  <div className={styles.overlay} onClick={onClose}>
+    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <button className={styles.closeButton} onClick={onClose}>
+        X
+      </button>
+      {children}
+    </div>
+  </div>
+);
+
 const ManageUserEvent = ({ eventId, onUserUpdated }) => {
   const [username, setUsername] = useState("");
-  const [role, setRole] = useState("participant"); // default role
+  const [role, setRole] = useState("participant");
   const [error, setError] = useState("");
-  const [action, setAction] = useState(""); // 'add', 'remove', 'approve', 'changeRole' or ''
+  const [action, setAction] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
-  const handleActionClick = (selectedAction) => {
-    setAction(selectedAction);
+  const handleModalClose = () => {
+    setShowModal(false);
+    setAction("");
     setUsername("");
     setRole("participant");
     setError("");
   };
+  const handleActionClick = (selectedAction) => {
+    setAction(selectedAction);
+    setShowModal(true);
+  };
+  const handleActionChange = (e) => {
+    setAction(e.target.value);
+    setShowModal(true);
+  };
 
   const handleAddUser = async () => {
-    if (!username || !role) {
-      alert("Please provide both username and role.");
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("username", "==", username));
+    const userSnapshot = await getDocs(q);
+
+    if (userSnapshot.empty) {
+      alert("User not found.");
       return;
     }
 
-    try {
-      const usersRef = collection(db, "users");
-      const q = query(usersRef, where("username", "==", username));
-      const userSnapshot = await getDocs(q);
+    const userId = userSnapshot.docs[0].id;
+    const eventRef = doc(db, "events", eventId);
+    await updateDoc(eventRef, {
+      [`roles.${userId}`]: {
+        role: role,
+        isApproved: false,
+      },
+    });
 
-      if (userSnapshot.empty) {
-        alert("User not found.");
-        return;
-      }
+    const userEventRef = doc(db, `users/${userId}/userEvents`, eventId);
+    await setDoc(userEventRef, { eventId: eventId });
 
-      const userId = userSnapshot.docs[0].id;
-      const eventRef = doc(db, "events", eventId);
-      await updateDoc(eventRef, {
-        [`roles.${userId}`]: {
-          role: role,
-          isApproved: false, // default to false
-        },
-      });
+    alert("User successfully added to the event!");
+    handleModalClose();
 
-      const userEventRef = doc(db, `users/${userId}/userEvents`, eventId);
-      await setDoc(userEventRef, { eventId: eventId });
-
-      alert("User successfully added to the event!");
-      setUsername(""); // Clear the input
-
-      if (typeof onUserUpdated === "function") {
-        onUserUpdated();
-      }
-    } catch (error) {
-      console.error("Error adding user to event:", error);
-      alert("An unknown error occurred.");
+    if (typeof onUserUpdated === "function") {
+      onUserUpdated();
     }
   };
 
@@ -227,107 +238,107 @@ const ManageUserEvent = ({ eventId, onUserUpdated }) => {
         </button>
       </div>
 
-      {action === "add" && (
-        <>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>
-              Username:
-              <input
-                className={styles.input}
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-            <label className={styles.label}>
-              Role:
-              <select
-                className={styles.select}
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <option value="participant">Participant</option>
-                <option value="judge">Judge</option>
-                <option value="cameraman">Cameraman</option>
-              </select>
-            </label>
-          </div>
-          <button className={styles.button} onClick={handleAddUser}>
-            Confirm Add
-          </button>
-        </>
+      {showModal && (
+        <Modal onClose={handleModalClose}>
+          {action === "add" && (
+            <>
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Username:
+                  <input
+                    className={styles.input}
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </label>
+                <label className={styles.label}>
+                  Role:
+                  <select
+                    className={styles.select}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option value="participant">Participant</option>
+                    <option value="judge">Judge</option>
+                    <option value="cameraman">Cameraman</option>
+                  </select>
+                </label>
+              </div>
+              <button className={styles.button} onClick={handleAddUser}>
+                Confirm Add
+              </button>
+            </>
+          )}
+          {action === "remove" && (
+            <>
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Username:
+                  <input
+                    className={styles.input}
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </label>
+              </div>
+              <button className={styles.button} onClick={handleRemoveUser}>
+                Confirm Remove
+              </button>
+            </>
+          )}
+          {action === "approve" && (
+            <>
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Username:
+                  <input
+                    className={styles.input}
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </label>
+              </div>
+              <button className={styles.button} onClick={handleApproveUser}>
+                Confirm Approve
+              </button>
+            </>
+          )}
+          {action === "changeRole" && (
+            <>
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Username:
+                  <input
+                    className={styles.input}
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </label>
+                <label className={styles.label}>
+                  Role:
+                  <select
+                    className={styles.select}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option value="participant">Participant</option>
+                    <option value="judge">Judge</option>
+                    <option value="cameraman">Cameraman</option>
+                  </select>
+                </label>
+              </div>
+              <button className={styles.button} onClick={handleChangeRole}>
+                Confirm Change
+              </button>
+            </>
+          )}
+          {error && <p className={styles.errorMessage}>{error}</p>}
+        </Modal>
       )}
-
-      {action === "remove" && (
-        <>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>
-              Username:
-              <input
-                className={styles.input}
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-          </div>
-          <button className={styles.button} onClick={handleRemoveUser}>
-            Confirm Remove
-          </button>
-        </>
-      )}
-
-      {action === "approve" && (
-        <>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>
-              Username:
-              <input
-                className={styles.input}
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-          </div>
-          <button className={styles.button} onClick={handleApproveUser}>
-            Confirm Approve
-          </button>
-        </>
-      )}
-
-      {action === "changeRole" && (
-        <>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>
-              Username:
-              <input
-                className={styles.input}
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-            <label className={styles.label}>
-              Role:
-              <select
-                className={styles.select}
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <option value="participant">Participant</option>
-                <option value="judge">Judge</option>
-                <option value="cameraman">Cameraman</option>
-              </select>
-            </label>
-          </div>
-          <button className={styles.button} onClick={handleChangeRole}>
-            Confirm Change
-          </button>
-        </>
-      )}
-
-      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };

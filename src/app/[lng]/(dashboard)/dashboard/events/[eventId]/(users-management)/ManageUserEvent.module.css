@@ -1,123 +1,123 @@
 /* ManageUserEvent.module.css */
 
 .container {
-  box-sizing: border-box;
-  background-color: #f9f9fa;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  max-width: 800px;
-  width: 100%;
-  margin: 20px auto; /* Center the container with some vertical spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* dodane ograniczenie szerokości */
+  margin: 0 auto; /* dodane centrowanie */
 }
 
 .title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  font-weight: 700;
-  color: #2c3e50;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.label {
-  font-size: 16px;
-  color: #34495e;
-  margin-bottom: 5px;
-}
-
-.input,
-.select {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ced4da;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  max-width: 100%;
-}
-
-.input:focus,
-.select:focus {
-  border-color: #5cb85c;
-  box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center; /* tytuł wyśrodkowany */
 }
 
 .buttonsContainer {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-between;
+  gap: 0.5rem; /* mniejsze odstępy */
+  flex-wrap: wrap; /* umożliwia zawijanie przycisków */
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 5px;
+  font-weight: 600;
+  background-color: #007bff;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.15s ease-in-out, transform 0.15s ease-in-out;
+  transition: background-color 0.3s;
+  flex: 1 0 calc(50% - 1rem); /* pozwala na dwie kolumny przycisków na mobilkach */
+  text-align: center;
+  min-width: 120px; /* Stała szerokość dla przycisków */
+  box-sizing: border-box; /* Aby padding był uwzględniony w szerokości */
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  padding: 1.5rem; /* mniejsze paddingi */
+  background-color: white;
+  border-radius: 8px;
+  width: 90%; /* większa szerokość modala na mobilkach */
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 500px; /* ograniczenie maksymalnej szerokości */
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px; /* mniejsze odstępy */
+  right: 10px; /* mniejsze odstępy */
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.input,
+.select {
   width: 100%;
-}
-
-.button.add {
-  background-color: #5cb85c;
-  color: #fff;
-  margin-top: 15px;
-}
-
-.button.add:hover {
-  background-color: #4cae4c;
-  transform: scale(1.05); /* Slight scale on hover for a dynamic effect */
-}
-
-.button.remove {
-  background-color: #d9534f;
-  color: #fff;
-  margin-top: 15px;
-}
-
-.button.remove:hover {
-  background-color: #c9302c;
-  transform: scale(0.95); /* Slight scale on hover for a dynamic effect */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #fff;
 }
 
 .errorMessage {
-  color: #d9534f;
-  font-size: 14px;
-  margin-top: 10px;
-  font-style: italic; /* Added italic style for error messages */
+  color: #ff0000;
+  margin-top: 1rem;
+  text-align: center;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 10px 10px;
-  }
-
-  .title {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-
-  .label {
-    font-size: 14px;
-  }
-
-  .input,
-  .select {
-    font-size: 12px;
-    padding: 6px 8px;
-  }
-
+/* Media queries dla większych ekranów */
+@media (min-width: 768px) {
   .button {
-    font-size: 14px;
-    padding: 6px 10px;
+    flex: 0 0 auto; /* powrót do domyślnego zachowania flexboxa */
+    padding: 0.75rem 1.5rem;
+    min-width: 150px; /* Większa stała szerokość dla przycisków na większych ekranach */
+  }
+
+  .modal {
+    padding: 2rem;
   }
 }
